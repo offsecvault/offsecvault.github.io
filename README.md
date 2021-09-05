@@ -1,2 +1,2 @@
-# offsecvault.github.io
+# offsecvault
 Knowledge Base
