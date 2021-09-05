@@ -10,78 +10,76 @@
   <meta charset="utf-8" />
 
   <style>
-    body {
+body {
       font-size: 12px;
       font-family: ubuntu mono;
       background-color: black;
       color: white;
       margin: 0;
     }
-
-    a {
+a {
       color: white;
       font-weight: bold;
       text-decoration: none;
     }
     
     * {
-			box-sizing: border-box;
-		}
+	box-sizing: border-box;
+}
+column {
+	color: white;
+	width: 60%;
+	padding: 50px;
+}
 
-    column {
-			color: white;
-			width: 60%;
-			padding: 50px;
-		}
+	.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
 
-		.row:after {
-			content: "";
-			display: table;
-			clear: both;
-		}
+details {
+	border: 2px solid white;
+	border-radius: 2px;
+	font-size: 10px;
+	padding: .5em .5em 0;
+	color: white;
+}
 
-		details {
-			border: 2px solid white;
-			border-radius: 2px;
-			font-size: 10px;
-			padding: .5em .5em 0;
-			color: white;
-		}
+summary {
+		font-weight: bold;
+		margin: -.5em -.5em 0;
+		padding: .5em;
+}
 
-		summary {
-			font-weight: bold;
-			margin: -.5em -.5em 0;
-			padding: .5em;
-		}
+details[open] summary {
+		background: black;
+}
 
-		details[open] summary {
-			background: black;
-		}
+details[open] {
+	background-color: black;
+	color: white;
+	padding: .5em .5em 0;
+}
 
-		details[open] {
-			background-color: black;
-			color: white;
-			padding: .5em .5em 0;
-		}
-
-		img {
-			position: absolute;
-			z-index: 1;
-		}
+img {
+	position: absolute;
+	z-index: 1;
+}
    
-    a:hover,
-    a:active {
+a:hover,
+a:active {
       color: #868686;
       text-decoration: underline;
-    }
-    table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
+}
+ table, th, td {
+ border: 1px solid black;
+ border-collapse: collapse;
     }
 
-    table.center {
-    margin-left: auto; 
-    margin-right: auto;
+table.center {
+	margin-left: auto; 
+	margin-right: auto;
 }
     
   </style>
@@ -116,7 +114,7 @@
 </pre>
 <pre><div class="row" style="text-align:center;"><div class="column" style="display: inline-block; text-align: left; background-color:black;">
 <details>
-<summary>Pentestin Platforms</summary>
+<summary>Pentesin Platforms</summary>
  <a href="">HTB</a>
  <a href="">Proving Grounds</a>
 </details>
