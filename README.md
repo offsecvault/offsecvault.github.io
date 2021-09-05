@@ -1,6 +1,4 @@
 # offsecvault.github.io
 Knowledge Base
 
-RED TEAM offsecvault.github.io/blob/main/index.html
-
-BLUE TEAM
+https://github.com/offsecvault/offsecvault.github.io/blob/main/index.html
