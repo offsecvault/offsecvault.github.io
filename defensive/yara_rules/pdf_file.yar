@@ -11,3 +11,5 @@ strings:
 condition:
   $start at 0 and $end
 }
+
+# add more strings as you needs and remember to modify the condition.
