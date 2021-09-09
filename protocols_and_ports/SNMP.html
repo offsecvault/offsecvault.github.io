@@ -65,8 +65,37 @@
     <a href="../ABOUT.html">ABOUT</a>
   </div>
 <pre style="text-align:center;">
+<p>protocol SNMP - "simple network management protocol" / over ports 161 or 162 /TCP-UDP - TCP/IP
 
+NMAP ENUMERATION
 
+--> snmp info | list snmp information
+
+# nmap -sV <ip_addr>
+
+--> snmp brute-force | brute force the community strings
+
+# nmap -sU --script snmp-brute <ip_addr> --script-args snmp.brute.communitiesdb=/usr/share/nmap/nselib/data/snmpcommunities.lst
+
+<a href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/SNMP/common-snmp-community-strings.txt">SecLists</a> 
+
+--> snmp-interfaces | list interfaces associated to the host
+
+# nmap -sU -p <port> --script-snmp-interfaces <ip_addr>
+
+--> snmp-processes | list running processes
+
+# nmap -sU -p <port> --script=snmp-processes <ip_addr>
+
+--> snmp-netstat | list netstat information
+
+# nmap -sU -p <port> --script=snmp-netstat <ip_addr>
+
+--> snmp-w32-software | list all installed software, 32 bits versions
+
+# nmap -sU -p <port> --script=snmp-win32-software <ip_addr>
+
+</p>
 </center>
 </body>
 </pre>
