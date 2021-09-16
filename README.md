@@ -7,8 +7,6 @@ It is a knowledge base created as part of the journey studying both sides of the
 
 The content will be related to each certification or courses completed, it is organized by topics for each side. 
 
-  | CEH | Sec+ | eJPT | CNSS | AZ900
-
 _ Come back regularly, you will find new content for each topic _
 
 2021 - @b0ydC_
