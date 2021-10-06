@@ -14,29 +14,72 @@
       font-size: 12px;
       font-family: ubuntu mono;
       background-color: white;
-      color: black;
+      color: white;
       margin: 0;
     }
-
-    a {
+a {
       color: black;
       font-weight: bold;
       text-decoration: none;
     }
+    
+    * {
+	box-sizing: border-box;
+}
+column {
+	color: black;
+	width: 60%;
+	padding: 50px;
+}
 
-    a:hover,
-    a:active {
-      color: #868686;
+	.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+details {
+	border: 2px solid black;
+	border-radius: 2px;
+	font-size: 10px;
+	padding: .5em .5em 0;
+	color: black;
+}
+
+summary {
+	font-weight: bold;
+	margin: -.5em -.5em 0;
+	padding: .5em;
+}
+
+details[open] summary {
+		background: white;
+}
+
+details[open] {
+	background-color: white;
+	color: black;
+	padding: .5em .5em 0;
+}
+
+img {
+	position: absolute;
+	z-index: 1;
+}
+   
+a:hover,
+a:active {
+      color: #da3815;
       text-decoration: underline;
-    }
-    table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
+}
+ table, th, td {
+ border: 1px solid white;
+ border-collapse: collapse;
     }
 
-    table.center {
-    margin-left: auto; 
-    margin-right: auto;
+table.center {
+	margin-left: auto; 
+	margin-right: auto;
 }
     
   </style>
