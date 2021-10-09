@@ -5,6 +5,7 @@
   <title>offsecvault - Knowledge Base</title>
   <!--------------------->
   <!-- b0ydC owned. -->
+  <!-- @77D64G2F= -->
   <!-- --------------- -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8" />
@@ -23,7 +24,7 @@
       font-weight: bold;
       text-decoration: none;
     }
-
+    
     a:hover,
     a:active {
       color: #868686;
@@ -41,7 +42,7 @@
     
   </style>
 </head>
-
+<!-- EL#~%cf0qp$t -->
 <body>
   <pre><center>
 <a href="/index.html" style="text-decoration:none;">
@@ -70,10 +71,17 @@ After you woke up, there's only QR codes in front of you… what are they saying
 The following QR code is the one everyone is talking about. 
 
 <img src="../CTF/the_rotting_base_hexing_chef.png" alt="qrcode" width="260" height="260">
-
+<!-- ec0wt)0r*qt#rwtuN -->
 FLAG: flag format will be 4 words separated by underscore closed by {}
 
 Sample: offsecvault{word1_word2_word3_word4}
+
+<button onclick="hint()">Hint !</button>
+<script>
+function hint() {
+  alert("You can find the flag in two different ways, however there's one remaining step to get the correct flag. Encrypted ? Cipher ?");
+}
+</script>
 
 <button onclick="confirmFlag()">Confirm FLAG!</button>
 
@@ -84,9 +92,9 @@ function confirmFlag() {
   let text;
   let flag = prompt("Please enter your flag:", "offsecvault{word1_word2_word3_word4}");
   if (flag == null || flag == "") {
-    text = "User cancelled the prompt.";
+    text = "Cannot be empty.";
   } else {
-    text = "Done! " + flag + "completed.";
+    text = "CORRECT ! " + flag;
   }
   document.getElementById("flag").innerHTML = text;
 }
