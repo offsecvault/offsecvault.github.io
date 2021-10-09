@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8" />
 
-  <style>
+ <style>
     body {
       font-size: 12px;
       font-family: ubuntu mono;
@@ -23,12 +23,41 @@
       font-weight: bold;
       text-decoration: none;
     }
+	
+	* {
+      box-sizing: border-box;
+    }
+
+	details {
+      border: 2px solid white;
+      border-radius: 2px;
+      font-size: 10px;
+      padding: .5em .5em 0;
+    }
+
+    summary {
+      font-weight: bold;
+      margin: -.5em -.5em 0;
+      padding: .5em;
+    }
+
+    details[open] summary {
+      background: white;
+      color: black;
+    }
+
+    details[open] {
+      background: black;
+      color: white;
+      padding: .5em .5em 0;
+    }
 
     a:hover,
     a:active {
       color: #868686;
       text-decoration: underline;
     }
+	
     table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
@@ -38,8 +67,8 @@
     margin-left: auto; 
     margin-right: auto;
 }
-    
-  </style>
+</style>
+	
 </head>
 
 <body>
