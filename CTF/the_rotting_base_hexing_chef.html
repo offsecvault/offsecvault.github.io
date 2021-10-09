@@ -75,5 +75,22 @@ FLAG: flag format will be 4 words separated by underscore closed by {}
 
 Sample: offsecvault{word1_word2_word3_word4}
 
+<button onclick="confirmFlag()">Confirm FLAG!</button>
+
+<p id="flag"></p>
+
+<script>
+function confirmFlag() {
+  let text;
+  let flag = prompt("Please enter your flag:", "offsecvault{word1_word2_word3_word4}");
+  if (flag == null || flag == "") {
+    text = "User cancelled the prompt.";
+  } else {
+    text = "Done! " + flag + "completed.";
+  }
+  document.getElementById("flag").innerHTML = text;
+}
+</script>
+
 </body>
 </html>
