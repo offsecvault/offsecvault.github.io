@@ -63,9 +63,9 @@
     <a href="../ABOUT.html">ABOUT</a>
   </div>
 <pre style="text-align:center;">
-<p>protocol SNMP - "simple network management protocol" / over ports 161 or 162 /TCP-UDP - TCP/IP
+<p>"simple network management protocol" | over ports 161 or 162 /TCP-UDP - TCP/IP
 
-NMAP ENUMERATION
+<h3>NMAP ENUMERATION</h3>
 
 --> snmp info | list snmp information
 
@@ -75,7 +75,7 @@ NMAP ENUMERATION
 
 # nmap -sU --script snmp-brute <ip_addr> --script-args snmp.brute.communitiesdb=/usr/share/nmap/nselib/data/snmpcommunities.lst
 
-<a href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/SNMP/common-snmp-community-strings.txt">SecLists</a> 
+<a href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/SNMP/common-snmp-community-strings.txt">SecLists "danielmiessler"</a> 
 
 --> snmp-interfaces | list interfaces associated to the host
 
