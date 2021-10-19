@@ -11,8 +11,8 @@ ref = "https://bazaar.abuse.ch/sample/a69d27abd043cc676095f71300bf6b2368167536fc
 strings:
 
 $folder = "ChromeTempFolder"
-$software="rebol_view_278_3_1.exe"
-$wininstallXMLtoolset="(3.11.0.1528)"
+$software= "rebol_view_278_3_1.exe"
+$wininstallXMLtoolset= "(3.11.0.1528)"
 
 condition:
 
