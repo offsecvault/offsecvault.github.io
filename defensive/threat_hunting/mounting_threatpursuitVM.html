@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <title>offsecvault - Knowledge Base</title>
+  <!--------------------->
+  <!-- b0ydC owned. -->
+  <!-- --------------- -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+
+  <style>
+    body {
+      font-size: 12px;
+      font-family: ubuntu mono;
+      background-color: white;
+      color: black;
+      margin: 0;
+    }
+
+    a {
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:active {
+      color: #868686;
+      text-decoration: underline;
+    }
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    }
+
+    table.center {
+    margin-left: auto; 
+    margin-right: auto;
+}
+    
+  </style>
+</head>
+
+<body>
+  <pre><center>
+<a href="/index.html" style="text-decoration:none;">
+ ▒█████    █████▒ █████▒ ██████ ▓█████  ▄████▄ ██▒   █▓ ▄▄▄       █    ██  ██▓  ▄▄▄█████▓
+▒██▒  ██▒▓██   ▒▓██   ▒▒██    ▒ ▓█   ▀ ▒██▀ ▀█▓██░   █▒▒████▄     ██  ▓██▒▓██▒  ▓  ██▒ ▓▒
+▒██░  ██▒▒████ ░▒████ ░░ ▓██▄   ▒███   ▒▓█    ▄▓██  █▒░▒██  ▀█▄  ▓██  ▒██░▒██░  ▒ ▓██░ ▒░
+▒██   ██░░▓█▒  ░░▓█▒  ░  ▒   ██▒▒▓█  ▄ ▒▓▓▄ ▄██▒▒██ █░░░██▄▄▄▄██ ▓▓█  ░██░▒██░  ░ ▓██▓ ░ 
+░ ████▓▒░░▒█░   ░▒█░   ▒██████▒▒░▒████▒▒ ▓███▀ ░ ▒▀█░   ▓█   ▓██▒▒▒█████▓ ░██████▒▒██▒ ░ 
+░ ▒░▒░▒░  ▒ ░    ▒ ░   ▒ ▒▓▒ ▒ ░░░ ▒░ ░░ ░▒ ▒  ░ ░ ▐░   ▒▒   ▓▒█░░▒▓▒ ▒ ▒ ░ ▒░▓  ░▒ ░░   
+  ░ ▒ ▒░  ░      ░     ░ ░▒  ░ ░ ░ ░  ░  ░  ▒    ░ ░░    ▒   ▒▒ ░░░▒░ ░ ░ ░ ░ ▒  ░  ░    
+░ ░ ░ ▒   ░ ░    ░ ░   ░  ░  ░     ░   ░           ░░    ░   ▒    ░░░ ░ ░   ░ ░   ░      
+    ░ ░                      ░     ░  ░░ ░          ░        ░  ░   ░         ░  ░       
+                                       ░           ░                                     
+</a></pre>
+
+<div style="font-size:24px; text-align:center; font-family:courier,monospace;">
+    <a href="../../RED-TEAM.html">OFFENSIVE</a> |
+    <a href="../../BLUE-TEAM.html">DEFENSIVE</a> |
+    <a href="../../CTF.html">CTF</a> |
+    <a href="../../TOOLS.html">TOOLS</a> |
+    <a href="../../ABOUT.html">ABOUT</a> 
+</div>
+<pre style="text-align:center;">
+<h3> Mounting Threat Pursuit VM </h3>
+
+Threat Pursuit Virtual Machine, it is a fully customizable, open-sourced Windows-based distribution focused on threat intelligence analysis and hunting 
+designed for intel, threat hunters & malware analysts. 
+
+<a href="https://github.com/mandiant/ThreatPursuit-VM">Github Page</a>
+
+# testing env
+
+- ubuntu 20.04
+- VM Ware Workstation 16 Player
+
+pre-req build
+
+- Windows 10 OS v 1903 <a href="https://archive.org/details/windows-10-1903-x-64">download .iso</a>
+
+settings:
+
+disk size: 120 GB ++
+RAM: 8GB ++
+network: 1 network adapter
+** Enable Virtualization support for VM
+
+on build
+
+- Google Chrome Browser | <a href="https://www.google.com/chrome/">download chrome</a> 
+- Oracle Java SE 11 or higher | <a href="https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html">download Oracle Java SE 11</a> 
+
+install steps
+
+1. install the OS on a VM
+2. run windows update until there's no more pending updates
+3. take a snapshot
+4. download the install.ps1 file <a href="https://github.com/mandiant/ThreatPursuit-VM/blob/master/install.ps1">install.ps1 file</a> 
+5. open powershell prompt as admin
+6. unblock the installer file
+# Unblock-File .\install.ps1
+7. enable script execution
+# Set-ExecutionPolicy Unrestricted -f
+
+
+
+
+
+
+</center>
+</body>
+</html>
