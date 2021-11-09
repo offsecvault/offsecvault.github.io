@@ -1,4 +1,3 @@
-![image](https://user-images.githubusercontent.com/90124592/140270372-0e22db24-2abe-4eb1-845b-1d6b7a1c416c.png)
 
 Knowledge Base
 
