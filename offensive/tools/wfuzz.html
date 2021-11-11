@@ -72,6 +72,9 @@
 -subdomains
 # wfuzz -w /path/to/wordlist -u http://[ip/FQDN] --hc 301 -v -c -H "Host:FUZZ.domain.com"
 
+-directory
+# wfuzz -w /path/to/wordlist -u http://[ip_FQDN]/FUZZ -v -c --hc 401,403
+
 flags:
 
 -w = wordlist
@@ -80,6 +83,8 @@ flags:
 -v = verbose
 -c = output with colors
 -H = headers
+
+note: the fuzz options will depends on the common list used, also, based on response the necessary response code will need to be used.
 
 </center>
 </body>
