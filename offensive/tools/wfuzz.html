@@ -69,7 +69,8 @@
 
 :: brute force webpage
 
-# wfuzz -w /path/to/wordlist -u http://[ip/FQDN] --hc 301 -v -c -H "Host:FUZZ.horizontall.htb"
+-subdomains
+# wfuzz -w /path/to/wordlist -u http://[ip/FQDN] --hc 301 -v -c -H "Host:FUZZ.domain.com"
 
 flags:
 
