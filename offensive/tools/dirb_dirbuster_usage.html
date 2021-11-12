@@ -73,12 +73,14 @@
 
 :: gobuster
 
-# gobuster dir -u http://[ip/FQDN]:[port] -w /path/to/wordlist
+# gobuster dir -u http://[ip/FQDN]:[port] -w /path/to/wordlist -t 150 -o /path/to/file
 
 flags
 
 -u = url
 -w = wordlist
+-t = current threads [faster]
+-o = output to file
 
 </center>
 </body>
