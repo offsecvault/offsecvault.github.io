@@ -67,7 +67,37 @@
 <pre style="text-align:center;">
 <h3> SQLmap Usage </h3>
 
+normal manual testing
 
+flags:
+
+' or 1=1;--
+"
+
+sqlmap automate
+
+::: normal database discovery
+
+# sqlmap -u [URL] --form -dbs --batch
+
+::: database discovery
+
+# sql -u [URL] --form -D [databasename] -a --batch
+
+::: table discovery
+
+# sql -u [URL] --form -D [databasename] -a --batch
+
+flags:
+
+-u = URL
+--all or -a =  retrieve everything
+--form = parse and test forms on target URL
+--dbs = enumerate dbms databases
+--batch = never ask for user input, default behavior selected
+--D = DBMS database to enumerate
+--T = DBMS database table(s) to enumerate
+--C = DBMS database table column(s) to enumerate
 
 </center>
 </body>
