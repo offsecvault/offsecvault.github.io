@@ -96,7 +96,8 @@ PS> Get-Command -CommandType [cmdlet]
 
 PS> powershell -ExecutionPolicy bypass
 PS> powershell -c [cmd]
-PS> powershell -encodedcommand $env:PS ExecutionPolicy Preference="bypass"
+PS> powershell -encodedcommand 
+$env:PS ExecutionPolicy Preference="bypass"
 
 ::: import a module
 
@@ -105,6 +106,74 @@ PS> Import-Module <modulePath>
 ::: list commands in a module
 
 PS> Get-Command -Module <moduleName>
+
+::: load powershell script using dot sourcing
+
+PS> . [fullpath]
+PS> . C:\b0ydC\Tools\PowerView.ps1
+
+::: bypass powershell security controls
+
+<a href="https://github.com/OmerYa/Invisi-Shell">invisi-shell | bypass security controls</a> 
+** required the .dll file and the execution file needed [admin/non-admin]
+RunWithPathAsAdmin.bat
+RunWithRegistryNonAdmin.bat
+
+::: bypass AV signatures 
+
+- load script in memory to avoid AMSI bypass
+AMSI Trigger to identify the part of the script that is detected !! Repeat the process until it is not detected to avoid detection on execution phase.
+<a href="https://github.com/RythmStick/AMSITrigger">AMSITrigger</a> 
+quick usage:
+
+PS> AmsiTrigger.exe -i [filePath]
+
+flags:
+
+-i = input file
+-u, --url=VALUE             URL eg. https://10.1.1.1/Invoke-NinjaCopy.ps1
+-f, --format=VALUE          Output Format:
+                              1 - Only show Triggers
+                              2 - Show Triggers with Line numbers
+                              3 - Show Triggers inline with code
+                              4 - Show AMSI calls (xmas tree mode)
+
+::: full obfuscation
+<a href="https://github.com/danielbohannon/Invoke-Obfuscation">Invoke-Obfuscation</a> 
+
+::: domain enumeration
+
+- active directory powershell module 
+<a href="https://github.com/samratashok/ADModule">ADModule | domain enumeration</a> 
+
+- bloodhound
+<a href="https://github.com/BloodHoundAD/BloodHound">BloodHound</a> 
+
+-powerview
+<a href="https://github.com/ZeroDayLab/PowerSploit/blob/master/Recon/PowerView.ps1">PowerView</a>
+
+-sharpview
+<a href="https://github.com/tevora-threat/SharpView/">SharpView</a>
+
+>> get current domain
+PS> Get-Domain | (powerview)
+PS> Get-ADDomain | (active directory module)
+
+>> get object of another domain 
+PS> Get-Domain -Domain [domain] | (PWV)
+PS> Get-ADDomain -Identity [domain] | (ADM)
+
+>> get domain SID for the current domain
+PS> Get-DomainSID | (PWV)
+PS> (Get-ADDomain).DomainSID | (ADM)
+
+>> get domain policy for current domain
+PS> Get-DomainPolicyData | (PWV)
+PS> (Get-DomainPolicyData).systemaccess | (ADM)
+
+>> get domain policy for another domain
+PS> (Get-DomainPolicyData –domain [domain]).systemaccess
+
 
 </center>
 </body>
