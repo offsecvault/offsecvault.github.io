@@ -67,7 +67,44 @@
 <pre style="text-align:center;">
 <h3> Powershell Usage </h3>
 
+::: get help all (it will retrieve all help options)
 
+PS> Get-Help * 
+
+::: get help by keyword (it will retrieve all content associated to the keyword)
+
+PS> Get-Help [keyword]
+PS> Get-Help process
+
+::: update help system
+
+PS> Update-Help
+
+::: get help by item (it will retrieve all information associated to a specific item, sample: cmdlet)
+
+PS> Get-Help Get-Item [itemname] -Full
+
+::: get samples about an item (it will retrieve different samples about the usage of the item)
+
+PS> Get-Help Get-Item [itemname] -Examples
+
+::: list all available cmdlets
+
+PS> Get-Command -CommandType [cmdlet]
+
+::: bypass the execution policy
+
+PS> powershell -ExecutionPolicy bypass
+PS> powershell -c [cmd]
+PS> powershell -encodedcommand $env:PS ExecutionPolicy Preference="bypass"
+
+::: import a module
+
+PS> Import-Module <modulePath>
+
+::: list commands in a module
+
+PS> Get-Command -Module <moduleName>
 
 </center>
 </body>
