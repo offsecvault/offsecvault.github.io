@@ -69,8 +69,6 @@
 
 using two tools [PowerView / ADModule]
 
-::: domain enumeration
-
 - active directory powershell module 
 <a href="https://github.com/samratashok/ADModule">ADModule | domain enumeration</a> 
 
@@ -83,58 +81,69 @@ using two tools [PowerView / ADModule]
 -sharpview
 <a href="https://github.com/tevora-threat/SharpView/">SharpView</a>
 
->> get current domain
+::: get current domain
+
 PS> Get-Domain | (powerview)
 PS> Get-ADDomain | (active directory module)
 
->> get object of another domain 
+::: get object of another domain 
+
 PS> Get-Domain -Domain [domain]
 
 PS> Get-ADDomain -Identity [domain]
 
->> get domain SID for the current domain
+::: get domain SID for the current domain
+
 PS> Get-DomainSID 
 
 PS> (Get-ADDomain).DomainSID 
 
->> get domain policy for current domain
+::: get domain policy for current domain
+
 PS> Get-DomainPolicyData 
 
 PS> (Get-DomainPolicyData).systemaccess 
 
->> get domain policy for another domain
+::: get domain policy for another domain
+
 PS> (Get-DomainPolicyData –domain [domain]).systemaccess
 
->> get domain controller for the current domain
+::: get domain controller for the current domain
+
 PS> Get-DomainController
 
 PS> Get-ADDomainController
 
->> get domain controller for another domain
+::: get domain controller for another domain
+
 PS> Get-DomainController -Domain [domainName]
 
 PS> Get-ADDomainController -DomainName [domainName] -Discover
 
->> get list of user in current domain
+::: get list of user in current domain
+
 PS> Get-DomainUser
 PS> Get-DomainUser -Identity [user]
 
 PS> Get-ADUser -Filter * -Properties *
 PS> Get-ADUser -Identity [userName] -Properties *
 
->> get list of properties of a user in current domain
+::: get list of properties of a user in current domain
+
 PS> Get-DomainUser -Identity [user] -Properties *
 PS> Get-DomainUser -Properties samaccountname,logonCount
 
 PS> Get-ADUser -Filter * -Properties * | select -First 1 | Get-Member -MemberType *Property | select Name
 PS> Get-ADUser -Filter * -Properties * | select name,logoncount,@{expression={[datetime]::fromFileTime($_.pwdlastset)}}
 
->> search for a string in a user's attribute
+::: search for a string in a user's attribute
+
 PS> Get-DomainUser -LDAPFilter "Description=*built*" | select name,Description
 
 PS> Get-ADUser -Filter 'Description -like "*built*"' -Properties Description | select name,Description
 
->> get a list of computers in the current domain
+::: get a list of computers in the current domain
+
 PS> Get-DomainComputer | select Name
 PS> Get-DomainComputer -OperatingSystem "*Server 2016*"
 PS> Get-DomainComputer -Ping
@@ -144,53 +153,66 @@ PS> Get-ADComputer -Filter * -Properties *
 PS> Get-ADComputer -Filter 'OperatingSystem -like "*Server 2016*"' -Properties OperatingSystem | select Name,OperatingSystem
 PS> Get-ADComputer -Filter * -Properties DNSHostname | %{Test-Connection -Count 1 -ComputerName $_.DNSHostName}
 
->> get all groups in the current domain
+::: get all groups in the current domain
+
 PS> Get-DomainGroup | select Name
 PS> Get-DomainGroup -Domain [target_domain]
 
 PS> Get-ADGroup -Filter * | select Name
 PS> Get-ADGroup -Filter * -Properties *
 
->> get all groups containing the word "admin" in group name
+::: get all groups containing the word "admin" in group name
+
 PS> Get-DomainGroup *admin*
 
 PS> Get-ADGroup -Filter 'Name -like "*admin*"' | select Name
 
->> get all members of the domain admin group
+::: get all members of the domain admin group
+
 PS> Get-DomainGroupMember -Identity "Domain Admins" -Recurse
 
 PS> Get-ADGroupMember -Identity "Domain Admins" -Recursive
 
->> get the group membership for a user
+::: get the group membership for a user
+
 PS> Get-DomainGroup -UserName "[userName]"
 
 PS> Get-ADPrincipalGroupMembership -Identity [userName]
 
->> list all local groups on a machine (need admin rights on non-dc machines)
+::: list all local groups on a machine (need admin rights on non-dc machines)
+
 PS> Get-NetLocalGroup -ComputerName [hostname] -ListGroups
 
->> get members of all the local groups on a machine (need admin rights on non-dc machines)
+::: get members of all the local groups on a machine (need admin rights on non-dc machines)
+
 PS> Get-NetLocalGroup -ComputerName [hostname] -Recurse
 
->> get members of all the local group "Administrators" on a machine (need admin rights on non-dc machines)
+::: get members of all the local group "Administrators" on a machine (need admin rights on non-dc machines)
+
 PS> Get-NetLocalGroupMember -ComputerName [hostname] -GroupName Administrators
 
->> get actively logged users on a computer (need local admin rights on the target)
+::: get actively logged users on a computer (need local admin rights on the target)
+
 PS> Get-NetLoggedon -ComputerName [hostname]
 
->> get locally logged users on a computer (need remote registry on the target - started by default on server OS)
+::: get locally logged users on a computer (need remote registry on the target - started by default on server OS)
+
 PS> Get-LoggedonLocal -ComputerName [hostname]
 
->> get the last logged user on a computer (need admin righst and remote registry on the target)
+::: get the last logged user on a computer (need admin righst and remote registry on the target)
+
 PS> Get-LastLoggedOn -ComputerName [hostname]
 
->> find shares on hosts in current domain
+::: find shares on hosts in current domain
+
 PS> Invoke-ShareFinder -Verbose
 
->> find sensitive files on computers in the domain
+::: find sensitive files on computers in the domain
+
 PS> Invoke-FileFinder -Verbose
 
->> get all fileservers of the domain
+::: get all fileservers of the domain
+
 PS> Get-NetFileServer
 
 </center>
