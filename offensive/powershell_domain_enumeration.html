@@ -101,6 +101,7 @@ PS> (Get-ADDomain).DomainSID
 ::: get domain policy for current domain
 
 PS> Get-DomainPolicyData 
+PS> Get-DomainPolicy
 
 PS> (Get-DomainPolicyData).systemaccess 
 
@@ -214,6 +215,10 @@ PS> Invoke-FileFinder -Verbose
 ::: get all fileservers of the domain
 
 PS> Get-NetFileServer
+
+::: get kerberos policy
+
+PS> (Get-DomainPolicy).KerberosPolicy
 
 </center>
 </body>
