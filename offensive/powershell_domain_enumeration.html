@@ -129,19 +129,23 @@ PS> Get-DomainUser -Identity [user]
 PS> Get-ADUser -Filter * -Properties *
 PS> Get-ADUser -Identity [userName] -Properties *
 
+::: get list of users by name and its count
+
+PS> Get-DomainUser | select samaccountname | measure
+
 ::: get list of properties of a user in current domain
 
 PS> Get-DomainUser -Identity [user] -Properties *
-PS> Get-DomainUser -Properties samaccountname,logonCount
+PS> Get-DomainUser -Properties samaccountname,logonCount | will help to retrieve and understand the normal activity of users 
 
 PS> Get-ADUser -Filter * -Properties * | select -First 1 | Get-Member -MemberType *Property | select Name
 PS> Get-ADUser -Filter * -Properties * | select name,logoncount,@{expression={[datetime]::fromFileTime($_.pwdlastset)}}
 
 ::: search for a string in a user's attribute
 
-PS> Get-DomainUser -LDAPFilter "Description=*built*" | select name,Description
+PS> Get-DomainUser -LDAPFilter "Description=*STRING*" | select name,Description
 
-PS> Get-ADUser -Filter 'Description -like "*built*"' -Properties Description | select name,Description
+PS> Get-ADUser -Filter 'Description -like "*STRING*"' -Properties Description | select name,Description
 
 ::: get a list of computers in the current domain
 
@@ -219,6 +223,10 @@ PS> Get-NetFileServer
 ::: get kerberos policy
 
 PS> (Get-DomainPolicy).KerberosPolicy
+
+::: get domain admin_groups of forest 
+
+PS> Get-DomainGroup *admin* -domain [forest] | select samaccountname
 
 </center>
 </body>
