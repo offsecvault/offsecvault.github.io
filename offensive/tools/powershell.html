@@ -112,57 +112,14 @@ PS> Get-Command -Module <moduleName>
 PS> . [fullpath]
 PS> . C:\b0ydC\Tools\PowerView.ps1
 
-::: bypass powershell security controls
-
-<a href="https://github.com/OmerYa/Invisi-Shell">invisi-shell | bypass security controls</a> 
-** required the .dll file and the execution file needed [admin/non-admin]
-RunWithPathAsAdmin.bat
-RunWithRegistryNonAdmin.bat
-
-::: bypass AV signatures 
-
-- load script in memory to avoid AMSI bypass
-AMSI Trigger to identify the part of the script that is detected !! Repeat the process until it is not detected to avoid detection on execution phase.
-<a href="https://github.com/RythmStick/AMSITrigger">AMSITrigger</a> 
-quick usage:
-
-PS> AmsiTrigger.exe -i [filePath]
-
-flags:
-
--i = input file
--u, --url=VALUE
--f, --format=VALUE          
-
-Output Format:
-1 - Only show Triggers
-2 - Show Triggers with Line numbers
-3 - Show Triggers inline with code
-4 - Show AMSI calls (xmas tree mode)
-
-quick steps to bypass AV detection when making changes to the script,
-1) remove comments
-
-2) modify each use of "DumpCreds"
-sample:
-DumpCreds = DC
-
-3) modify the name of the WIN32 API calls detected
-
-4) reverse the strings that are detected.
-
-sample:
-System.AppDomain = "niamoDppA.metsyS"
-
-::: full obfuscation
-<a href="https://github.com/danielbohannon/Invoke-Obfuscation">Invoke-Obfuscation</a> 
-
 ::: get language mode on current session 
+
 PS> $ExecutionContext.SessionState.LanguageMode
 FullLanguage | means you can do whatever the privs allow it
 
-::: TYPE: domain enumeration
+::: TYPES:
 <a href="/offensive/powershell_domain_enumeration.html"> Domain Enumeration</a> 
+<a href="/offensive/bypass_AV_signatures_with_powershell.html"> bypass AV Signatures</a> 
 
 </center>
 </body>
