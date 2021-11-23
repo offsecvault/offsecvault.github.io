@@ -140,6 +140,20 @@ Output Format:
 3 - Show Triggers inline with code
 4 - Show AMSI calls (xmas tree mode)
 
+quick steps to bypass AV detection when making changes to the script,
+1) remove comments
+
+2) modify each use of "DumpCreds"
+sample:
+DumpCreds = DC
+
+3) modify the name of the WIN32 API calls detected
+
+4) reverse the strings that are detected.
+
+sample:
+System.AppDomain = "niamoDppA.metsyS"
+
 ::: full obfuscation
 <a href="https://github.com/danielbohannon/Invoke-Obfuscation">Invoke-Obfuscation</a> 
 
