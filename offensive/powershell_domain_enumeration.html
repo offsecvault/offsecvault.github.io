@@ -228,6 +228,27 @@ PS> (Get-DomainPolicy).KerberosPolicy
 
 PS> Get-DomainGroup *admin* -domain [forest] | select samaccountname
 
+::: get list of GPO in current domain
+
+PS> Get-DomainGPO
+PS> Get-DomainGPO -ComputerIdentity <hostname>
+
+::: get GPO which use restricted groups or groups.xml for interesting users
+
+PS> Get-DomainGPOLocalGroup 
+
+::: get users which are in a local group of a machine using GPO
+
+PS> Get-DomainGPOComputerLocalGroupMapping -ComputerIdentity <hostname>
+
+::: get machines where the given user is member of a specific group
+
+PS> Get-DomainGPOUserLocalGroupMapping -Identity [user] -Verbose
+
+
+
+
+
 </center>
 </body>
 </html>
