@@ -67,57 +67,58 @@
 <pre style="text-align:center;">
 <h3> Powershell Usage </h3>
 
-::: get help all (it will retrieve all help options)
+<b>::: get help all (it will retrieve all help options)</b>
 
 PS> Get-Help * 
 
-::: get help by keyword (it will retrieve all content associated to the keyword)
+<b>::: get help by keyword (it will retrieve all content associated to the keyword)</b>
 
 PS> Get-Help [keyword]
 PS> Get-Help process
 
-::: update help system
+<b>::: update help system</b>
 
 PS> Update-Help
 
-::: get help by item (it will retrieve all information associated to a specific item, sample: cmdlet)
+<b>::: get help by item (it will retrieve all information associated to a specific item, sample: cmdlet)</b>
 
 PS> Get-Help [item/cmdlet] -Full
 
-::: get samples about an item (it will retrieve different samples about the usage of the item)
+<b>::: get samples about an item (it will retrieve different samples about the usage of the item)</b>
 
 PS> Get-Help [item/cmdlet] -Examples
 
-::: list all available cmdlets
+<b>::: list all available cmdlets</b>
 
 PS> Get-Command -CommandType [cmdlet]
 
-::: bypass the execution policy
+<b>::: bypass the execution policy</b>
 
 PS> powershell -ExecutionPolicy bypass
 PS> powershell -c [cmd]
 PS> powershell -encodedcommand 
 $env:PS ExecutionPolicy Preference="bypass"
 
-::: import a module
+<b>::: import a module</b>
 
 PS> Import-Module <modulePath>
 
-::: list commands in a module
+<b>::: list commands in a module</b>
 
 PS> Get-Command -Module <moduleName>
 
-::: load powershell script using dot sourcing
+<b>::: load powershell script using dot sourcing</b>
 
 PS> . [fullpath]
 PS> . C:\b0ydC\Tools\PowerView.ps1
 
-::: get language mode on current session 
+<b>::: get language mode on current session </b>
 
 PS> $ExecutionContext.SessionState.LanguageMode
 FullLanguage | means you can do whatever the privs allow it
 
-::: TYPES:
+<b>::: TYPES:</b>
+
 <a href="/offensive/powershell_domain_enumeration.html"> Domain Enumeration</a> 
 <a href="/offensive/bypass_AV_signatures_with_powershell.html"> bypass AV Signatures</a> 
 
