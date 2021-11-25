@@ -67,7 +67,7 @@
 <pre style="text-align:center;">
 <h3> bypass powershell security controls </h3>
 
-::: invisi-shell 
+<b>::: invisi-shell</b>
 works really well to bypass:
 - script block logging
 - system wide transcription 
@@ -77,7 +77,7 @@ works really well to bypass:
 RunWithPathAsAdmin.bat
 RunWithRegistryNonAdmin.bat
 
-::: bypass AV signatures <AMSITrigger>
+<b>::: bypass AV signatures <AMSITrigger></b>
 
 - load script in memory to avoid AMSI bypass
 AMSI Trigger to identify the part of the script that is detected !! Repeat the process until it is not detected to avoid detection on execution phase.
@@ -86,37 +86,41 @@ quick usage:
 
 PS> AmsiTrigger.exe -i [filePath]
 
-flags:
+<b>flags:</b>
 
 -i = input file
 -u, --url=VALUE
 -f, --format=VALUE          
 
-Output Format:
+<b>Output Format:</b>
+
 1 - Only show Triggers
 2 - Show Triggers with Line numbers
 3 - Show Triggers inline with code
 4 - Show AMSI calls (xmas tree mode)
 
-quick steps to bypass AV detection when making changes to the script,
+<b>quick steps to bypass AV detection when making changes to the script,</b>
 
 1) remove comments
 
 2) modify each use of "DumpCreds"
-sample:
+
+<b>sample:</b>
+
 DumpCreds = DC
 
 3) modify the name of the WIN32 API calls detected
 
 4) reverse the strings that are detected.
 
-sample:
+<b>sample:</b>
+
 System.AppDomain = "niamoDppA.metsyS"
 
-::: full obfuscation
+<b>::: full obfuscation</b>
 <a href="https://github.com/danielbohannon/Invoke-Obfuscation">Invoke-Obfuscation</a> 
 
-::: AMSI bypass
+<b>::: AMSI bypass</b>
 
 "just copy & paste, it will let you import script without detection."
 works really well with Powerview.
