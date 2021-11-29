@@ -299,7 +299,7 @@ PS> Get-DomainObjectAcl -SamAccountName <username> -ResolveGUIDs
 
 PS> Get-DomainObjectAcl -SearchBase "STRING" -ResolveGUIDs -Verbose
 
-<b>::: enumerate ACLs using ActiveDirectory Module</b> ***
+<b>::: enumerate ACLs using ActiveDirectory Module</b> *** by ObjectDN
 
 PS> (Get-Acl 'AD:\CN=Administrator,CN-Users,CD=dollarcorp,DC=moneycorp,DC=local').Access
 
@@ -314,6 +314,8 @@ PS> Get-PathAcl -Path "\\<domain>\sysvol"
 <b>::: show current ACL for a specific user</b>
 
 PS> Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -eq "<username>"}
+
+note: ?{$_. = means find everything
 
 <b>-TRUSTS-</b>
 
