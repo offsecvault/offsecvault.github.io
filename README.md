@@ -7,6 +7,6 @@ It is a knowledge base created as part of the journey studying both sides of the
         
 The content will be related to each certification, research or courses completed, it will be organized by topics for each side. 
 
-                     _ Come back regularly, you will find new content for each topic _
+                     _Come back regularly, you will find new content for each topic_
 
 2021 - @b0ydC_
