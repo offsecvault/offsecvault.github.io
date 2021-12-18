@@ -77,8 +77,24 @@ exist GUI and CLI mode
 
 ::: brute force protocol
 
-# hydra -v -l [user] -p [password] -t [numberthreads] [ip_addr][protocol]
-# hydra -v -l b0ydC -p qwerty -t50 10.10.10.1 ssh
+# hydra -l [user] -p [password] -t [numberthreads] [ip_addr][protocol]
+
+:: SSH brute force
+
+# hydra -l <username> -p <wordlist> 10.10.10.1 -t 50  ssh
+
+:: FTP brute force
+
+# hydra -l <username> -p <wordlist> ftp://10.10.10.1
+
+:: HTTP-POST-FORM
+
+# hydra -l <username> -P <wordlist> 10.10.10.1 http-post-form "/:username=^USER^&password=^PASS^:F=incorrect" -V
+# hydra -l <username> -P <wordlist> 10.10.10.1 http-post-form "/login:username=^USER^&password=^PASS^:F=incorrect" -V
+
+^USER^ = variable used to use the users provided
+^PASS^ = variable used to use the passwords provided
+F=incorrect = message to known an incorrect value, refer to the error message after trying to login with invalid creds.
 
 ::: brute force list of servers
 
@@ -88,7 +104,7 @@ exist GUI and CLI mode
 
 # hydra -v -l b0ydC -P /usr/pass.txt -t50 -M /usr/servers.txt ssh
 
-flags:
+FLAGS:
 
 -v = verbose
 -l = username
