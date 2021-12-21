@@ -67,10 +67,24 @@
 <pre style="text-align:center;">
 <h3> wpScan Usage </h3>
 
+::: normal scan
+
 $ wpscan --url <http://site>
+
+::: user enumeration
+
+# wpscan --url https://example/ --enumerate u
+
+::: bruteforce
+
+# wpscan --url https://example/ --passwords wordlist.txt --usernames b0ydC
 
 -v = verbose
 -o = output to a file
+-u = users (under enumerate options)
+--enumerate = feature to enumerate
+--passwords or -P = password to use 
+--usernames or -U = users to use 
 
 </center>
 </body>
