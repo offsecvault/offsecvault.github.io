@@ -67,7 +67,22 @@
 <pre style="text-align:center;">
 <h3> FTP </h3>
 
+21/tcp open  ftp
 
+::: wordlist
+
+<a href="https://shorturl.at/lmAX5">ftp-betterdefaultpasslist.txt</a> 
+
+::: banner grabbing
+
+# nc -vn <ip_addr> 21
+# openssl s_client -connect <ip_Addr>:21 -starttls ftp
+
+::: nmap
+
+# nmap -p 21 <ip_addr>
+
+::: metasploit
 
 </center>
 </body>
