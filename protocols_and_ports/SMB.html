@@ -67,7 +67,63 @@
 <pre style="text-align:center;">
 <h3> SMB </h3>
 
+::: nmap
 
+# nmap --script nbstat.nse <ip_addr>
+# nmap --script smb-os-discovery <ip_addr>
+# nmap --script smb-enum-shares -p139,445 <ip_addr>
+# nmap --script smb-vuln* <ip_addr>
+# nmap --script smb-system-info <ip_addr>
+
+::: smbclient
+
+# smbclient -L <ip_addr>
+# smbclient //<ip_addr>/<share_name>
+# get <filename>
+
+-null session
+# smbclient -N -L \\\\<ip_addr>
+
+::: smbmap
+
+"allows users to enumerate samba share drives across an entire domain, enumerate, etc."
+
+# smbmap -H <ip_addr>
+# smbmap -H <ip_addr> -u <user> -p <password>
+
+::: nmblookup
+
+"resolve hostname/IP"
+
+# nmblookup -A <ip_addr>
+
+::: nbtscan
+
+"retrieve NetBIOS computer name, logged-in user name and MAC address"
+
+# nbtscan <ip_addr>
+
+::: nbtstat
+
+# nbtstat -A <ip_addr>
+
+::: netview
+
+"displays a list of domains, computers, or resources that are being shared by the specified computer."
+
+net view \\<ip_addr> /All
+
+::: metasploit
+
+- enum shares
+use auxiliary/scanner/smb/smb_enumshares
+
+- brute force SID lookups
+use auxiliary/scanner/smb/smb_lookupsid
+
+::: enum4linux
+
+# enum4linux <ip_addr>
 
 </center>
 </body>
