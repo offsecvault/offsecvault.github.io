@@ -81,8 +81,22 @@
 ::: nmap
 
 # nmap -p 21 <ip_addr>
+# nmap -p 21 –script ftp-anon,ftp-bounce,ftp-brute,ftp-libopie,ftp-proftpd-backdoor,ftp-syst,ftp-vsftpd-backdoor,ftp-vuln-cve2010-4221 <ip_addr>
 
 ::: metasploit
+
+- anonymous login
+# use auxiliary/scanner/ftp/anonymous
+
+- banner grabbing
+# use auxiliary/scanner/ftp/ftp_version
+
+- bruteforce
+# use auxiliary/scanner/ftp/ftp_login
+
+::: brute force
+
+hydra | <a href="https://offsecvault.github.io/offensive/tools/hydra.html">hydra</a>
 
 </center>
 </body>
