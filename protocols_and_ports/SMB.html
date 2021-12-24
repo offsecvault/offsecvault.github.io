@@ -91,6 +91,11 @@
 
 # smbmap -H [ip_addr]
 # smbmap -H [ip_addr] -u [user] -p [password]
+# smbmap -H [ip_addr] -R
+
+flags:
+
+-R = resursive
 
 ::: nmblookup
 
@@ -105,6 +110,8 @@
 # nbtscan [ip_addr]
 
 ::: nbtstat
+
+"displays NetBIOS over TCP/IP (NetBT) protocol statistics, NetBIOS name tables for both the local computer and remote computers, and the NetBIOS name cache"
 
 # nbtstat -A [ip_addr]
 
@@ -124,7 +131,15 @@ use auxiliary/scanner/smb/smb_lookupsid
 
 ::: enum4linux
 
-# enum4linux [ip_addr]
+# enum4linux -A [ip_addr]
+# enum4linux -S [ip_addr]
+
+flags:
+
+-A = all
+-S = shares
+-o = OS
+-l = ldap info
 
 </center>
 </body>
