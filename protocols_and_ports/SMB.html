@@ -75,6 +75,13 @@
 # nmap --script smb-vuln* [ip_addr]
 # nmap --script smb-system-info [ip_addr]
 # nmap --script smb-enum-users [ip_addr]
+# nmap --script smb-brute.nse -p445 [ip_addr]
+
+-- merge the scripts "enumerating and listing shares"
+# nmap --script smb-enum-shares,smb-ls [ip_addr]
+
+-- use smbtype
+# nmap --script smb-brute.nse --script-args smbtype=v2
 
 ::: smbclient
 
