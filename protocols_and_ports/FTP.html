@@ -76,12 +76,12 @@
 ::: banner grabbing
 
 # nc -vn [ip_addr] 21
-# openssl s_client -connect <ip_Addr>:21 -starttls ftp
+# openssl s_client -connect [ip_Addr]:21 -starttls ftp
 
 ::: nmap
 
-# nmap -p 21 <ip_addr>
-# nmap -p 21 –script ftp-anon,ftp-bounce,ftp-brute,ftp-libopie,ftp-proftpd-backdoor,ftp-syst,ftp-vsftpd-backdoor,ftp-vuln-cve2010-4221 <ip_addr>
+# nmap -p 21 [ip_addr]
+# nmap -p 21 –script ftp-anon,ftp-bounce,ftp-brute,ftp-libopie,ftp-proftpd-backdoor,ftp-syst,ftp-vsftpd-backdoor,ftp-vuln-cve2010-4221 [ip_addr]
 
 ::: metasploit
 
