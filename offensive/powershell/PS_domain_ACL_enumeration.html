@@ -1,1 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-US">
 
+<head>
+  <title>offsecvault - Knowledge Base</title>
+  <!--------------------->
+  <!-- b0ydC owned. -->
+  <!-- --------------- -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+
+  <style>
+    body {
+      font-size: 12px;
+      font-family: ubuntu mono;
+      background-color: white;
+      color: black;
+      margin: 0;
+    }
+
+    a {
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:active {
+      color: #868686;
+      text-decoration: underline;
+    }
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    }
+
+    table.center {
+    margin-left: auto; 
+    margin-right: auto;
+}
+    
+  </style>
+</head>
+
+<body>
+  <pre><center>
+<a href="/index.html" style="text-decoration:none;">
+ ▒█████    █████▒ █████▒ ██████ ▓█████  ▄████▄ ██▒   █▓ ▄▄▄       █    ██  ██▓  ▄▄▄█████▓
+▒██▒  ██▒▓██   ▒▓██   ▒▒██    ▒ ▓█   ▀ ▒██▀ ▀█▓██░   █▒▒████▄     ██  ▓██▒▓██▒  ▓  ██▒ ▓▒
+▒██░  ██▒▒████ ░▒████ ░░ ▓██▄   ▒███   ▒▓█    ▄▓██  █▒░▒██  ▀█▄  ▓██  ▒██░▒██░  ▒ ▓██░ ▒░
+▒██   ██░░▓█▒  ░░▓█▒  ░  ▒   ██▒▒▓█  ▄ ▒▓▓▄ ▄██▒▒██ █░░░██▄▄▄▄██ ▓▓█  ░██░▒██░  ░ ▓██▓ ░ 
+░ ████▓▒░░▒█░   ░▒█░   ▒██████▒▒░▒████▒▒ ▓███▀ ░ ▒▀█░   ▓█   ▓██▒▒▒█████▓ ░██████▒▒██▒ ░ 
+░ ▒░▒░▒░  ▒ ░    ▒ ░   ▒ ▒▓▒ ▒ ░░░ ▒░ ░░ ░▒ ▒  ░ ░ ▐░   ▒▒   ▓▒█░░▒▓▒ ▒ ▒ ░ ▒░▓  ░▒ ░░   
+  ░ ▒ ▒░  ░      ░     ░ ░▒  ░ ░ ░ ░  ░  ░  ▒    ░ ░░    ▒   ▒▒ ░░░▒░ ░ ░ ░ ░ ▒  ░  ░    
+░ ░ ░ ▒   ░ ░    ░ ░   ░  ░  ░     ░   ░           ░░    ░   ▒    ░░░ ░ ░   ░ ░   ░      
+    ░ ░                      ░     ░  ░░ ░          ░        ░  ░   ░         ░  ░       
+                                       ░           ░                                     
+</a></pre>
+
+<div style="font-size:24px; text-align:center; font-family:courier,monospace;">
+    <a href="../../RED-TEAM.html">OFFENSIVE</a> |
+    <a href="../../BLUE-TEAM.html">DEFENSIVE</a> |
+    <a href="../../CTF.html">CTF</a> |
+    <a href="../../TOOLS.html">TOOLS</a> |
+    <a href="../../ABOUT.html">ABOUT</a> 
+</div>
+<pre style="text-align:center;">
+<h3> domain ACL enumeration with powershell </h3>
+
+<b>-ACL-</b>
+
+<b>::: enumerate ACL for domain admin group</b>
+
+in case another domain group is needed, just change it...
+
+PS> Get-DomainObjectAcl -Identity "Domain Admins" -ResolveGUIDs –Verbose
+
+<b>::: get ACL associated with the specified object</b>
+
+PS> Get-DomainObjectAcl -SamAccountName <username> -ResolveGUIDs
+
+<b>::: get ACL associated with the specified prefix to be used for search</b>
+
+PS> Get-DomainObjectAcl -SearchBase "STRING" -ResolveGUIDs -Verbose
+
+<b>::: enumerate ACLs using ActiveDirectory Module</b> *** by ObjectDN
+
+PS> (Get-Acl 'AD:\CN=Administrator,CN-Users,CD=dollarcorp,DC=moneycorp,DC=local').Access
+
+<b>::: search for interesting ACEs</b>
+
+PS> Find-InterestingDomainAcl -ResolveGUIDs
+
+<b>::: get ACL associated with specified path</b>
+
+PS> Get-PathAcl -Path "\\<domain>\sysvol"
+
+<b>::: show current ACL for a specific user</b>
+
+PS> Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -eq "<username>"}
+
+note: ?{$_. = means find everything
+
+</center>
+</body>
+</html>
