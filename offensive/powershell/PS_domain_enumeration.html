@@ -1,1 +1,128 @@
+<!DOCTYPE html>
+<html lang="en-US">
 
+<head>
+  <title>offsecvault - Knowledge Base</title>
+  <!--------------------->
+  <!-- b0ydC owned. -->
+  <!-- --------------- -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+
+  <style>
+    body {
+      font-size: 12px;
+      font-family: ubuntu mono;
+      background-color: white;
+      color: black;
+      margin: 0;
+    }
+
+    a {
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:active {
+      color: #868686;
+      text-decoration: underline;
+    }
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    }
+
+    table.center {
+    margin-left: auto; 
+    margin-right: auto;
+}
+    
+  </style>
+</head>
+
+<body>
+  <pre><center>
+<a href="/index.html" style="text-decoration:none;">
+ ▒█████    █████▒ █████▒ ██████ ▓█████  ▄████▄ ██▒   █▓ ▄▄▄       █    ██  ██▓  ▄▄▄█████▓
+▒██▒  ██▒▓██   ▒▓██   ▒▒██    ▒ ▓█   ▀ ▒██▀ ▀█▓██░   █▒▒████▄     ██  ▓██▒▓██▒  ▓  ██▒ ▓▒
+▒██░  ██▒▒████ ░▒████ ░░ ▓██▄   ▒███   ▒▓█    ▄▓██  █▒░▒██  ▀█▄  ▓██  ▒██░▒██░  ▒ ▓██░ ▒░
+▒██   ██░░▓█▒  ░░▓█▒  ░  ▒   ██▒▒▓█  ▄ ▒▓▓▄ ▄██▒▒██ █░░░██▄▄▄▄██ ▓▓█  ░██░▒██░  ░ ▓██▓ ░ 
+░ ████▓▒░░▒█░   ░▒█░   ▒██████▒▒░▒████▒▒ ▓███▀ ░ ▒▀█░   ▓█   ▓██▒▒▒█████▓ ░██████▒▒██▒ ░ 
+░ ▒░▒░▒░  ▒ ░    ▒ ░   ▒ ▒▓▒ ▒ ░░░ ▒░ ░░ ░▒ ▒  ░ ░ ▐░   ▒▒   ▓▒█░░▒▓▒ ▒ ▒ ░ ▒░▓  ░▒ ░░   
+  ░ ▒ ▒░  ░      ░     ░ ░▒  ░ ░ ░ ░  ░  ░  ▒    ░ ░░    ▒   ▒▒ ░░░▒░ ░ ░ ░ ░ ▒  ░  ░    
+░ ░ ░ ▒   ░ ░    ░ ░   ░  ░  ░     ░   ░           ░░    ░   ▒    ░░░ ░ ░   ░ ░   ░      
+    ░ ░                      ░     ░  ░░ ░          ░        ░  ░   ░         ░  ░       
+                                       ░           ░                                     
+</a></pre>
+
+<div style="font-size:24px; text-align:center; font-family:courier,monospace;">
+    <a href="../../RED-TEAM.html">OFFENSIVE</a> |
+    <a href="../../BLUE-TEAM.html">DEFENSIVE</a> |
+    <a href="../../CTF.html">CTF</a> |
+    <a href="../../TOOLS.html">TOOLS</a> |
+    <a href="../../ABOUT.html">ABOUT</a> 
+</div>
+<pre style="text-align:center;">
+<h3> domain enumeration with powershell </h3>
+
+<b>- active directory powershell module</b> 
+
+<a href="https://github.com/samratashok/ADModule">ADModule | domain enumeration</a> 
+
+<b>- bloodhound</b>
+
+<a href="https://github.com/BloodHoundAD/BloodHound">BloodHound</a> 
+
+<b>-powerview</b>
+
+<a href="https://github.com/ZeroDayLab/PowerSploit/blob/master/Recon/PowerView.ps1">PowerView</a>
+
+<b>-sharpview</b>
+
+<a href="https://github.com/tevora-threat/SharpView/">SharpView</a>
+
+<b>::: get current domain</b>
+
+PS> Get-Domain | (powerview)
+PS> Get-ADDomain | (active directory module)
+
+<b>::: get object of another domain </b>
+
+PS> Get-Domain -Domain <domain>
+
+PS> Get-ADDomain -Identity <domain>
+
+<b>::: get domain SID for the current domain</b>
+
+PS> Get-DomainSID 
+
+PS> (Get-ADDomain).DomainSID 
+
+<b>::: get domain policy for current domain</b>
+
+PS> Get-DomainPolicyData 
+PS> Get-DomainPolicy
+
+PS> (Get-DomainPolicyData).systemaccess 
+
+<b>::: get domain policy for another domain</b>
+
+PS> (Get-DomainPolicyData –domain <domain>).systemaccess
+
+<b>::: get domain controller for the current domain</b>
+
+PS> Get-DomainController
+
+PS> Get-ADDomainController
+
+<b>::: get domain controller for another domain</b>
+
+PS> Get-DomainController -Domain <domainName>
+
+PS> Get-ADDomainController -DomainName <domainName> -Discover
+
+</center>
+</body>
+</html>
