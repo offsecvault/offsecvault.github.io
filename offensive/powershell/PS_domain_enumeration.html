@@ -109,7 +109,7 @@ PS> (Get-DomainPolicyData).systemaccess
 
 <b>:::GET DOMAIN POLICY FOR ANOTHER DOMAIN</b>
 
-PS> (Get-DomainPolicyData –domain <domain>).systemaccess
+PS> (Get-DomainPolicyData –domain [domain]).systemaccess
 
 <b>:::GET DOMAIN CONTROLLER FOR THE CURRENT DOMAIN</b>
 
@@ -119,9 +119,9 @@ PS> Get-ADDomainController
 
 <b>:::GET DOMAIN CONTROLLER FOR ANOTHER DOMAIN</b>
 
-PS> Get-DomainController -Domain <domainName>
+PS> Get-DomainController -Domain [domainName]
 
-PS> Get-ADDomainController -DomainName <domainName> -Discover
+PS> Get-ADDomainController -DomainName [domainName] -Discover
 
 </center>
 </body>
