@@ -65,9 +65,9 @@
     <a href="../../ABOUT.html">ABOUT</a> 
 </div>
 <pre style="text-align:center;">
-<h3> domain group/members enumeration with powershell </h3>
+<h3>DOMAIN GROUP/MEMBERS ENUMERATION WITH POWERSHELL</h3>
 
-<b>::: get all groups in the current domain</b>
+<b>:::GET ALL GROUPS IN THE CURRENT DOMAIN</b>
 
 PS> Get-DomainGroup | select Name
 PS> Get-DomainGroup -Domain <target_domain>
@@ -75,13 +75,13 @@ PS> Get-DomainGroup -Domain <target_domain>
 PS> Get-ADGroup -Filter * | select Name
 PS> Get-ADGroup -Filter * -Properties *
 
-<b>::: get all groups containing the word "admin" in group name</b>
+<b>:::GET ALL GROUPS CONTAINING THE WORD "admin" IN GROUP NAME</b>
 
 PS> Get-DomainGroup *admin*
 
 PS> Get-ADGroup -Filter 'Name -like "*admin*"' | select Name
 
-<b>::: get all members of the domain admin group</b>
+<b>:::GET ALL MEMBERS OF THE DOMAIN ADMIN GROUP</b>
 
 PS> Get-DomainGroupMember -Identity "Domain Admins" -Recurse
 
