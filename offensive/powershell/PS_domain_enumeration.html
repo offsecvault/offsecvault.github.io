@@ -67,57 +67,57 @@
 <pre style="text-align:center;">
 <h3> domain enumeration with powershell </h3>
 
-<b>- active directory powershell module</b> 
+<b>-ACTIVE DIRECTORY POWERSHELL MODULE</b> 
 
 <a href="https://github.com/samratashok/ADModule">ADModule | domain enumeration</a> 
 
-<b>- bloodhound</b>
+<b>-BLOODHOUND</b>
 
 <a href="https://github.com/BloodHoundAD/BloodHound">BloodHound</a> 
 
-<b>-powerview</b>
+<b>-POWERVIEW</b>
 
 <a href="https://github.com/ZeroDayLab/PowerSploit/blob/master/Recon/PowerView.ps1">PowerView</a>
 
-<b>-sharpview</b>
+<b>-SHARPVIEW</b>
 
 <a href="https://github.com/tevora-threat/SharpView/">SharpView</a>
 
-<b>::: get current domain</b>
+<b>:::GET CURRENT DOMAIN</b>
 
 PS> Get-Domain | (powerview)
 PS> Get-ADDomain | (active directory module)
 
-<b>::: get object of another domain </b>
+<b>:::GET OBJECT OF ANOTHER DOMAIN</b>
 
 PS> Get-Domain -Domain <domain>
 
 PS> Get-ADDomain -Identity <domain>
 
-<b>::: get domain SID for the current domain</b>
+<b>:::GET DOMAIN SID FOR THE CURRENT DOMAIN</b>
 
 PS> Get-DomainSID 
 
 PS> (Get-ADDomain).DomainSID 
 
-<b>::: get domain policy for current domain</b>
+<b>:::GET DOMAIN POLICY FOR CURRENT DOMAIN</b>
 
 PS> Get-DomainPolicyData 
 PS> Get-DomainPolicy
 
 PS> (Get-DomainPolicyData).systemaccess 
 
-<b>::: get domain policy for another domain</b>
+<b>:::GET DOMAIN POLICY FOR ANOTHER DOMAIN</b>
 
 PS> (Get-DomainPolicyData –domain <domain>).systemaccess
 
-<b>::: get domain controller for the current domain</b>
+<b>:::GET DOMAIN CONTROLLER FOR THE CURRENT DOMAIN</b>
 
 PS> Get-DomainController
 
 PS> Get-ADDomainController
 
-<b>::: get domain controller for another domain</b>
+<b>:::GET DOMAIN CONTROLLER FOR ANOTHER DOMAIN</b>
 
 PS> Get-DomainController -Domain <domainName>
 
