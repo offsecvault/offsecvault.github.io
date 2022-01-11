@@ -67,12 +67,12 @@
 <pre style="text-align:center;">
 <h3> bypass powershell security controls </h3>
 
-<b>execution</b>
+<b>EXECUTION</b>
 
 PS> powershell -ExecutionPolicy bypass [script.ps1]
 PS> powershell -c [script.ps1]
 
-<b>::: invisi-shell</b>
+<b>:::INVISI-SHELL</b>
 
 works really well to bypass:
 
@@ -86,7 +86,7 @@ works really well to bypass:
 RunWithPathAsAdmin.bat
 RunWithRegistryNonAdmin.bat
 
-<b>::: bypass AV signatures <AMSITrigger></b>
+<b>::: BYPASS AV SIGNATURES <AMSITrigger></b>
 
 - load script in memory to avoid AMSI bypass
 AMSI Trigger to identify the part of the script that is detected !! Repeat the process until it is not detected to avoid detection on execution phase.
@@ -96,13 +96,13 @@ quick usage:
 
 PS> AmsiTrigger.exe -i [filePath]
 
-<b>flags:</b>
+<b>FLAGS:</b>
 
 -i = input file
 -u, --url=VALUE
 -f, --format=VALUE          
 
-<b>Output Format:</b>
+<b>OUTPUT FORMAT:</b>
 
 1 - Only show Triggers
 2 - Show Triggers with Line numbers
@@ -115,7 +115,7 @@ PS> AmsiTrigger.exe -i [filePath]
 
 2) modify each use of "DumpCreds"
 
-<b>sample:</b>
+<b>SAMPLE:</b>
 
 DumpCreds = DC
 
@@ -123,15 +123,15 @@ DumpCreds = DC
 
 4) reverse the strings that are detected.
 
-<b>sample:</b>
+<b>SAMPLE:</b>
 
 System.AppDomain = "niamoDppA.metsyS"
 
-<b>::: full obfuscation</b>
+<b>::: FULL OBFUSCATION</b>
 
 <a href="https://github.com/danielbohannon/Invoke-Obfuscation">Invoke-Obfuscation</a> 
 
-<b>::: AMSI bypass</b>
+<b>::: AMSI BYPASS</b>
 
 "just copy & paste, it will let you import script without detection."
 works really well with Powerview.
