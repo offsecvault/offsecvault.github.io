@@ -65,45 +65,45 @@
     <a href="../../ABOUT.html">ABOUT</a> 
 </div>
 <pre style="text-align:center;">
-<h3> domain enumeration with powershell </h3>
+<h3>DOMAIN ENUMERATION WITH POWERSHELL</h3>
 
-<b>::: get list of user in current domain</b>
+<b>:::GET LIST OF USER IN CURRENT DOMAIN</b>
 
 PS> Get-DomainUser
-PS> Get-DomainUser -Identity <user>
+PS> Get-DomainUser -Identity [user]
 
 PS> Get-ADUser -Filter * -Properties *
-PS> Get-ADUser -Identity <userName> -Properties *
+PS> Get-ADUser -Identity [userName] -Properties *
 
-<b>::: get list of users by name and its count</b>
+<b>:::GET LIST OF USERS BY NAME AND ITS COUNT</b>
 
 PS> Get-DomainUser | select samaccountname | measure
 
-<b>::: get list of properties of a user in current domain</b>
+<b>:::GET LIST OF PROPERTIES OF A USER IN CURRENT DOMAIN</b>
 
-PS> Get-DomainUser -Identity <user> -Properties *
+PS> Get-DomainUser -Identity [user] -Properties *
 PS> Get-DomainUser -Properties samaccountname,logonCount ||| will help to retrieve and understand the normal activity of users 
 
 PS> Get-ADUser -Filter * -Properties * | select -First 1 | Get-Member -MemberType *Property | select Name
 PS> Get-ADUser -Filter * -Properties * | select name,logoncount,@{expression={[datetime]::fromFileTime($_.pwdlastset)}}
 
-<b>::: search for a string in a user's attribute</b>
+<b>:::SEARCH FOR A STRING IN A USER'S ATTRIBUTE</b>
 
 PS> Get-DomainUser -LDAPFilter "Description=*STRING*" | select name,Description
 
 PS> Get-ADUser -Filter 'Description -like "*STRING*"' -Properties Description | select name,Description
 
-<b>::: get actively logged users on a computer (need local admin rights on the target)</b>
+<b>:::GET ACTIVELY LOGGED USERS ON A COMPUTER (NEED LOCAL ADMIN RIGHTS ON THE TARGET)</b>
 
-PS> Get-NetLoggedon -ComputerName <hostname>
+PS> Get-NetLoggedon -ComputerName [hostname]
 
-<b>::: get locally logged users on a computer (need remote registry on the target - started by default on server OS)</b>
+<b>:::GET LOCALLY LOGGED USERS ON A COMPUTER (NEED REMOTE REGISTRY ON THE TARGET - STARTED BY DEFAULT ON SERVER OS)</b>
 
-PS> Get-LoggedonLocal -ComputerName <hostname>
+PS> Get-LoggedonLocal -ComputerName [hostname]
 
-<b>::: get the last logged user on a computer (need admin righst and remote registry on the target)</b>
+<b>:::GET THE LAST LOGGED USER ON A COMPUTER (NEED ADMIN RIGHTS AND REMOTE REGISTRY ON THE TARGET)</b>
 
-PS> Get-LastLoggedOn -ComputerName <hostname>
+PS> Get-LastLoggedOn -ComputerName [hostname]
 
 </center>
 </body>
