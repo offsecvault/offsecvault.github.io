@@ -65,37 +65,37 @@
     <a href="../../ABOUT.html">ABOUT</a> 
 </div>
 <pre style="text-align:center;">
-<h3> domain ACL enumeration with powershell </h3>
+<h3> DOMAIN ACL ENUMERATION WITH POWERSHELL</h3>
 
-<b>-ACL-</b>
+<b> -ACL- </b>
 
-<b>::: enumerate ACL for domain admin group</b>
+<b>::: ENUMERATE ACL FOR DOMAIN ADMIN GROUP</b>
 
 in case another domain group is needed, just change it...
 
 PS> Get-DomainObjectAcl -Identity "Domain Admins" -ResolveGUIDs –Verbose
 
-<b>::: get ACL associated with the specified object</b>
+<b>::: GET ACL ASSOCIATED WITH THE SPECIFIED OBJECT</b>
 
-PS> Get-DomainObjectAcl -SamAccountName <username> -ResolveGUIDs
+PS> Get-DomainObjectAcl -SamAccountName [username] -ResolveGUIDs
 
-<b>::: get ACL associated with the specified prefix to be used for search</b>
+<b>::: GET ACL ASSOCIATED WITH THE SPECIFIED PREFIX TO BE USED FOR SEARCH</b>
 
 PS> Get-DomainObjectAcl -SearchBase "STRING" -ResolveGUIDs -Verbose
 
-<b>::: enumerate ACLs using ActiveDirectory Module</b> *** by ObjectDN
+<b>::: ENUMERATE ACLs USING ACTIVEDIRECTORY MODULE</b> *** by ObjectDN
 
 PS> (Get-Acl 'AD:\CN=Administrator,CN-Users,CD=dollarcorp,DC=moneycorp,DC=local').Access
 
-<b>::: search for interesting ACEs</b>
+<b>::: SEARCH FOR INTERESTING ACEs</b>
 
 PS> Find-InterestingDomainAcl -ResolveGUIDs
 
-<b>::: get ACL associated with specified path</b>
+<b>::: GET ACL ASSOCIATED WITH SPECIFIED PATH</b>
 
-PS> Get-PathAcl -Path "\\<domain>\sysvol"
+PS> Get-PathAcl -Path "\\[domain]\sysvol"
 
-<b>::: show current ACL for a specific user</b>
+<b>::: SHOW CURRENT ACL FOR A SPECIFIC USER</b>
 
 PS> Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -eq "<username>"}
 
