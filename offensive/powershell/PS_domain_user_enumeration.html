@@ -79,6 +79,10 @@ PS> Get-ADUser -Identity [userName] -Properties *
 
 PS> Get-DomainUser | select samaccountname | measure
 
+<b>:::GET LIST OF A SPECIFIC PROPERTY OF USERS</b>
+
+PS> Get-DomainUser | select -ExpandProperty samaccountname
+
 <b>:::GET LIST OF PROPERTIES OF A USER IN CURRENT DOMAIN</b>
 
 PS> Get-DomainUser -Identity [user] -Properties *
