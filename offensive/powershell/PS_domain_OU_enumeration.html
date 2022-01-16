@@ -65,29 +65,29 @@
     <a href="../../ABOUT.html">ABOUT</a> 
 </div>
 <pre style="text-align:center;">
-<h3> domain OU enumeration with powershell </h3>
+<h3> DOMAIN OU ENUMERATION WITH POWERSHELL </h3>
 
 <b>-OU-</b>
 
-<b>::: get OU in a domain</b>
+<b>::: GET OU IN A DOMAIN</b>
 
 PS> Get-DomainOU
 
 PS> Get-ADOrganizationalUnit -Filter * -Properties *
 
-<b>::: get attribute of an OU</b>
+<b>::: GET ATTRIBUTE OF AN OU</b>
 
-PS> (Get-DomainOU -Identity <OU>).attribute
+PS> (Get-DomainOU -Identity [OU]).attribute
 
-<b>sample:</b>
+<b>SAMPLE:</b>
 
 PS> (Get-DomainOU -Identity Servers).gplink
 
-<b>::: filter name on results</b>
+<b>::: FILTER NAME ON RESULTS</b>
 
-PS> Get-DomainOU | select -ExpandProperty name
+PS> Get-DomainOU | select -ExpandProperty [name]
 
-<b>::: list all computers in a specific OU</b>
+<b>::: LIST ALL COMPUTERS IN A SPECIFIC OU</b>
 
 PS> (Get-DomainOU -Identity [OUName]).distinguishedname | %{Get-DomainComputer -SearchBase $_} | select name
 
