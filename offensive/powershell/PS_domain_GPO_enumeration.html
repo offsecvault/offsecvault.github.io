@@ -67,7 +67,7 @@
 <pre style="text-align:center;">
 <h3> DOMAIN GPO ENUMERATION WITH POWERSHELL</h3>
 
-<b>-GPO-</b>
+<b> -GPO- </b>
 
 <b>::: GET LIST OF GPO IN CURRENT DOMAIN</b>
 
@@ -93,6 +93,10 @@ PS> Get-DomainGPO -Identity "gplink/cn"
 <b>SAMPLE: </b>
 
 PS> Get-DomainGPO -Identity {00000000-0000-0000-0000-000000000000}
+
+<b>::: GET GPLINK ATTRIBUTE OF A GPO</b>
+
+PS> (Get-DomainOU -Identity [OU]).gplink
 
 </center>
 </body>
