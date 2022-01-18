@@ -65,9 +65,25 @@
     <a href="../../ABOUT.html">ABOUT</a> 
 </div>
 <pre style="text-align:center;">
-<h3> DOMAIN COMPUTER ENUMERATIOn WITH POWERSHELL</h3>
+<h3> DOMAIN TRUST ENUMERATION WITH POWERSHELL</h3>
 
 <b> -TRUSTS- </b>
+
+- one way trust | users can access resources in one way, reverse is not allowed.
+- two way trust | bi-directional access is allowed
+
+TRANSITIVE: can be extended to establish trust relationships with other domains.
+NON-TRANSITIVE: cannot be extended to other domains in the forest. can be two-way or one-way.
+
+> parent-child trust
+> tree-root trust
+
+--both use two-way transitive trust
+
+> external trust | between two domains in different forest when forest do not have a trust relationship
+can be two-way or one-way and it is non-transitive
+
+> forest trust | between root domains, can be one-way or two-way, transitive or non-transitive
 
 Is a relationship between two domains or forests which allows users of one domain or forest to 
 access resources in the other domain or forest. 
