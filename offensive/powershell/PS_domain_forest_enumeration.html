@@ -65,11 +65,11 @@
     <a href="../../ABOUT.html">ABOUT</a> 
 </div>
 <pre style="text-align:center;">
-<h3> domain forest enumeration with powershell </h3>
+<h3> DOMAIN FOREST ENUMERATION WITH POWERSHELL</h3>
 
-<b>-FOREST-</b>
+<b> -FOREST- </b>
 
-<b>::: get details about the current forest</b>
+<b>::: GET DETAILS ABOUT THE CURRENT FOREST</b>
 
 PS> Get-Forest
 PS> Get-Forest -Forest <root/forest>
@@ -77,19 +77,26 @@ PS> Get-Forest -Forest <root/forest>
 PS> Get-ADForest
 PS> Get-ADForest - Identity <root/forest>
 
-<b>::: get all domains in the current forest</b>
+<b>::: GET ALL DOMAINS IN THE CURRENT FOREST</b>
 
 PS> Get-ForestDomain
 PS> Get-ForestDomain -Forest <root/forest>
 
 PS> (Get-ADForest).Domains
 
-<b>::: get all global catalogs for the current forest</b>
+<b>::: GET ALL GLOBAL CATALOGS FOR THE CURRENT FOREST</b>
 
 PS> Get-ForestGlobalCatalog
 PS> Get-ForestGlobalCatalog -Forest <root/forest>
 
 PS> Get-ADForest | select -ExpandProperty GlobalCatalogs
+
+<b>::: MAP TRUST OF A FOREST </b>
+
+PS> Get-ForestTrust
+PS> Get-ForestTrust -Forest [domain]
+
+PS> Get-ADTrust -Filter 'msDS-TrustForestTrustInfo -ne "$null"'
 
 </center>
 </body>
