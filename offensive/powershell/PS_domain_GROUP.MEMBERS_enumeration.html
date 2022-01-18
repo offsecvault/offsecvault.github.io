@@ -87,41 +87,41 @@ PS> Get-DomainGroupMember -Identity "Domain Admins" -Recurse
 
 PS> Get-ADGroupMember -Identity "Domain Admins" -Recursive
 
-<b>::: get the group membership for a user</b>
+<b>::: GET THE GROUP MEMBERSHIP FOR A USER</b>
 
 PS> Get-DomainGroup -UserName "<userName>"
 
 PS> Get-ADPrincipalGroupMembership -Identity <userName>
 
-<b>::: list all local groups on a machine (need admin rights on non-dc machines)</b>
+<b>::: LIST ALL LOCAL GROUPS ON A MACHINE (NEED ADMIN RIGHTS ON NON-DC MACHINES)</b>
 
 PS> Get-NetLocalGroup -ComputerName <hostname> -ListGroups
 
-<b>::: get members of all the local groups on a machine (need admin rights on non-dc machines)</b>
+<b>::: GET MEMBERS OF ALL THE LOCAL GROUPS ON A MACHINE (NEED ADMIN RIGHTS ON NON-DC MACHINES)</b>
 
 PS> Get-NetLocalGroup -ComputerName <hostname> -Recurse
 
-<b>::: get members of all the local group "Administrators" on a machine (need admin rights on non-dc machines)</b>
+<b>::: GET MEMBRERS OF ALL THE LOCAL GROUP "Administrators" ON A MACHINE (NEED ADMIN RIGHTS ON NON-DC MACHINES)</b>
 
 PS> Get-NetLocalGroupMember -ComputerName <hostname> -GroupName Administrators
 
-<b>::: find shares on hosts in current domain</b>
+<b>::: FIND SHARES ON HOSTS IN CURRENT DOMAIN</b>
 
 PS> Invoke-ShareFinder -Verbose
 
-<b>::: find sensitive files on computers in the domain</b>
+<b>::: FIND SENSITIVE FILES ON COMPUTERS IN THE DOMAIN</b>
 
 PS> Invoke-FileFinder -Verbose
 
-<b>::: get all fileservers of the domain</b>
+<b>::: GET ALL FILESERVERS OF THE DOMAIN</b>
 
 PS> Get-NetFileServer
 
-<b>::: get kerberos policy</b>
+<b>::: GET KERBEROS POLICY</b>
 
 PS> (Get-DomainPolicy).KerberosPolicy
 
-<b>::: get domain admin_groups of forest</b>
+<b>::: GET DOMAIN ADMIN_GROUPS OF FOREST</b>
 
 PS> Get-DomainGroup *admin* -domain <forest/root> | select samaccountname
 
