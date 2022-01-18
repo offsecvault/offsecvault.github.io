@@ -65,9 +65,9 @@
     <a href="../../ABOUT.html">ABOUT</a> 
 </div>
 <pre style="text-align:center;">
-<h3> domain computer enumeration with powershell </h3>
+<h3> DOMAIN COMPUTER ENUMERATIOn WITH POWERSHELL</h3>
 
-<b>-TRUSTS-</b>
+<b> -TRUSTS- </b>
 
 Is a relationship between two domains or forests which allows users of one domain or forest to 
 access resources in the other domain or forest. 
@@ -75,7 +75,7 @@ Trust can be automatic (parent-child, same forest etc.) or established (forest, 
 
 TDO / Trusted Domain Objects (represent the trust relation in a domain)
 
-<b>::: get list of all domain trusts for the current domain</b>
+<b>::: GET LIST OF ALL DOMAIN TRUSTS FOR THE CURRENT DOMAIN</b>
 
 PS> Get-DomainTrust
 PS> Get-DomainTrust -Domain [domain]
@@ -83,34 +83,34 @@ PS> Get-DomainTrust -Domain [domain]
 PS> Get-ADTrust
 PS> Get-ADTrust -Identity [domain]
 
-<b>::: list all trust current forest</b> AD Module
+<b>::: LIST ALL TRUST CURRENT FOREST</b> AD MODULE
 
 PS> Get-ADForest | %{Get-ADTrust -Filter *}
 
-<b>::: list trust in current domain</b>
+<b>::: LIST TRUST IN CURRENT DOMAIN</b>
 
 PS> Get-DomainTrust | ?{$_.TrustAttributes -eq "FILTER_SIDS"}
 
 PS> Get-ADTrust -Filter '(intraForest -ne $True) -and (ForestTransitive -ne $True)'
 
-<b>::: list external trust in current forest</b>
+<b>::: LIST EXTERNAL TRUST IN CURRENT FOREST</b>
 
 PS> Get-ForestDomain | %{Get-DomainTrust -Domain $_.Name} | ?{$_.TrustAttributes -eq "FILTER_SIDS"}
 
 PS> (Get-ADForest).Domains | %{Get-ADTrust -Filter '(intraForest -ne $True) -and (ForestTransitive -ne $True)' -Server $_}
 
-<b>::: map trusts of a forest</b>
+<b>::: MAP TRUSTS OF A FOREST</b>
 
 PS> Get-ForestTrust
 PS> Get-ForestTrust -Forest <root/forest>
 
 PS> Get-ADTrust -Filter 'msDS-TrustForestTrustInfo -ne "$null"'
 
-<b>::: map trusts of current domain</b>
+<b>::: MAP TRSUTS OF CURRENT DOMAIN</b>
 
 PS> Get-ADTrust -Filter *
 
-<b>::: map trusts of external trust</b>
+<b>::: MAP TRUSTS OF EXTERNAL TRUST</b>
 
 PS> Get-ADTrust -Filter * -Server [xternalTrust]
 
