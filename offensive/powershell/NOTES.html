@@ -88,15 +88,6 @@ POWERSHELL DETECTIONS
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Invoke-WebRequest -Uri [URL]
 
-<b>:::CONNECT TO A REMOTE MACHINE USING WINRS</b>
-
-PS> winrs -r:[hostname] [command]
-PS> winrs -r:CVS-SRV001 cmd
-
-<b>:::CONNECT TO A REMOTE MACHINE USING POWERSHELL-REMOTING</b>
-
-PS> Enter-PSSession -ComputerName FQDN
-
 </center>
 </body>
 </html>
