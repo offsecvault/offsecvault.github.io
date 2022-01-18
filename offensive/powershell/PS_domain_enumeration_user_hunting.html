@@ -67,8 +67,9 @@
 <pre style="text-align:center;">
 <h3> DOMAIN ENUMERATION - USER HUNTING </h3>
 
-Find all machines on the current domain where the current user has local admin access
-"Find-LocalAdminAccess –Verbose" 
+<b>::: FIND ALL MACHINES ON THE CURRENT DOMAIN WHERE THE CURRENT USER HAS LOCAL ADMIN ACCESS</b>
+
+PS> Find-LocalAdminAccess –Verbose
 
 - This function queries the DC of the current or provided domain for a list of computers (Get-NetComputer) and then use 
 multi-threaded "Invoke -CheckLocalAdminAccess" on each machine.
@@ -77,6 +78,23 @@ multi-threaded "Invoke -CheckLocalAdminAccess" on each machine.
 Pretty useful in cases ports (RPC and SMB) used by "Find-LocalAdminAccessare" blocked.
 
 - See "Find-WMILocalAdminAccess.ps1" and "Find-PSRemotingLocalAdminAccess.ps1"
+
+<b>::: FIND COMPUTERS WHERE A DOMAIN ADMIN (OR SPECIFIED USER/GROUP) HAS SESSIONS</b>
+
+PS> Find-DomainUserLocation -Verbose
+PS> Find-DomainUserLocation -UserGroupIdentity "[group]"
+
+This function queries the DC of the current or provided domain for members of the given group (Domain Admins by default) using 
+"Get-DomainGroupMember", gets a list of computers (Get-DomainComputer) and list sessions and logged on users "(Get-NetSession/Get-NetLoggedon)" 
+from each machine.
+
+<b>::: FIND COMPUTERS WHERE A DOMAIN ADMIN SESSION IS AVAILABLE & CURRENT USER HAS ADMIN ACCESS </b>
+
+PS> Find-DomainUserLocation -CheckAccess
+
+<b>::: FIND COMPUTERS (FILE SERVERS AND DISTRIBUTED FILE SERVERS) WHERE A DOMAIN ADMIN SESSION IS AVAILABLE</b>
+
+PS> Find-DomainUserLocation -Stealth
 
 </center>
 </body>
