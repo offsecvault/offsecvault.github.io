@@ -67,30 +67,37 @@
 <pre style="text-align:center;">
 <h3> METHODOLOGY </h3>
 
-1. bypass powershell security with "invisi-shell"
+RECON >> DOMAIN ENUMERATION >> LOCAL PRIV ESC >> ADMIN RECON >> LATERAL MOVEMENT >>
+DOMAIN ADMIN PRIV ESC >> CROSS TRUST ATTACKS >> PERSIST & EXFILTRATE
 
-  withadminprivileges | RunWithPathAsAdmin.bat
-  withnonadminprivileges | RunWithRegistryNonAdmin.bat
+>>> ENUMERATION
+
+1. AMSI code bypass <a href="offensive/powershell/PS_bypass_execution_&_AV_signatures.html">AV bypass</a>
+2. bypass powershell security with "invisi-shell"
+
+NOTE: download and run the necessary file depending the current scenario, remember to check current user to use the correct. 
+
+withadminprivileges | RunWithPathAsAdmin.bat
+withnonadminprivileges | RunWithRegistryNonAdmin.bat
   
 AMSI BYPASS (rescan the code until there's no detection)
-  - change letters order
-  - use smaller variable names
-  - remove comments (clean code)
+- change letters order
+- use smaller variable names
+- remove comments (clean code)
 
-recon >> domain enumeration >> local priv escalation >> admin recon >> lateral movement >>
-domain admin priv esc >> cross trust attacks >> persist & exfiltrate
-
-2. enumeration (powerview or AD module)
-  > domain
-  > users
-  > groups / group members
-  > computers
-  > logged users
-  > shares
-  > GPO's
-  > OU
+3. enumeration (powerview or AD module)
+> domain | <a href="offensive/powershell/PS_domain_enumeration.html">ref</a>
+> users | <a href="offensive/powershell/PS_domain_USER_enumeration.html">ref</a>
+> groups | group members | <a href="offensive/powershell/PS_domain_GROUP.MEMBERS_enumeration.html">ref</a>
+> computers | <a href="offensive/powershell/PS_domain_COMPUTER_enumeration.html">ref</a>
+> logged users | <a href="offensive/powershell/ "> </a>
+> shares | <a href="offensive/powershell/ "> </a>
+> GPO's | <a href="offensive/powershell/PS_domain_GPO_enumeration.html">ref</a>
+> OU | <a href="offensive/powershell/PS_domain_OU_enumeration.html">ref</a>
   
-note: enterprise admins group is present only in the root of a forest.
+NOTE: enterprise admins group is present only in the root of a forest.
+
+>>> LOCAL PRIV ESCALATION
 
 </center>
 </body>
