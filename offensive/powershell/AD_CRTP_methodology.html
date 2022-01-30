@@ -75,7 +75,8 @@ DOMAIN ADMIN PRIV ESC >> CROSS TRUST ATTACKS >> PERSIST & EXFILTRATE
 1. AMSI code bypass <a href="offensive/powershell/PS_bypass_execution_&_AV_signatures.html">AV bypass</a>
 2. bypass powershell security with "invisi-shell"
 
-NOTE: download and run the necessary file depending the current scenario, remember to check current user to use the correct. 
+NOTE: First use AMSI code to bypass (AMSI logging) after that download and run the necessary file of invisi-shell depending 
+the current scenario to by pass (Script Block Logging & System Wide Transcription) remember to check current user to use the correct file.
 
 withadminprivileges | RunWithPathAsAdmin.bat
 withnonadminprivileges | RunWithRegistryNonAdmin.bat
@@ -85,7 +86,7 @@ AMSI BYPASS (rescan the code until there's no detection)
 - use smaller variable names
 - remove comments (clean code)
 
-3. enumeration (powerview or AD module)
+3. enumeration (load powerview or AD module for enumeration now that all powershell detections methods are bypassed)
 > domain | <a href="offensive/powershell/PS_domain_enumeration.html">ref</a>
 > users | <a href="offensive/powershell/PS_domain_USER_enumeration.html">ref</a>
 > groups | group members | <a href="offensive/powershell/PS_domain_GROUP.MEMBERS_enumeration.html">ref</a>
@@ -96,6 +97,7 @@ AMSI BYPASS (rescan the code until there's no detection)
 > OU | <a href="offensive/powershell/PS_domain_OU_enumeration.html">ref</a>
   
 NOTE: enterprise admins group is present only in the root of a forest.
+NOTE2: remember to check for decoy "users".
 
 >>> LOCAL PRIV ESCALATION
 
