@@ -109,6 +109,10 @@ PS> Get-LoggedonLocal -ComputerName [hostname]
 
 PS> Get-LastLoggedOn -ComputerName [hostname]
 
+<b>::: GET USERS INFO TO CATCH DECOY USERS</b>
+
+PS> Get-DomainUser | select samaccountname,logoncount
+
 </center>
 </body>
 </html>
