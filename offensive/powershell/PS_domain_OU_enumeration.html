@@ -91,6 +91,8 @@ PS> Get-DomainOU | select -ExpandProperty [name]
 
 PS> (Get-DomainOU -Identity [OUName]).distinguishedname | %{Get-DomainComputer -SearchBase $_} | select name
 
+% = means each result (object)
+
 </center>
 </body>
 </html>
