@@ -91,6 +91,10 @@ PS> (Get-Acl 'AD:\CN=Administrator,CN-Users,CD=dollarcorp,DC=moneycorp,DC=local'
 
 PS> Find-InterestingDomainAcl -ResolveGUIDs
 
+<b>::: FIND INTERESTING ACL ASSOCIATED TO A GROUP</b>
+
+PS> Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -match "group_name"}
+
 <b>::: GET ACL ASSOCIATED WITH SPECIFIED PATH</b>
 
 PS> Get-PathAcl -Path "\\[domain]\sysvol"
