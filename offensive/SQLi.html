@@ -67,9 +67,44 @@
 <pre style="text-align:center;">
 <h3> SQLi - SQL Injection </h3>
 
-few ways to test
+few ways to test:
 
+types:
 
+>> ERROR-BASED SQLi
+
+you will get an error explaining the scenario, that will help to retrieve more information and it will confirm the SQLi vuln.
+
+>> AUTHENTICATION BY-PASS
+
+used easily to by-pass security and gain access to web applications
+
+how to test ?
+
+- given any "username" the password can be by-pass it, good to test [admin/ADMIN]
+- analyze it, probably a php language is associated
+
+sample referers to a login page:
+
+user: admin
+password: 
+
+"...on password field is possible to try the following..." 
+
+password: [any_username]' or  '1'=1'
+if not user is given, try this.
+
+user: test' and 1=1 # --
+password: [any_string]
+
+"... if access was given but not with privileges, a second attempt can be tested... 
+it will jump to the second user on the table..."
+
+password: [any_username]' or  '1'=1' and id <> 1; --#
+
+>>> UNION BASED SQLi
+
+- used to reveal database schema, table names and columns names.
 
 </center>
 </body>
