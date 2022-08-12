@@ -82,6 +82,6 @@ def main():
                     site.write(row)
                 site.write("\n")      
          
-       # print(" ===== Threat-X Sites List File Created =====")
+       # print(" ===== TASK COMPLETED =====")
 
 main()
