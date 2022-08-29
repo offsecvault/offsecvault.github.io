@@ -9,4 +9,4 @@ The content will be related to each certification, research or courses completed
 
                      _Come back regularly, you will find new content for each topic_
 
-2021 - 2022 @b0ydC_
+Since 2021 | @b0ydC_
