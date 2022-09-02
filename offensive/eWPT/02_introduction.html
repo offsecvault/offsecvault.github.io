@@ -95,9 +95,65 @@
 <pre style="text-align:center;">
 <h3> 02.introduction  </h3>
 
->>> pdf
+For HTTP 1.0 and HTTP 1.1, the key value (Connection: Keep-Alive) can be used to keep the connection 
+alive for some specific time. Meaning that all request will be sent using the same connection.
 
-https://drive.google.com/file/d/1ZgY3CwO0Ri9fjLm_lLQTgTy-4DRX836e/view?usp=sharing
+> common response codes: 200 OK, 301 Moved Permanently , 302 Found
+
+<a href="https://www.rfc-editor.org/rfc/rfc9110.html">RFC9110</a>
+
+<a href="https://www.rfc-editor.org/rfc/rfc2978.html">RFC2978</a>
+
+<a href="https://www.ascii-code.com/">ASCII CODE</a>
+
+<a href="https://unicode-table.com/en/#0032">UNICODE CHARSET</a>
+
+-- unicode implementation, UTF-8 | UTF-16 | UTF-32 == UTF means "Unicode Transformation Format"
+the number means the amount of bits used to represent code points.
+
+if the HTML encoding is not defined, it will use the default one, "ISO-8859-1: 8-bit single-byte coded graphic characters sets"
+
+URL encoding reference: <a href="https://www.w3schools.com/tags/ref_urlencode.asp"> w3schools URL ref</a>
+
+****
+
+one of the most important and critical point of web application security is SAME ORIGIN POLICY
+this policy prevents a script or document from getting or setting properties of another document
+that comes from a different origin. 
+
+...ORIGIN DEFINITION
+
+it prevents javascript running on a given origin, interacting with a document from a different origin.
+---> primary goal, "isolate requests coming from different origins"
+
+MAIN RULE: a document (could be an "HTML page, an iFrame embedded or a response to an AJAX request") can be accessed via (javascript) 
+the properties of another document only if they have the same origin !!! the browser will perform the request but the results will be 
+presented only if the SOP is respected. 
+
+>>...> PROTOCOL - HOST - PORT
+
+sample: http://www.elswapt.site
+
+-site: it is the top-level domain (TLD)
+-elswapt: is the second level domain (SLD)
+-www: is the third level domain 
+and so on....
+
+internet explorer works differently about the SOP policy, it has two exceptions:
+-port: does not consider the port as a SAME ORIGIN component.
+-trust zone: same origin is not applied to domains that are in "highly trusted zone" (sample, corporate domains...) 
+
+exceptions to SOP restrictions:
+-> window.location = can be used to get the current page address (URL) and to redirect the browser to a new page.
+-> document.domain = the property describe the domain portion of the current document.
+-> cross window messaging 
+-> cross origin resource sharing (CORS)
+
+...> a document can always update the location property of another document if they have some relationship...
+typical relationships: 
+1. document embedded via an iFrame element
+2. one document is opened by other via the "window.open" DOM API
+
 
 
 </center>
