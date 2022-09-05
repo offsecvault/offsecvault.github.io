@@ -154,6 +154,22 @@ typical relationships:
 1. document embedded via an iFrame element
 2. one document is opened by other via the "window.open" DOM API
 
+NOTE: when a cookie does not contain a domain value, it is assumed that the host-only flag is set to true. A cookie
+with the host-only flag value will be sent only to the target domain that set it. 
+
+>> SESSIONS
+are simple mechanism that allows websites to store variables specific for a given visit on the server side. each user
+session is identified by a either a session id or token, which the server assigns to the client. 
+
+COOKIES ==> stored at client side. 
+SESSION ==> stored at server side. session will expire as soon as the connection is dropped. it works by session tokens or IDs.
+this sessionID is assigned by the server for future refs. 
+
+each development language has its own parameter name, sample: PHP -> PHPSESSID | JSP -> JSESSIONID & more. it can be customized as well.
+
+
+
+
 
 
 </center>
