@@ -95,9 +95,65 @@
 <pre style="text-align:center;">
 <h3> 03.information gathering  </h3>
 
->>> pdf
+- first thing: collect information about the organization
 
-https://drive.google.com/file/d/1BuSgZL6YvYTm6V4opnwtR_vcwmGIBnZv/view?usp=sharing
+<a href="https://whois.domaintools.com/">WHOIS.com</a>
+
+DNS:
+
+SOA = start of authority 
+NS = name server
+A = address
+PTR = pointer | maps an IP address to a hostname, PTR records are called reverse zones
+CNAME = maps an alias hostname to an A record hostname
+MX = mail exchange | specify a host that will accept email on behalf of a given host
+
+perform a reverse lookup = nslookup -type=PTR [ip_address]
+
+perform a request for all record = nslookup -querytype=ANY [IP/hostname]
+
+finding target IPs: 
+-using nslookup you can get the IP address associated to each subdomain, the first step is to 
+find all possible IPs associated to a domain or subdomain.
+
+>>... NSLOOKUP usage
+
+$ nslookup
+$ set querytype=ANY
+$ google.com
+
+$ set type=NS
+$ google.com
+
+<a href="https://www.netcraft.com/">netcraft.com</a>
+
+... infraestructure::
+
+IIS is for Windows OS. IIS 6.0 for 2003 boxes, windows 2008 support IIS 7 and IIS 8.0 supported by windows 2012.
+
+list:
+
+- nameserver NS record
+- IPs
+- hostnames
+- OS version
+- domains/subdomains
+- uptimes
+- ISP provider
+
+TOOLS USAGE
+
+---> netcat
+
+$ nc [ip_addr] [port]
+HEAD / HTTP/1.0
+
+flag, X-Powered-By is used to reveal the technology behind the web application.
+
+cookie flag by technology: PHPSESSID = PHP | ASPSSESSIONID = .NET | JSESSION = JAVA
+
+
+
 
 
 </center>
