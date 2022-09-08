@@ -159,7 +159,36 @@ On IIS is handled by Ionic Isapi Rewrite or Helicon Isapi Rewrite.
 ...SUBDOMAIN ENUMERATION
 <a href="https://searchdns.netcraft.com/"> SEARCH DNS netcraft.com</a>
 
+another tool that can be used is google operators=google hacking !!
+<a href="https://www.googleguide.com/advanced_operators_reference.html"> GOOGLE HACKING!</a>
 
+more tools for domain/sub-domain enumeration:
+
+<a href="https://github.com/darkoperator/dnsrecon"> DNS RECON </a>
+<a href="https://github.com/TheRook/subbrute"> SUBBRUTE </a>
+<a href="https://github.com/davidpepper/fierce-domain-scanner"> FIERCE </a>
+<a href="https://github.com/laramies/theHarvester"> THE HARVESTER </a>
+
+enumerate via zone transfer
+
+$ nslookup -type=NS [domain]
+
+for linux other option:
+
+$ dig @nameserver axfr [domain]
+
+---> fingerprint third-party addons
+
+JOOMLA URL main parts
+
+$ index.php?option=%component_name%&task=%task_value%
+
+-=> index.php = it is the only script you will see, it is in charge of loading the specified component 
+passed in via the option parameter. 
+
+DOCMAN URL main parts
+
+$ index.php?option=com_docman&task=doc_view&gid=100
 
 
 
