@@ -99,9 +99,39 @@
 
 https://portswigger.net/web-security/cross-site-scripting
 
->>> pdf
+classic XSS test
 
-https://drive.google.com/file/d/1RoJfzxJhzjurSQv2KQ4I3moPb1GueMQr/view?usp=sharing
+-> <script>alert('This is an XSS');</script>
+
+XSS possible attacks
+
+-cookie stealing
+-complete control over a browser
+-initiating an explotation phase against browser plugins and then the machine
+-perform keylogging 
+
+******
+
+when stealing a cookie, the goal is to find the vulnerability associated to the domain assigned to the
+cookie founded. 
+-when a vuln is founded, it is time to create a link or image with the specific payload to send it to the user 
+so the user can click on this and exploit the vulnerability. 
+
+>> 3 types of XSS
+
+-reflected: occurs when untrusted user data is sent to web app and it is inmediately echoed back as the untrusted content.
+... PROCESS
+.victims bring the payload in their HTTP request to the vulnerable site, the payload will be inserted into the web page 
+and executed in the browser. 
+
+-> victim click the link >> request sent to the server >> response back to the client with the payload info >> execution on client side.
+
+-stored or persistent: similar to reflected XSS, however, it does not reflect into the response, it is stored within the application.
+
+are attacks that lead to the execution of code in all the user's web browsers visiting a vulnerable (and exploited) site.
+
+-DOM XSS: simply put, it only exist on client side code. lives in the DOM environment, it does nor reach the server side code. 
+the goal is that the client side script code can access the browsers DOM thus all the information available in it. 
 
 
 </center>
