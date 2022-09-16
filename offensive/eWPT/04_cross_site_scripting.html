@@ -137,7 +137,22 @@ the goal is that the client side script code can access the browsers DOM thus al
 
 .1 find all correlations between input > output, so if what the user is reflected any where on the site.
 .2 try to inject js or html code into the previous defined targets [GET/POST - HTTP HEADERS - COOKIE VARIABLES]
-.3 
+
+NOTE: one way to test is to add the HTML parameter <plaintext> to the input, so if the XSS attack is present you will see
+a page under construction. it does not mean you can execute script, however the XSS possibility is present. 
+all tags after the plaintext is inserted will be threated as plaintext. 
+
+potential objectives:
+-cookie stealing
+
+sample: 
+
+.offsecvault.com | it will be open to any subdomain of offsecvault.com, Eg. foo.offsecvault.com , red.offsecvault.com and more.
+the * is used like a wildcard. 
+
+-defacement
+-phishing/malware
+-XSS worms
 
 
 </center>
