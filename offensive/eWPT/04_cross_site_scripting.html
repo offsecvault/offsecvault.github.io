@@ -156,7 +156,9 @@ NOTE: when a cookie is issued with the parameter path=/ it is valid for all the 
 applies. path can limit the attack surface to an only subdirectory Eg. path=/cars/, so it is limited to "cars" folder or subfolders.
 without the final slash Eg. path=/cars will be like a wildcard for this cars folder, /carswash | /carsdm | cars* & more.
 
+httponly flag prevents javascript to read the content of the cookie file. (however exist a workaround)
 
+"secure cookies" - these cookies are sent only if https (SSL) is used in the request
 
 -defacement
 -phishing/malware
