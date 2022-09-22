@@ -112,7 +112,7 @@ XSS possible attacks
 
 ******
 
-when stealing a cookie, the goal is to find the vulnerability associated to the domain assigned to the
+when stealing a cookie, the goal is to find the vulnerability associated to the assigned to the
 cookie founded. 
 -when a vuln is founded, it is time to create a link or image with the specific payload to send it to the user 
 so the user can click on this and exploit the vulnerability. 
@@ -155,6 +155,7 @@ the * is used like a wildcard.
 NOTE: when a cookie is issued with the parameter path=/ it is valid for all the directories of the domains it
 applies. path can limit the attack surface to an only subdirectory Eg. path=/cars/, so it is limited to "cars" folder or subfolders.
 without the final slash Eg. path=/cars will be like a wildcard for this cars folder, /carswash | /carsdm | cars* & more.
+the same path will apply to all subdomains or domains associated. 
 
 httponly flag prevents javascript to read the content of the cookie file. (however exist a workaround)
 
@@ -163,6 +164,16 @@ httponly flag prevents javascript to read the content of the cookie file. (howev
 -defacement
 -phishing/malware
 -XSS worms
+
+>>>>
+
+.domain 
+.path
+.expiration 
+
+these atributes are needed to define if it is needed to set a cookie or not for a request. 
+
+SOP prevents cookie stealing 
 
 
 
