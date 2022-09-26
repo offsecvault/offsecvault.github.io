@@ -173,7 +173,18 @@ httponly flag prevents javascript to read the content of the cookie file. (howev
 
 these atributes are needed to define if it is needed to set a cookie or not for a request. 
 
-SOP prevents cookie stealing 
+SOP prevents cookie stealing.
+
+
+---DEFACEMENT
+
+.an XSS can achive the defacement.
+.to become a real defacement is needed a persistent XSS
+.with a persistent XSS we are able to change the appearance of the web page manipulating the DOM.
+.the DOM object corresponds to the BODY tag that holds the page content. 
+
+_typical DOM manipulation is useful at modyfing the page appareance like this:
+>> document.body,innerHTML="<h1>DEFACED</>";
 
 
 
