@@ -110,6 +110,63 @@ how to comments lines on SQL ?
 hashtag # 
 two dashes --  followed by space
 
+commong forms to exploit the SQLi:
+
+' OR 'a'='a
+
+' UNION SELECT Username, Password from Accounts WHERE 'a'='a
+
+what can we do with an SQLi attack ?
+
+-read file system
+-run OS commands 
+-install shells
+-access remote network & more
+
+SQLi classifications:
+-scope of the attack
+-exploitation vector
+-source of the attack
+
+types
+
+in-band = it is exploited by using the same channel to retrieve the data
+error-based = it is exploited by forcing the DBMS to output errors
+blind = there's no output and it is exploited by an inference exploitation, mostly by true/false conditions.
+to understand the true/false responses, it is needed to study the webapp behavior.
+
+C O N D I T I O N S / BOOLEAN BASED DETECTIONS = needed when there's no output. 
+
+' OR '1'='1 ==> TRUE
+' OR '1'='2 ==> FALSE
+
+a good trick to exploit SQLi is to use "Comments" [# or --]
+
+ENUMERATING the number of fields in a query
+we can start injecting the null value in order to build a valid query.
+sample:
+
+9999 UNION SELECT NULL; -- -
+9999 UNION SELECT NULL, NULL; -- -
+9999 UNION SELECT NULL, NULL, NULL; -- -
+
+and so on, only add the NULL value to create a valid query and the error dissapear. 
+
+BLIND ENUMERATING SCENARIO
+
+- it is needed to start with a valid ID in order to enumerate the fields in a query.
+when nothing is displayed, it possible means there's something bad with the query. when the content is displayed, it means you found
+the number of parameters. 
+
+- enumerate the type of the fields
+when enumerating the type of field and the type enforcing is enabled it will trigger an error.
+engines with type enforcing enabled:
+->PostgreSQL = YES
+->MS SQL SERVER = YES
+->ORACLE = YES
+->MySQL = NO
+
+
 
 
 
