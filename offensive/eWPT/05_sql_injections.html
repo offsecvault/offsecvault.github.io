@@ -166,6 +166,19 @@ engines with type enforcing enabled:
 ->ORACLE = YES
 ->MySQL = NO
 
+> enumerate field types
+
+cyclical process
+steps:
+1.substitute one of the null fields in our payload with a constant
+if the constant is correct, it will work, if not, it will throw an error.
+
+sample: after finding the in-band valid query, there's a way to validate the type.
+
+' UNION SELECT 1, null; -- -
+
+it will try to check for integer the first field. (if there's no error, it means the field is integer) the same process can be repeated to check for the field type.
+
 
 
 
