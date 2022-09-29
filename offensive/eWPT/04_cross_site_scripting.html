@@ -175,7 +175,6 @@ these atributes are needed to define if it is needed to set a cookie or not for 
 
 SOP prevents cookie stealing.
 
-
 ---DEFACEMENT
 
 .an XSS can achive the defacement.
@@ -199,8 +198,58 @@ it is about to implement two layers:
 -context-aware output encoding 
 
 it is good to implement XSS filtering by using a vetted library or a platform function.  
-													
 
+> XSS LAB
+
+>>> REFLECTED XSS EXPLOITATION
+
+xsser tool usage
+
+xsser is a tool used to check for XSS in an URL.  to run the tool against the site use the following command,
+
+xsser --url 'URL' -p 'PARAMETERS'
+
+to accomplish this, you will need to use burpsuite to intercept the url and parameters.
+
+sample complete command:
+
+xsser --url 'http://demo.ine.local/index.php?page=dns-lookup.php' -p 'target_host=XSS&dns-lookup-php-submit-button=Lookup+DNS'
+
+to perform an automatic test, we can add the --auto and it will retrieve all the results about possible XSS vectors.
+
+to inject a custom XSS payload you can use the flag: --Fp, it means FINALPAYLOAD
+the following example will add a simple javascript 
+
+xsser --url 'http://demo.ine.local/index.php?page=dns-lookup.php' -p 'target_host=XSS&dns-lookup-php-submit-button=Lookup+DNS' --Fp "<script>alert(1)</script>"
+
+...performing XSS reflected using another payload:
+
+<img src onerror="alert(1)" />
+
+NOTE: always is good to inspect the code to see if the DOM was modified and we can find the new tags we are trying to execute. 
+
+>>> STORED XSS EXPLOITATION
+
+basically the option will be similar to a post, or something that will be in place on the site.
+
+one way to test: Hello <b>World!</b>
+
+if it is reflected the word "World" on negrita, the HTML injection was successfull. 
+
+another way to test: <script>alert(1234);</script>
+
+another way to test: <img src onerror="alert(1337)" />
+
+NOTE: always is good to inspect the code to see if the DOM was modified and we can find the new tags we are trying to execute. 
+
+>>> DOM XSS EXPLOITATION
+
+-locate vulnerability in the webpage
+
+if it si DOM-based XSS, there must be some exploitable javascript sinks, like: innerHTML, eval, Function and more. Some that receive the user input and render it, will be an injection issue.
+
+javascript inserted as DOM text/tags will not execute. so in order to exploit the same, it will be needed to use the "img" tag. 
+													
 </center>
 </body>
 </html>
