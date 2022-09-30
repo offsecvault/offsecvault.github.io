@@ -284,6 +284,43 @@ NOTE: to get all tables it is needed to change/modify the "offset" section from 
 
 <a href="http://pentestmonkey.net/cheat-sheet/sql-injection/postgres-sql-injection-cheat-sheet">postgres-sql-injection-cheat-sheet</a>
 
+EXPLOITING BLIND SQL INJECTIONS
+
+used to extract database schemas and data... 
+
+always true condition will be a good initial test. first will be good to understand the query structure behind. if running an always false condition there's no results, and running the always true retrieves, it means that it is exploitable. 
+
+knowing when a condition is truw or false helps to ask simple true/false questions.
+sample: 
+-is the first letter of the username 'a' ?
+-does this database contain three tables ?
+
+how to get the user ?
+
+first way:
+SELECT user(); // will retrieve the current user
+
+second way: returns a substring. it takes 3 parameters, input string, the position and its lenght. 
+SELECT substring('string', 2, 1); 
+
+functions can be used as an argument of other functions:
+SELECT substring(user(), 1, 1);
+
+SQL allows you to test the output of a function in a true/false condition.
+combining that, we can iterate over the letters of the username by using payloads such as:
+' or substr(user(),1, 1)= 'a
+' or substr(user(),1, 1)= 'b
+...
+
+when we find the first letter, we can move to the second:
+
+' or substr(user(), 2, 1)= 'a
+
+repeat the process to find the complete username.
+
+9999 or SUBSTRING(user_name(), 1, 1) = 'c';--
+
+
 </center>
 </body>
 </html>
