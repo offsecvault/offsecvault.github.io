@@ -355,7 +355,90 @@ NOTE: it is time consuming. below code means that if the clause yields TRUE, it 
 
 >>... SQLMAP TOOL USAGE
 
+tip: test the vuln manually first, because if you go fully automatic, probably the tool could act inefficient or crash the remote service.
 
+basic sintax: sqlmap -u <URL> -p <injection parameter> [options]
+
+exploit POST parameter: sqlmap -u <URL> --data=<POST string> -p <parameter> [options]
+
+needed: 
+1. URL
+2. parameter, (it could work without a parameter)
+
+flags:
+
+-u = URL
+-p = parameter
+--techinique = technique to use
+--data = define HTTP POST request 
+-r = request file
+-D = database name
+-T = table name
+--dbms= specify database
+
+TIP: one way to use SQLMap is by saving a request intercepted with burp proxy to a file. it can be POST as well.
+
+exploit using a burp result file: sqlmap -r <request file> -p parameter [options]
+
+FIRST STEP: grab the database banner. that will help to test the injection and also, to proof of the exploitability of the vulnerability.
+
+sqlmap -u <URL> --banner <options>
+
+SECOND: information gathering
+
+sqlmap -u <URL> --users <options>
+
+--> check if web app database user is admin
+
+sqlmap -u <URL> --is-dba <options>
+
+--> list all available databases
+
+sqlmap -u <URL> --dbs <options>
+
+--> select a database and list tables
+
+sqlmap -u <URL> -D <database> --tables <options>
+
+--> choose one or more tables and list their columns
+
+sqlmap -u <URL> -D <database> -T <tables, comma separated list> --columns <options>
+
+--> dump columns needed
+
+sqlmap -u <URL> -D <database> -T <table> -C <columns list> --dump <options>
+
+NOTE: webapps sometimes change the output in a way SQLMap cannot figure out. making blind SQLi impossible. to fix that, there's two flags: --string / --not-string
+=> append to --string a string which is always present in true output pages or
+=> append to --not-string a string which is always present in false output pages
+
+if the injected payload need to end with ')); for example, the flag --suffix can be used, if is at the beginning, --prefix can be used
+
+SQLi can be performed on any client-side input field. to make a SQLMap test:
+[1] GET/POST request
+[2] the cookie header values
+[3] the user-agent and referrer headers
+[5] host header
+
+to use it the flag needed is --level, the flag -p will bypass the level. actually is better to run the test with that flag as it perform more accurate, stealthy and in-depth exploitation.
+
+--risk parameter lets you fine-tune how dangerous the injections can be. however, will be good to use it only when is really needed and after carefully study the web app.
+
+three risk levels:
+1 - default innocuous injections
+2 - enables heavy time-based injections
+3 - enables OR-based injections
+
+sometimes the injections can take long time to dump the data, to reduce that and make a persistent connection the following flag can be used: --keep-alive
+
+sqlmap -u <URL> --keep-alive <options>
+
+you can reduce the dumping time using parallel threads with the following flag:          --threads [range 1-10]
+
+-mitigations-
+
+.. input validation
+.. type casting
 
 
 </center>
