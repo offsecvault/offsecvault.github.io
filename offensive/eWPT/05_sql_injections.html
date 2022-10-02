@@ -637,6 +637,18 @@ same instruction until there's no more chunks to add.
 finally: you can write the file on the target system by executing...
 SELECT <victim_field> FROM <victim_table> WHERE <optional conditions> INTO DUMPFILE '<output path>';
 
+>. EXECUTING SHELL COMMANDS
+
+MySQL does not have a native function to run shell commands by default, but, "User Defined Functions / UDF" can be used to that. 
+
+using UDF it is possible to create two functions:
+
+sys_eval(<command>) = returns the standard output of the chosen command
+sys_exec(<command>) = returns the command exit status
+
+to use both functions, you have to upload a shared object (SO) on a Unix system or on a dynamic-link library (DLL) on windows system to the target server. 
+(UNIX/WINDOWS(DLL) > TARGET_SERVER)
+
 </center>
 </body>
 </html>
