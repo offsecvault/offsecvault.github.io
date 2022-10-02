@@ -649,9 +649,16 @@ sys_exec(<command>) = returns the command exit status
 to use both functions, you have to upload a shared object (SO) on a Unix system or on a dynamic-link library (DLL) on windows system to the target server. 
 (UNIX/WINDOWS(DLL) > TARGET_SERVER)
 
+..> after uploading the files to the target system, running a command is just a matter of performing a SELECT statement.
 
+payload:
 
+SELECT sys_eval('<command>');
+SELECT sys_exec('<command>');
 
+using SQLMap you can use the following statements, --os-cmd / --os-shell
+
+NOTE: modern DBMS offer some kind of file system routines or system shell command interfaces; this poses a high security risk to a DBMS serving an insecure web application.
 
 </center>
 </body>
