@@ -99,9 +99,63 @@
 
 https://portswigger.net/web-security/authentication
 
->>> pdf
+is the process of determining whether someone is really who they claim to be. for example, webapps often rely on username & password pair for this. 
 
-https://drive.google.com/file/d/1wa9IUh854tphHYEI6c777xXIZJLoEd24/view?usp=sharing
+authentication factor represent something the user owns, know, or is. 
+
+authentication factors: something the user has / something the user knows / something the user is.
+
+single factor, means that the user only need to provide one of the 3 factors we saw. typical single factor is the user to provide the password.
+
+two factor, MFA. requires a user to provide two or more of the three authentication factors. sample, the ATM machine, you will need to provide two factors, something you have: the credit card and something you know, the pin.
+
+if a password does not adhere to a strong password policy, it is exposed to attacks such as:
+
+-dictionary attack | can be language oriented, role oriented, etc. | the goal is to guess passwords by selecting words from the dictionary.
+
+-brute-force attack | tries to use every possible combination of characters to guess the password. takes time, will be good to use this attack only if the dictionary attack did not work. number of attempts depends upon the character domain and password length (charset)
+
+sample: if the character domain is [a-zA-Z0-9] and the password length is 8, the max numbers of attempts will be 62^8.
+
+common wordlists:
+http://www.openwall.com/wordlists/
+https://github.com/danielmiessler/SecLists
+https://wiki.skullsecurity.org/Passwords
+
+-STRONG PASSWORD POLICY
+
+==> length: at least 10 characters
+==> never use the same password twice
+==> composition (at least one uppercase char / one lower / one digit / special character)
+==> do not include personal information and dictionary words
+==> change password regularly (monthly, annually)
+
+-STORING HASHES
+
+from server-side perspective, passwords must never be stored in clear text. passwords need to be hashed (preferably with a salt) before they are stored. 
+
+-LOCKOUT/BLOCKING REQUESTS
+
+to avoid brute force and dictionaty attacks, system can be designed to block the access. typical example of good system design:
+-* adds and incrementing delay after each failed login attempt
+-* after 3 failed attempts show a CAPTCHA puzzle
+-* after 10 failed attempts, locks the user for a certain amount of time. 
+
+-USER ENUMERATION
+
+authentication mechanics accept a user identifier and a secret word (pass), know by only the user. 
+badly designed system can reveal sensitive information about the existence of a user. example, an app can reveal the existence of a user. determinig valid usernames is something not considered serious threat, users are half of what is needed.
+
+samples: enumerate via error messages
+-login for user foo: invalid password
+-login failed, invalid user ID
+-login failed, account disabled
+-login failed, this user is not active
+
+handle exception ?
+
+-login failed; invalid user ID or password
+
 
 </center>
 </body>
