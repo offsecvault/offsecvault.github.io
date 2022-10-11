@@ -191,6 +191,75 @@ this function can be implemented through the following methods:
 -by storing credentials permanently within the web storage
 -by storing the credentials within a cookie
 
+password inputs or any sensitive information, must not be cached. if yes, an attacker can steal info from there. the cache method relies on HTML, the following code enable the browser to cache the password: 
+INPUT TYPE="password" AUTOCOMPLETE="on"
+
+cookie method makes use of cookies to store credentials. alternatively, a token might be stored in the cookie, better feature due to the expiration, shorter than the users password.
+
+concerns: attackers can steal the cookie through the following attacks
+-XSS attack, only if the cookie has not been marked with the flag HTTPOnly.
+-Session Hijacking, via packer sniffing only if the cookie is sent over an unencrypted channel.
+
+web storage method, could be local storage to store credentials. a developer can use the API call localStorage.setItem() to add an item containing credential data to local web storage.
+
+web storage is a data container accessible and writable by all pages sharing the same origin, therefore, an attacker could access web storage after a successfull XSS attack. if password has been stored unencrypted, the attacker could obtain the victim's password. 
+
+best defensive techniques
+> cache browser method defense
+autocomplete HTML attribute instructs the browser on whether storing certain form information is allowed or not. the following code can be used to disable the cache for the HTML password element.
+<INPUT TYPE="password" AUTOCOMPLETE="off">
+
+> cookie method defense
+any sensitive information like password must be encrypted before storing it within the cookie.
+if "remember me" cookie is stolen, an attacker can impersonate the victim without knowing the actual password. 
+
+> web storage method defense
+any sensitive information like password must be encrypted before storing it.
+
+> PASSWORD RESET FEATURE
+generally, it is implemented by sending an email to the user with a new pass or a link to trigger the password reset function.
+at a first step, web app could ask one or more secret questions before sending the email.
+
+> easily guessable answers
+secret questions are a critical component. they are just like "another password" and they are usually the weakest link in the authentication system. it is unique by each user, however, some sites provide sometime suggestions that can represent vulnerabilities.
+
+to avoid dictionary or brute force attacks, the web application must limit the answer attempts and then block the requests coming from a malicious user. easily implemented by counting a user's incorrect attempts and blocking the IP after several consecurity tries. IP can always be changed by the attacker through proxies or TOR.
+
+attacker could easily guess the answer of a question if:
+
+-its response has a public answer.
+--> how many people live in Rome ?
+-its response has a private answer but is easily guessable (social engineering)
+--> whats your mother's name ?
+-its response has a limited domain
+--> which country do you prefer ?
+
+web app, should never allow unlimited attempts to answer a secret question.
+
+> PASSWORD RESET LINK
+normally, this protocol requires the user to click a link, usually an email to trigger the password reset. 
+weaknesses:
+-guessable, password reset link
+-predictable password reset token
+-recyclable password reset link
+
+best practice
+
+-link should contain a token
+--> minimum length N characters: N>6
+--> wide character set: for example, [A-Za-z0-9]
+--> purely random and unpredictable
+--> subject to expiration soon: 30 or 60 min
+
+the link triggering the password reset does not contain a random token, and it is easily guessable, it contains only a reference to the user requuesting the password reset action. this can be easily created by an attacker and used to reset the password of arbitrary users. 
+
+guessable password reset link: 
+elsfooradio/reset.php?user=els@fooradio.com
+
+for this one, it is a simple one, as attacker the only need is the email.
+
+recycable password reset link: 
+
 </center>
 </body>
 </html>
