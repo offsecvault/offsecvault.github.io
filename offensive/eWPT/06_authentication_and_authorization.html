@@ -156,6 +156,40 @@ handle exception ?
 
 -login failed; invalid user ID or password
 
+... USER ENUMERATION VIA WEBSITE BEHAVIOR
+
+some apps may not display the previous messages but have a distinct behavior on user existence. if that behavior is identified, it can be attacked via user enumeration. 
+samples:
+user does not exist: cookies are deleted / user goes to a known fixed page / the HTML is fixed
+
+user exists: cookies are not deleted or a new cookie is set / user goes to a user-specific page / the HTML changes or is different from an invalid-user
+
+....USER ENUMERATION VIA TIMING ATTACKS
+
+there will be two most common behaviors, 
+-user does not exist in the DB: show error + abort
+-user exists in the DB: retrieve user, calculate password, check if the password matches.
+because of this, it may possible to perform user enumeration by timing how long it takes to the applicaton to send a response. 
+this can be exploited and allow and attacker to discover whether a user is present on the system. 
+
+ADVANTAGE OF USER ENUMERATION
+
+once this info is available to the attacker, it can be performed any attack requiring the username component:
+- a dictionary (or brute force) attack agains the password to discover the user's password
+- a password reset for that user if the system suffers from a weakness in the password reset feature.
+
+in order to perform user enumeration, a login page should return different messages based on the submittal of a pair of: (asumming we dont know the password)
+-correct username / wrong password
+-wrong username / wrong password
+now that it is needed to check for differences, "burp comparer" can be used to compare responses. 
+
+... REMEMBER FUNCTIONALITY
+
+after a successful authentication, the web app does not ask the user to log in(usually for a period of time). 
+this function can be implemented through the following methods:
+-through the browser cache
+-by storing credentials permanently within the web storage
+-by storing the credentials within a cookie
 
 </center>
 </body>
