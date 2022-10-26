@@ -191,10 +191,12 @@ this function can be implemented through the following methods:
 -by storing credentials permanently within the web storage
 -by storing the credentials within a cookie
 
-password inputs or any sensitive information, must not be cached. if yes, an attacker can steal info from there. the cache method relies on HTML, the following code enable the browser to cache the password: 
+password inputs or any sensitive information, must not be cached. if yes, an attacker can steal info from there. the cache method relies on HTML, 
+the following code enable the browser to cache the password: 
 INPUT TYPE="password" AUTOCOMPLETE="on"
 
-cookie method makes use of cookies to store credentials. alternatively, a token might be stored in the cookie, better feature due to the expiration, shorter than the users password.
+cookie method makes use of cookies to store credentials. alternatively, a token might be stored in the cookie, better feature due to the expiration, 
+shorter than the users password.
 
 concerns: attackers can steal the cookie through the following attacks
 -XSS attack, only if the cookie has not been marked with the flag HTTPOnly.
@@ -206,7 +208,8 @@ web storage is a data container accessible and writable by all pages sharing the
 
 best defensive techniques
 > cache browser method defense
-autocomplete HTML attribute instructs the browser on whether storing certain form information is allowed or not. the following code can be used to disable the cache for the HTML password element.
+autocomplete HTML attribute instructs the browser on whether storing certain form information is allowed or not. the following code can be used to disable the 
+cache for the HTML password element.
 <INPUT TYPE="password" AUTOCOMPLETE="off">
 
 > cookie method defense
@@ -223,7 +226,9 @@ at a first step, web app could ask one or more secret questions before sending t
 > easily guessable answers
 secret questions are a critical component. they are just like "another password" and they are usually the weakest link in the authentication system. it is unique by each user, however, some sites provide sometime suggestions that can represent vulnerabilities.
 
-to avoid dictionary or brute force attacks, the web application must limit the answer attempts and then block the requests coming from a malicious user. easily implemented by counting a user's incorrect attempts and blocking the IP after several consecurity tries. IP can always be changed by the attacker through proxies or TOR.
+to avoid dictionary or brute force attacks, the web application must limit the answer attempts and then block the requests coming from a malicious user. 
+easily implemented by counting a user's incorrect attempts and blocking the IP after several consecurity tries. 
+IP can always be changed by the attacker through proxies or TOR.
 
 attacker could easily guess the answer of a question if:
 
