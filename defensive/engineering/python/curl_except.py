@@ -8,7 +8,7 @@ filepath = "/home/scripting/sites.csv"
 
 def headers():
     header = ['effective_url','namelookup_time','connect_time','pretransfer_time','redirect_time','starttransfer_time','total_time']
-    file = open('Zzz.csv','a+')
+    file = open('Zzz.csv','w+')
     action = csv.writer(file)
     action.writerow(header)
 
@@ -36,7 +36,6 @@ def curl_except(compose_url):
         action.writerow(data)    
     
     except:
-        error_msg = "ERROR"
         msg = [compose_url + "____> ERROR_FOUNDED"]
         file = open('Zzz.csv','a+')
         action = csv.writer(file)
