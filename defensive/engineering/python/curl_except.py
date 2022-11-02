@@ -17,6 +17,7 @@ def curl_except(compose_url):
     request = pycurl.Curl()
     request.setopt(request.URL, compose_url)
     request.setopt(request.FOLLOWLOCATION, False)
+    request.setopt(request.TIMEOUT, 15)
 
     try:
         request.perform() 
@@ -36,7 +37,7 @@ def curl_except(compose_url):
         action.writerow(data)    
     
     except:
-        msg = [compose_url + "____> ERROR_FOUNDED"]
+        msg = [compose_url + "____> ERROR_NOT_HANDLED"]
         file = open('Zzz.csv','a+')
         action = csv.writer(file)
         action.writerow(msg)
