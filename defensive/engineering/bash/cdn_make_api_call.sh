@@ -20,7 +20,7 @@ API_URL="type the URL..."
 
 DATE=`env LANG="en_US.UTF-8" date -u "+%a, %d %b %Y %H:%M:%S GMT"`
 
-#generating the password needed to make the api_call
+#..... GENERATING_THE_PASSWORD_NEEDED_TO_MAKE_THE_API-CALL:
 
 PASSWORD=$(echo -n "$DATE" | openssl dgst -sha1 -hmac "$API_KEY" -binary | base64)
 
