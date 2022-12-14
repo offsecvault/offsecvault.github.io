@@ -1,6 +1,4 @@
 
-Knowledge Base
-
 It is a knowledge base created as part of the journey studying both sides of the cyber world !
 
                              | D E F E N S I V E  &  O F F E N S I V E | 
